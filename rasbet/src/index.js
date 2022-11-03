@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './css/index.css';
+import './css/index.scss';
 import App from './components/views/App';
 import reportWebVitals from './reportWebVitals';
 import {
@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import GamesList from './components/views/GamesList';
+import { NavBar } from './components/blocks/NavBar';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <main className='main-container'>
+      <NavBar />
+      <RouterProvider router={router} />
+    </main>
   </React.StrictMode>
 );
 
