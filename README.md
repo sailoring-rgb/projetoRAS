@@ -9,4 +9,5 @@ Classificação Final: .../20
 - Ana Murta
 - Ana Henriques
 - Hugo Gomes
+- João Lourenço
 - Rui Armada
