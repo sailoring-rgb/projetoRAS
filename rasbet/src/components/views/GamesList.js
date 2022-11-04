@@ -3,6 +3,7 @@ import { getGames } from '../../utils/api.js'
 import '../../css/views/GamesList.scss'
 import { GameCard } from '../items/GameCard.js'
 import { BetCard } from '../items/BetCard.js'
+import { PaymentModal } from '../blocks/PaymentModal.js'
 
 function GamesList() {
   const [ betsList, setBetsList ] = useState([])
@@ -10,6 +11,7 @@ function GamesList() {
   const [ searchText, setSearchText ] = useState('')
   const [ betTotal, setBetTotal ] = useState(0.0)
   const [ selectedBet, setSelectedBet ] = useState(null)
+  const [ displayPaymentModal, setDisplayPaymentModal ] = useState(false)
 
   const fetchGamesList = async () => {
     const newGamesList = await getGames();
@@ -42,9 +44,9 @@ function GamesList() {
       newBets = newBets.filter(bet => bet.id !== oddId)
 
     let newBetTotal = 0.0
-    newBets.forEach(bet => { newBetTotal += bet.total })
+    newBets.forEach(bet => { newBetTotal += bet.total * bet.odd })
 
-    setBetTotal(newBetTotal)
+    setBetTotal(newBetTotal.toFixed(2))
     setGamesList(updatedGames)
     setBetsList(newBets)
   }
@@ -62,7 +64,7 @@ function GamesList() {
 
     setBetsList(updatedBetsList)
     setGamesList(updatedGames)
-    setBetTotal(totalWinnings)
+    setBetTotal(totalWinnings.toFixed(2))
   }
 
   const onSelectedBetValueChange = (e) => {
@@ -83,7 +85,12 @@ function GamesList() {
 
     setBetsList(updatedBetsList)
     setSelectedBet(updatedBetsList[selectedBetIndex])
-    setBetTotal(totalWinnings)
+    setBetTotal(totalWinnings.toFixed(2))
+  }
+
+  const openPaymentModal = () => {
+    if(betTotal > 0)
+      setDisplayPaymentModal(true)
   }
 
   useEffect(() => {
@@ -94,7 +101,11 @@ function GamesList() {
     <main className="container">
       <div className='gameslist-container'>
         <div className='searchbar-container'>
-          <input onChange={onSearchTextChange} type="text" value={searchText}/>
+          <input
+            onChange={onSearchTextChange}
+            type="text"
+            placeholder='Pesquisar'
+            value={searchText}/>
         </div>
         <div className='gameslist'>
           {
@@ -104,8 +115,11 @@ function GamesList() {
             )
           }
         </div>
-
       </div>
+      
+      { displayPaymentModal &&
+        <PaymentModal bets={betsList} closeModal={() => setDisplayPaymentModal(false)}/>
+      }
 
       <div className='betlist-container'>
         <h2>Boletim</h2>
@@ -153,7 +167,9 @@ function GamesList() {
               <label>Total de ganhos</label>
               <label className='orange-text'>{ betTotal }€</label>
             </div>
-            <button>Apostar</button>
+            <button
+              disabled={betTotal <= 0}
+              onClick={openPaymentModal}>Apostar</button>
           </div>
 
         </div>

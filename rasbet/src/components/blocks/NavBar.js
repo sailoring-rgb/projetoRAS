@@ -9,7 +9,7 @@ export const NavBar = ({}) => {
             <ul>
                 <li>Todos</li>
                 <li>Futebol</li>
-                <li>Basquetbol</li>
+                <li>Basquetebol</li>
                 <li>Ténis</li>
                 <li>MotoGP</li>
             </ul>

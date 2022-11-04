@@ -140,8 +140,13 @@
                 transition: .2s;
 
                 &:hover {
-                    background-color: #f39979;
+                    background-color: $light-orange;
                     cursor: pointer;
+                }
+
+                &:disabled {
+                    background-color: $light-orange;
+                                        
                 }
             }
         }
