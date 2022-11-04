@@ -1,8 +1,8 @@
 import '../../css/items/BetCard.scss'
 
-export const BetCard = ({bet}) => {
+export const BetCard = ({bet, onClick}) => {
     return (
-        <div className='bet-card'>
+        <div className='bet-card' onClick={onClick}>
             <header>
             <label> {bet.gameName} </label>
             <button>X</button>
@@ -13,7 +13,7 @@ export const BetCard = ({bet}) => {
             <div className='bet-info'>
             
             <label>Resultado:  
-                { bet.result === '_DRAW_' 
+                { bet.result === 'Draw' 
                 ? ' Empate'
                 : ` ${bet.result} vence`
             }</label>

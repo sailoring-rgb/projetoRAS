@@ -1,7 +1,9 @@
 import { OddCard } from "./OddCard"
 import '../../css/items/GameCard.scss'
+import { useEffect, useState } from "react"
 
-export const GameCard = ({game}) => {
+export const GameCard = ({game, onOddClick}) => {
+
     return (
         <div className='game-card'>
             <div className='id-labels'>
@@ -14,8 +16,8 @@ export const GameCard = ({game}) => {
             </div>
 
             <div className='odds-list'>
-                { game.bookmakers[0].markets[0].outcomes.map(odd => 
-                    <OddCard odd={odd} />
+                { (game.odds && game.oddsKey) && Object.values(game.odds).map(odd => 
+                    <OddCard key={`${game.oddsKey}_${odd.name}`} odd={odd} onClick={() => onOddClick(game.id, odd)} />
                 ) }
                 
             </div>

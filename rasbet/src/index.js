@@ -26,7 +26,9 @@ root.render(
   <React.StrictMode>
     <main className='main-container'>
       <NavBar />
-      <RouterProvider router={router} />
+      <div className='main-content'>
+        <RouterProvider router={router} />
+      </div>
     </main>
   </React.StrictMode>
 );

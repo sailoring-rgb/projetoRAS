@@ -5,6 +5,7 @@ body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f7f7f7;
 }
 
 code {
@@ -14,9 +15,13 @@ code {
 
 .main-container {
   display: grid;
-  grid-template-rows: 3.75em;
+  grid-template-rows: 3.3em calc(100vh - 3.3em);
 
   nav {
     grid-row: 1;
+  }
+
+  .main-content {
+    grid-row: 2;
   }
 }

@@ -1,6 +1,7 @@
+@import '../vars.scss';
 
 nav {
-    background-color: #3d7b2a;
+    background-color: $primary-green;
     color: white;
     display: flex;
     flex-direction: row;

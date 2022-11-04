@@ -1,27 +1,46 @@
 @import "../general.scss";
+@import '../vars.scss';
 
 .container {
     display: grid;
     grid-template-columns: auto 33%;
     width: 100%;
-    height: 90vh;
 
     .gameslist-container {
         grid-column: 1;
         display: flex;
         flex-direction: column;
+        height: calc(100vh - 3.3em);
+
+        .searchbar-container {
+            width: auto;
+            border: 1px solid $primary-green;
+            border-radius: 100px;
+            padding: 0.2em 0.5em;
+            margin: 1em;
+
+            input {
+                width: 100%;
+                border: 0;
+                border-radius: 100px;
+                outline: 0;
+                font-size: 1rem;
+            }
+        }
     
         .gameslist {
             display: flex;
             flex-direction: column;
-            height: 90vh;
+            height: 100%;
             overflow-y: auto;
         }
     }
 
     .betlist-container {
         grid-column: 2;
-        background-color: beige;
+        background-color: white;
+        // border: 1px solid 
+        box-shadow: $box-shadow-light;
         border-radius: 0.3em;
         margin: 1em .3em;
         height: 90vh;
@@ -72,7 +91,7 @@
             }
 
             button {
-                background-color: #ea7e56;
+                background-color: $orange;
                 border: 0;
                 border-radius: 5em;
                 padding: 1em;
