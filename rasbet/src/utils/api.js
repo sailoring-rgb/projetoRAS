@@ -29,7 +29,7 @@ const getGames = async () => {
         }
 
         game.bookmakers[0].markets[0].outcomes.forEach(odd => {
-            newGame.odds[oddsListKey+odd.name] = {
+            newGame.odds[game.id + '_' + odd.name] = {
                 name: odd.name,
                 value: odd.price,
                 selected: false

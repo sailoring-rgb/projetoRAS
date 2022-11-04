@@ -24,14 +24,14 @@ function GamesList() {
     let newBets = [...betsList]
     let updatedGames = gamesList
     const tmpGame = updatedGames[gameId]
-    const oddId = tmpGame.oddsKey + odd.name
+    const oddId = tmpGame.id + '_' + odd.name
     tmpGame.odds[oddId].selected = !tmpGame.odds[oddId].selected
 
     updatedGames[tmpGame.id] = tmpGame
 
     if(tmpGame.odds[oddId].selected) {
       const newBet = {
-        id: `${tmpGame.homeTeam}${tmpGame.awayTeam}${odd.name}`,
+        id: oddId,
         gameName: `${tmpGame.homeTeam} - ${tmpGame.awayTeam}`,
         result: odd.name,
         odd: odd.value
@@ -39,12 +39,22 @@ function GamesList() {
       newBets.push(newBet)
       console.log(newBet)
     } else
-      newBets = newBets.filter(bet => bet.id !== `${tmpGame.homeTeam}${tmpGame.awayTeam}${odd.name}`)
+      newBets = newBets.filter(bet => bet.id !== oddId)
 
     console.log(tmpGame, newBets)
 
     setGamesList(updatedGames)
     setBetsList(newBets)
+  }
+
+  const removeBet = (betId) => {
+    const updatedBetsList = [...betsList].filter(bet => bet.id !== betId)
+    const updatedGames = gamesList
+    const [ gameId, _ ] = betId.split('_')
+    updatedGames[gameId].odds[betId].selected = !updatedGames[gameId].odds[betId].selected
+
+    setBetsList(updatedBetsList)
+    setGamesList(updatedGames)
   }
 
   useEffect(() => {
@@ -78,7 +88,7 @@ function GamesList() {
 
         <div className='bets-list'>
           { betsList.map(bet =>
-              <BetCard key={bet.id} bet={bet} />)
+              <BetCard key={bet.id} bet={bet} onRemoveBetClick={removeBet}/>)
           }
         </div>
         

@@ -1,11 +1,11 @@
 import '../../css/items/BetCard.scss'
 
-export const BetCard = ({bet, onClick}) => {
+export const BetCard = ({bet, onRemoveBetClick}) => {
     return (
-        <div className='bet-card' onClick={onClick}>
+        <div className='bet-card'>
             <header>
             <label> {bet.gameName} </label>
-            <button>X</button>
+            <button onClick={() => onRemoveBetClick(bet.id)}>X</button>
             </header>
 
             <hr/>
