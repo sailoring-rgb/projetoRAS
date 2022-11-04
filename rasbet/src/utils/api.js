@@ -1,5 +1,4 @@
-
-const getGames = async () => {
+export const getFootballGames = async () => {
     const data = await fetch(`${process.env.REACT_APP_API_URL}/games`)
         .then(res => res.json());
     const games = {}
@@ -29,7 +28,3 @@ const getGames = async () => {
 
     return games
 };
-
-export {
-    getGames
-}

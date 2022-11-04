@@ -1,6 +1,5 @@
 import { OddCard } from "./OddCard"
 import '../../css/items/GameCard.scss'
-import { useEffect, useState } from "react"
 
 export const GameCard = ({game, onOddClick}) => {
 

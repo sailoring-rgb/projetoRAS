@@ -5,7 +5,7 @@
     flex-direction: column;
     width: 100%;
     flex-grow: 1;
-    background-color: azure;
+    background-color: $light-green;
     margin: 1em 0.5em;
     padding: 0.5em 1em;
     text-align: center;
@@ -13,7 +13,7 @@
     border: 1px solid $primary-green;
 
     &:hover {
-        background-color: #f8ffff;
+        background-color: $lighter-green;
         cursor: pointer;
     }
 

@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react'
-import { getGames } from '../../utils/api.js'
+import { getFootballGames } from '../../utils/api.js'
 import '../../css/views/GamesList.scss'
 import { GameCard } from '../items/GameCard.js'
 import { BetCard } from '../items/BetCard.js'
 import { PaymentModal } from '../blocks/PaymentModal.js'
 
-function GamesList() {
+/*
+Future todo:
+  - Split this into smaller components
+  - Refactor some functions for better readibility
+  - Use barrels
+*/
+function GamesList({game}) {
   const [ betsList, setBetsList ] = useState([])
   const [ gamesList, setGamesList ] = useState([])
   const [ searchText, setSearchText ] = useState('')
@@ -15,7 +21,12 @@ function GamesList() {
   const [ betType, setBetType ] = useState(1) // 1 - Single; 2 - Multiple
 
   const fetchGamesList = async () => {
-    const newGamesList = await getGames();
+    let newGamesList = []
+    switch(game) {
+      case 'football':
+        newGamesList = await getFootballGames();
+    }
+
     setGamesList(newGamesList)
   }
 
@@ -159,14 +170,22 @@ function GamesList() {
             placeholder='Pesquisar'
             value={searchText}/>
         </div>
-        <div className='gameslist'>
           {
-            gamesList &&
-            Object.values(gamesList).map((game, i) => 
-              <GameCard key={i} game={game} onOddClick={selectOdd} />
-            )
+            game !== 'football' ?
+              <div className='gameslist'>
+                <h1 className='game-available-soon'>Jogo disponível brevemente</h1>
+              </div>
+            : <div className='gameslist'>
+                {
+                  (gamesList && Object.values(gamesList).length > 0) ?
+                    Object.values(gamesList).map((game, i) => 
+                      <GameCard key={i} game={game} onOddClick={selectOdd} />
+                    )
+                  : <label className='no-games-label'>Sem jogos disponíveis</label>
+                }
+              </div>
           }
-        </div>
+        
       </div>
       
       { displayPaymentModal &&

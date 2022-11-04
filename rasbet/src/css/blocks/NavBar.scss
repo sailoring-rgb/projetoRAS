@@ -30,6 +30,19 @@ nav {
                 font-weight: bold;
                 cursor: pointer;
             }
+
+            &.selected {
+                background-color: $light-green;
+                border-radius: 2em;
+                padding: 0.4em 0.5em;
+                color: $primary-green;
+                font-weight: bold;
+            }
+
+            a {
+                color: inherit; /* blue colors for links too */
+                text-decoration: inherit; /* no underline */
+            }
         }
     }
 }

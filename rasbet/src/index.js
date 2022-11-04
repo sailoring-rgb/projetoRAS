@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
+  Navigate
 } from "react-router-dom";
 import GamesList from './components/views/GamesList';
 import { NavBar } from './components/blocks/NavBar';
@@ -13,13 +14,30 @@ import { NavBar } from './components/blocks/NavBar';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <Navigate to='/todos' />,
   },
   {
-    path: "/games",
-    element: <GamesList/>,
+    path: "/todos",
+    element: <GamesList game={'football'} />,
+  },
+  {
+    path: "/football",
+    element: <GamesList game={'football'} />,
+  },
+  {
+    path: "/basketball",
+    element: <GamesList game={'basketball'} />,
+  },
+  {
+    path: "/tenis",
+    element: <GamesList game={'tenis'} />,
+  },
+  {
+    path: "/motogp",
+    element: <GamesList game={'motoGP'} />,
   },
 ]);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
