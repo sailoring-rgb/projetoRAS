@@ -49,6 +49,10 @@
          
         h2 { text-align: center;}
 
+        .bets-list {
+        overflow-y: auto;
+        }
+
         .joint-btn {
             margin: 0.5em auto;
 
@@ -61,6 +65,12 @@
                 &:hover {
                     background-color: #e8eff1;
                     cursor: pointer;
+                }
+
+                &.selected {
+                    background-color: $primary-green;
+                    font-weight: bold;
+                    color: white;
                 }
             }
 
@@ -146,7 +156,7 @@
 
                 &:disabled {
                     background-color: $light-orange;
-                                        
+
                 }
             }
         }

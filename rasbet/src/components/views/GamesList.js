@@ -12,6 +12,7 @@ function GamesList() {
   const [ betTotal, setBetTotal ] = useState(0.0)
   const [ selectedBet, setSelectedBet ] = useState(null)
   const [ displayPaymentModal, setDisplayPaymentModal ] = useState(false)
+  const [ betType, setBetType ] = useState(1) // 1 - Single; 2 - Multiple
 
   const fetchGamesList = async () => {
     const newGamesList = await getGames();
@@ -22,7 +23,7 @@ function GamesList() {
     setSearchText(e.target.value)
   }
 
-  const selectOdd = (gameId, odd) => {
+  const selectMultipleOdd = (gameId, odd) => {
     let newBets = [...betsList]
     let updatedGames = gamesList
     const tmpGame = updatedGames[gameId]
@@ -34,6 +35,7 @@ function GamesList() {
     if(tmpGame.odds[oddId].selected) {
       const newBet = {
         id: oddId,
+        gameId: gameId,
         gameName: `${tmpGame.homeTeam} - ${tmpGame.awayTeam}`,
         result: odd.name,
         odd: odd.value,
@@ -49,6 +51,46 @@ function GamesList() {
     setBetTotal(newBetTotal.toFixed(2))
     setGamesList(updatedGames)
     setBetsList(newBets)
+  }
+
+  const selectSingleOdd = (gameId, odd) => {
+    let updatedGames = gamesList
+    const tmpGame = updatedGames[gameId]
+    const newBet = {
+      id: tmpGame.id + '_' + odd.name,
+      gameId: gameId,
+      gameName: `${tmpGame.homeTeam} - ${tmpGame.awayTeam}`,
+      result: odd.name,
+      odd: odd.value,
+      total: 0.0
+    }
+
+    if(betsList.length === 0 ||
+      (betsList.length > 0 && betsList[0].gameId === gameId)) {
+        tmpGame.odds[newBet.id].selected = !tmpGame.odds[newBet.id].selected
+    } 
+
+    if(betsList.length > 0 && newBet.id !== betsList[0].id) {
+      const currBetGame = updatedGames[betsList[0].gameId]
+      currBetGame.odds[betsList[0].id].selected = false
+      tmpGame.odds[newBet.id].selected = true
+
+      updatedGames[betsList[0].gameId] = currBetGame
+    }
+
+    updatedGames[gameId] = tmpGame
+    let newBetTotal = newBet.total * newBet.odd
+
+    setBetTotal(newBetTotal.toFixed(2))
+    setGamesList(updatedGames)
+    setBetsList([newBet])
+  }
+
+  const selectOdd = (gameId, odd) => {
+    if(betType === 1) 
+      selectSingleOdd(gameId, odd)
+    else if(betType === 2)
+      selectMultipleOdd(gameId, odd)
   }
 
   const removeBet = (betId) => {
@@ -93,6 +135,16 @@ function GamesList() {
       setDisplayPaymentModal(true)
   }
 
+  const changeBetType = newBetType => {
+    if(newBetType === 1 || newBetType === 2)
+      setBetType(newBetType)
+      
+    fetchGamesList()
+    setBetsList([])
+    setSelectedBet(null)
+    setBetTotal(0)
+  }
+
   useEffect(() => {
     fetchGamesList()
   }, [])
@@ -125,8 +177,16 @@ function GamesList() {
         <h2>Boletim</h2>
         
         <div className='joint-btn'>
-          <button>Simples</button>
-          <button>Múltipla</button>
+          <button
+            className={betType === 1 ? 'selected' : ''}
+            onClick={() => changeBetType(1)}>
+              Simples
+          </button>
+          <button 
+            className={betType === 2 ? 'selected' : ''} 
+            onClick={() => changeBetType(2)}>
+              Múltipla
+          </button>
         </div>
 
         <div className='bets-list'>
