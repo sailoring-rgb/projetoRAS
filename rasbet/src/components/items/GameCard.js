@@ -4,6 +4,18 @@ import { useEffect, useState } from "react"
 
 export const GameCard = ({game, onOddClick}) => {
 
+    const parseTimestamp = (timestamp) => {
+        const date = new Date(timestamp)
+        const currDate = new Date()
+        const currDayString = `${currDate.getDate()}/${currDate.getMonth()}/${currDate.getFullYear()}` 
+        const dayString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}` 
+        const hourString = `${date.getHours()}:${date.getMinutes()}`
+        
+        return (currDayString === dayString) 
+            ? `Hoje ${hourString}`
+            : `${dayString} ${hourString}`
+    }
+
     return (
         <div className='game-card'>
             <div className='id-labels'>
@@ -11,7 +23,7 @@ export const GameCard = ({game, onOddClick}) => {
                     { game.homeTeam } - { game.awayTeam }
                 </label>
                 <label className='secondary-label'>
-                    { game.commenceTime }
+                    { parseTimestamp(game.commenceTime) }
                 </label>
             </div>
 
