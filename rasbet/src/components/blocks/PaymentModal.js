@@ -7,15 +7,15 @@ import '../../css/blocks/PaymentModal.scss'
 
 export const PaymentModal = ({bets, closeModal}) => {
     const [ step, setStep ] = useState(1)
-    const [ phoneNumber, setPhoneNumber ] = useState('')
+    const [ phoneNumber, setPhoneNumber ] = useState(0)
 
     const onPhoneNumberChange = e => {
         console.log(e.currentTarget.value)
         console.log(parseInt(e.currentTarget.value))
         if(e.currentTarget.value === '' || e.currentTarget.value.length > 9)
-            setPhoneNumber(phoneNumber)
+            setPhoneNumber(parseInt(phoneNumber))
         else
-            setPhoneNumber(e.currentTarget.value)
+            setPhoneNumber(parseInt(e.currentTarget.value))
     }
 
     const isActive = (currStep) => {
