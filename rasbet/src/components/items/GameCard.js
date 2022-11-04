@@ -9,11 +9,11 @@ export const GameCard = ({game, onOddClick}) => {
         const currDate = new Date()
         const currDayString = `${currDate.getDate()}/${currDate.getMonth()}/${currDate.getFullYear()}` 
         const dayString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}` 
-        const hourString = `${date.getHours()}:${date.getMinutes()}`
+        const hourString = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
         
         return (currDayString === dayString) 
-            ? `Hoje ${hourString}`
-            : `${dayString} ${hourString}`
+            ? `Hoje  ${hourString}`
+            : `${dayString}  ${hourString}`
     }
 
     return (
@@ -23,7 +23,7 @@ export const GameCard = ({game, onOddClick}) => {
                     { game.homeTeam } - { game.awayTeam }
                 </label>
                 <label className='secondary-label'>
-                    { parseTimestamp(game.commenceTime) }
+                    { parseTimestamp(game.commenceTime) }h
                 </label>
             </div>
 

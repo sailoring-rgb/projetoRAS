@@ -1,18 +1,5 @@
 
-// [{
-//     id,
-//     homeTeam,
-//     awayTeam,
-//     commenceTime,
-
-//     odds: [{
-//         name,
-//         value,
-//         selected
-//     }]
-// }]
 const getGames = async () => {
-    console.log(`SENDING TO => ${process.env.REACT_APP_API_URL}/games`)
     const data = await fetch(`${process.env.REACT_APP_API_URL}/games`)
         .then(res => res.json());
     const games = {}

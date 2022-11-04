@@ -14,12 +14,10 @@ function GamesList() {
   const fetchGamesList = async () => {
     const newGamesList = await getGames();
     setGamesList(newGamesList)
-    console.log("=>", newGamesList)
   }
 
   const onSearchTextChange = (e) => {
     setSearchText(e.target.value)
-    console.log(searchText)
   }
 
   const selectOdd = (gameId, odd) => {
@@ -40,11 +38,8 @@ function GamesList() {
         total: 0.0
       }
       newBets.push(newBet)
-      console.log(newBet)
     } else
       newBets = newBets.filter(bet => bet.id !== oddId)
-
-    console.log(tmpGame, newBets)
 
     let newBetTotal = 0.0
     newBets.forEach(bet => { newBetTotal += bet.total })
@@ -56,12 +51,18 @@ function GamesList() {
 
   const removeBet = (betId) => {
     const updatedBetsList = [...betsList].filter(bet => bet.id !== betId)
+    let totalWinnings = 0
+    updatedBetsList.forEach(bet => {
+      totalWinnings += bet.total * bet.odd
+    })
+
     const updatedGames = gamesList
     const [ gameId, _ ] = betId.split('_')
     updatedGames[gameId].odds[betId].selected = !updatedGames[gameId].odds[betId].selected
 
     setBetsList(updatedBetsList)
     setGamesList(updatedGames)
+    setBetTotal(totalWinnings)
   }
 
   const onSelectedBetValueChange = (e) => {
@@ -76,7 +77,7 @@ function GamesList() {
         selectedBetIndex = i
       }
 
-      totalWinnings += bet.total
+      totalWinnings += bet.total * bet.odd
       return bet
     })
 
@@ -132,15 +133,17 @@ function GamesList() {
                 Cota: { selectedBet.odd }
               </div>
               <table className='price-container'>
-                <tr>
-                  <td><label>Montante</label></td>
-                  <td>
-                    <input pattern="[0-9]*"
-                      type="number"
-                      value={ selectedBet.total }
-                      onChange={ onSelectedBetValueChange }/>€
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td><label>Montante</label></td>
+                    <td>
+                      <input pattern="[0-9]*"
+                        type="number"
+                        value={ selectedBet.total }
+                        onChange={ onSelectedBetValueChange }/>€
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           }
