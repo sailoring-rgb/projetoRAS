@@ -8,6 +8,8 @@ function GamesList() {
   const [ betsList, setBetsList ] = useState([])
   const [ gamesList, setGamesList ] = useState([])
   const [ searchText, setSearchText ] = useState('')
+  const [ betTotal, setBetTotal ] = useState(0.0)
+  const [ selectedBet, setSelectedBet ] = useState(null)
 
   const fetchGamesList = async () => {
     const newGamesList = await getGames();
@@ -34,7 +36,8 @@ function GamesList() {
         id: oddId,
         gameName: `${tmpGame.homeTeam} - ${tmpGame.awayTeam}`,
         result: odd.name,
-        odd: odd.value
+        odd: odd.value,
+        total: 0.0
       }
       newBets.push(newBet)
       console.log(newBet)
@@ -43,6 +46,10 @@ function GamesList() {
 
     console.log(tmpGame, newBets)
 
+    let newBetTotal = 0.0
+    newBets.forEach(bet => { newBetTotal += bet.total })
+
+    setBetTotal(newBetTotal)
     setGamesList(updatedGames)
     setBetsList(newBets)
   }
@@ -55,6 +62,27 @@ function GamesList() {
 
     setBetsList(updatedBetsList)
     setGamesList(updatedGames)
+  }
+
+  const onSelectedBetValueChange = (e) => {
+    let updatedBetValue = e.currentTarget.value
+    let selectedBetIndex = 0;
+    let totalWinnings = 0;
+
+    const updatedBetsList = [ ...betsList ].map((bet, i) => {
+      if(bet.id === selectedBet.id) {
+        if(updatedBetValue !== '')
+          bet.total = parseFloat(updatedBetValue)
+        selectedBetIndex = i
+      }
+
+      totalWinnings += bet.total
+      return bet
+    })
+
+    setBetsList(updatedBetsList)
+    setSelectedBet(updatedBetsList[selectedBetIndex])
+    setBetTotal(totalWinnings)
   }
 
   useEffect(() => {
@@ -88,16 +116,43 @@ function GamesList() {
 
         <div className='bets-list'>
           { betsList.map(bet =>
-              <BetCard key={bet.id} bet={bet} onRemoveBetClick={removeBet}/>)
+              <BetCard
+                key={bet.id}
+                bet={bet}
+                onRemoveBetClick={removeBet}
+                onCardClick={setSelectedBet} />)
           }
         </div>
         
         <div className='bottom-container'>
-          <div className='totalWins'>
-            <label>Total de ganhos</label>
-            <label>xxx€</label>
+          
+          { selectedBet && 
+            <div className='flex-horizontal'>
+              <div className='bet-odd-label'>
+                Cota: { selectedBet.odd }
+              </div>
+              <table className='price-container'>
+                <tr>
+                  <td><label>Montante</label></td>
+                  <td>
+                    <input pattern="[0-9]*"
+                      type="number"
+                      value={ selectedBet.total }
+                      onChange={ onSelectedBetValueChange }/>€
+                  </td>
+                </tr>
+              </table>
+            </div>
+          }
+         
+          <div className='flex-horizontal'>
+            <div className='totalWins'>
+              <label>Total de ganhos</label>
+              <label className='orange-text'>{ betTotal }€</label>
+            </div>
+            <button>Apostar</button>
           </div>
-          <button>Apostar</button>
+
         </div>
       </div>
     </main>
