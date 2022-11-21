@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.scss';
-import App from './components/views/App';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
   Navigate
 } from "react-router-dom";
-import GamesList from './components/views/GamesList';
+import GamesListView from './components/views/GamesListView';
 import { NavBar } from './components/blocks/NavBar';
+import { StateProvider } from './state';
+import { initialState, globalStateReducer } from './globalState';
 
 const router = createBrowserRouter([
   {
@@ -18,23 +19,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/todos",
-    element: <GamesList game={'football'} />,
+    element: <GamesListView game={'football'} />,
   },
   {
     path: "/football",
-    element: <GamesList game={'football'} />,
+    element: <GamesListView game={'football'} />,
   },
   {
     path: "/basketball",
-    element: <GamesList game={'basketball'} />,
+    element: <GamesListView game={'basketball'} />,
   },
   {
     path: "/tenis",
-    element: <GamesList game={'tenis'} />,
+    element: <GamesListView game={'tenis'} />,
   },
   {
     path: "/motogp",
-    element: <GamesList game={'motoGP'} />,
+    element: <GamesListView game={'motoGP'} />,
   },
 ]);
 
@@ -42,12 +43,14 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <main className='main-container'>
-      <NavBar />
-      <div className='main-content'>
-        <RouterProvider router={router} />
-      </div>
-    </main>
+    <StateProvider initialState={initialState} reducer={globalStateReducer}>
+      <main className='main-container'>
+        <NavBar />
+        <div className='main-content'>
+          <RouterProvider router={router} />
+        </div>
+      </main>
+    </StateProvider>
   </React.StrictMode>
 );
 
