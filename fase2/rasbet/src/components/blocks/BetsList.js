@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { BetCard } from '../items/BetCard.js'
 import { BetTypeButtons } from '../items/BetTypeButtons';
 import '../../css/blocks/BetsList.scss'
+import { BetType } from '../../models/BetType.js';
 // import { useStateValue } from '../../state';
 
 export const BetsList = ({
@@ -15,27 +16,33 @@ export const BetsList = ({
     // const { betsList } = state;
     const [ betTotal, setBetTotal ] = useState(0.0)
     const [ selectedBet, setSelectedBet ] = useState(null)
-    const [ betType, setBetType ] = useState(1) // 1 - Single; 2 - Multiple
+    const [ betType, setBetType ] = useState(BetType.Simple)
 
-    const calcBetTotal = (bets) => {
-        if(bets.length == 0) return 0
+    // const calcBetTotal = (bets) => {
+    //     if(bets.length === 0) return 0
 
-        let newBetTotal = (betType === 1)
-            ? bets.reduce((acc, b) => acc += b.total * b.odd, 0) // Single bet
-            : bets.reduce((acc, b) => acc *= b.total * b.odd, 1) // Multiple bet
-        console.log(bets, newBetTotal)
-        return newBetTotal.toFixed(2)
-    }
+    //     let newBetTotal = (betType === BetType.Simple)
+    //         ? bets.reduce((acc, b) => acc += b.total * b.odd, 0) // Single bet
+    //         : bets.reduce((acc, b) => acc *= b.total * b.odd, 1) // Multiple bet
+    //     console.log(bets, newBetTotal)
+    //     return newBetTotal.toFixed(2)
+    // }
+
+    const calcBetTotal = useCallback((bets) => {
+          if(bets.length === 0) return 0
+  
+          let newBetTotal = (betType === BetType.Simple)
+              ? bets.reduce((acc, b) => acc += b.total * b.odd, 0) // Single bet
+              : bets.reduce((acc, b) => acc *= b.total * b.odd, 1) // Multiple bet
+          console.log(bets, newBetTotal)
+          return newBetTotal.toFixed(2)
+    }, [betType]);
 
     const removeBet = (betId) => {
       const updatedBetsList = [...betsList].filter(bet => bet.id !== betId)
-      let totalWinnings = 0
-      updatedBetsList.forEach(bet => {
-        totalWinnings += bet.total * bet.odd
-      })
   
       const updatedGames = gamesList
-      const [ gameId, _ ] = betId.split('_')
+      const [ gameId ] = betId.split('_')
       updatedGames[gameId].odds[betId].selected = !updatedGames[gameId].odds[betId].selected
   
     //   dispatch({ type: 'setBetsList', value: updatedBetsList })
@@ -62,11 +69,6 @@ export const BetsList = ({
       setSelectedBet(updatedBetsList[selectedBetIndex])
     }
 
-    const changeBetType = newBetType => {
-      if(newBetType === 1 || newBetType === 2)
-        setBetType(newBetType)
-    }
-
     const openPaymentModal = () => {
       if(betTotal > 0)
         setDisplayPaymentModal(true)
@@ -76,7 +78,7 @@ export const BetsList = ({
     // bet type changes, update the bet total
     useEffect(() => {
         setBetTotal(calcBetTotal(betsList))
-    }, [betsList, betType])
+    }, [betsList, betType, calcBetTotal])
 
     return (
         <div className='betlist-container'>
@@ -84,7 +86,7 @@ export const BetsList = ({
 
             <BetTypeButtons
                 betType={betType}
-                changeBetType={changeBetType}
+                changeBetType={setBetType}
             />
 
             <div className='bets-list'>

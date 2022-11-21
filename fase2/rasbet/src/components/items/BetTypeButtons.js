@@ -1,4 +1,5 @@
 import '../../css/items/BetTypeButtons.scss'
+import { BetType } from '../../models/BetType'
 
 export const BetTypeButtons = ({
     betType,
@@ -7,13 +8,13 @@ export const BetTypeButtons = ({
     return (
         <div className='joint-btn'>
             <button
-                className={betType === 1 ? 'selected' : ''}
-                onClick={() => changeBetType(1)}>
+                className={betType === BetType.Simple ? 'selected' : ''}
+                onClick={() => changeBetType(BetType.Simple)}>
                     Simples
             </button>
             <button 
-                className={betType === 2 ? 'selected' : ''} 
-                onClick={() => changeBetType(2)}>
+                className={betType === BetType.Multiple ? 'selected' : ''} 
+                onClick={() => changeBetType(BetType.Multiple)}>
                     Múltipla
             </button>
         </div>

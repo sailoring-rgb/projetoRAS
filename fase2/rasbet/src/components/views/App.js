@@ -1,13 +1,15 @@
-import '../../css/views/App.css';
+// import '../../css/views/App.css';
+import GamesListView from './GamesListView';
+import { NavBar } from '../blocks/NavBar';
+import '../../css/index.scss';
 
-function App() {
+export const App = ({game}) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Rasbet</h1>
-      </header>
-    </div>
+    <main className='main-container'>
+      <NavBar />
+      <div className='main-content'>
+        <GamesListView game={game} />
+      </div>
+    </main>
   );
 }
-
-export default App;

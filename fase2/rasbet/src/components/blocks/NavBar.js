@@ -1,6 +1,7 @@
 import '../../css/blocks/NavBar.scss'
+import { Link } from "react-router-dom";
 
-export const NavBar = ({}) => {
+export const NavBar = () => {
     const isSelected = (path) => path === window.location.pathname
 
     return (
@@ -9,19 +10,19 @@ export const NavBar = ({}) => {
 
             <ul>
                 <li className={isSelected('/todos') ? 'selected' : ''}>
-                    <a href={'todos'}>Todos</a>
+                    <Link to={`/todos`}>Todos</Link>
                 </li>
                 <li className={isSelected('/football') ? 'selected' : ''}>
-                    <a href={'football'}>Futebol</a>
+                    <Link to={`/football`}>Futebol</Link>
                 </li>
                 <li className={isSelected('/basketball') ? 'selected' : ''}>
-                    <a href={'basketball'}>Basquetebol</a>
+                    <Link to={`/basketball`}>Basquetebol</Link>
                 </li>
                 <li className={isSelected('/tenis') ? 'selected' : ''}>
-                    <a href={'tenis'}>Ténis</a>
+                    <Link to={`/tenis`}>Ténis</Link>
                 </li>
                 <li className={isSelected('/motogp') ? 'selected' : ''}>
-                    <a href={'motogp'}>MotoGP</a>
+                    <Link to={`/motogp`}>MotoGP</Link>
                 </li>
             </ul>
 

@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './css/index.scss';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
   Navigate
 } from "react-router-dom";
-import GamesListView from './components/views/GamesListView';
-import { NavBar } from './components/blocks/NavBar';
 import { StateProvider } from './state';
 import { initialState, globalStateReducer } from './globalState';
+import { App } from './components/views/App';
 
 const router = createBrowserRouter([
   {
@@ -19,23 +17,28 @@ const router = createBrowserRouter([
   },
   {
     path: "/todos",
-    element: <GamesListView game={'football'} />,
+    // element: <GamesListView game={'football'} />,
+    element: <App game={'football'} />
   },
   {
     path: "/football",
-    element: <GamesListView game={'football'} />,
+    element: <App game={'football'} />,
+    // element: <GamesListView game={'football'} />,
   },
   {
     path: "/basketball",
-    element: <GamesListView game={'basketball'} />,
+    element: <App game={'basketball'} />,
+    // element: <GamesListView game={'basketball'} />,
   },
   {
     path: "/tenis",
-    element: <GamesListView game={'tenis'} />,
+    element: <App game={'tenis'} />,
+    // element: <GamesListView game={'tenis'} />,
   },
   {
     path: "/motogp",
-    element: <GamesListView game={'motoGP'} />,
+    element: <App game={'motoGP'} />,
+    // element: <GamesListView game={'motoGP'} />,
   },
 ]);
 
@@ -44,12 +47,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <StateProvider initialState={initialState} reducer={globalStateReducer}>
-      <main className='main-container'>
+      {/* <main className='main-container'>
         <NavBar />
-        <div className='main-content'>
+        <div className='main-content'> */}
           <RouterProvider router={router} />
-        </div>
-      </main>
+        {/* </div>
+      </main> */}
     </StateProvider>
   </React.StrictMode>
 );
