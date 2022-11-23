@@ -13,20 +13,9 @@ export const BetsList = ({
     setDisplayPaymentModal,
 }) => {
     // const { state, dispatch } = useStateValue();
-    // const { betsList } = state;
     const [ betTotal, setBetTotal ] = useState(0.0)
     const [ selectedBet, setSelectedBet ] = useState(null)
     const [ betType, setBetType ] = useState(BetType.Simple)
-
-    // const calcBetTotal = (bets) => {
-    //     if(bets.length === 0) return 0
-
-    //     let newBetTotal = (betType === BetType.Simple)
-    //         ? bets.reduce((acc, b) => acc += b.total * b.odd, 0) // Single bet
-    //         : bets.reduce((acc, b) => acc *= b.total * b.odd, 1) // Multiple bet
-    //     console.log(bets, newBetTotal)
-    //     return newBetTotal.toFixed(2)
-    // }
 
     const calcBetTotal = useCallback((bets) => {
           if(bets.length === 0) return 0
