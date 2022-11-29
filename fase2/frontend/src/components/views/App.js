@@ -1,6 +1,7 @@
 // import '../../css/views/App.css';
 import GamesListView from './GamesListView';
 import { NavBar } from '../blocks/NavBar';
+//import {NotificationList} from '../blocks/NotificationList';
 import '../../css/index.scss';
 
 export const App = ({game}) => {

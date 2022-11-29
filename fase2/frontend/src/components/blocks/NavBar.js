@@ -1,5 +1,6 @@
 import '../../css/blocks/NavBar.scss'
 import { Link } from "react-router-dom";
+import notificationButton from '../../imgs/notification_button.png'
 
 export const NavBar = () => {
     const isSelected = (path) => path === window.location.pathname
@@ -23,6 +24,13 @@ export const NavBar = () => {
                 </li>
                 <li className={isSelected('/motogp') ? 'selected' : ''}>
                     <Link to={`/motogp`}>MotoGP</Link>
+                </li>
+                <li className={isSelected('/notifications') ? 'selected' : ''}>
+                    <Link to={`/notifications`}>
+                        <div className="img-btn">
+                            <img src={notificationButton} />
+                        </div>
+                    </Link>
                 </li>
             </ul>
 
