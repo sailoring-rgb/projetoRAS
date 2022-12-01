@@ -1,12 +1,31 @@
 import '../../css/blocks/NavBar.scss'
 import { Link } from "react-router-dom";
-import notificationButton from '../../imgs/notification_button.png'
+import userButton from '../../imgs/user_button.png'
+import React from 'react';
+import { useState } from "react"
+import ReactDOM from 'react-dom';
+//import Modal from 'react-modal';
 
-export const NavBar = () => {
+export const NavBar = ({
+    //setDisplayUserFunctions,
+}) => {
     const isSelected = (path) => path === window.location.pathname
+    const [open, setOpen] = React.useState(false);
+
+    /*const openUserFunctions = () => {
+        setDisplayUserFunctions(true)
+    }*/
+
+    function openModal() {
+        setOpen(true);
+    }
+
+    function closeModal() {
+        setOpen(false);
+    }
 
     return (
-        <nav>
+        <nav> 
             <h2>RasBet</h2>
 
             <ul>
@@ -25,16 +44,11 @@ export const NavBar = () => {
                 <li className={isSelected('/motogp') ? 'selected' : ''}>
                     <Link to={`/motogp`}>MotoGP</Link>
                 </li>
-                <li className={isSelected('/notifications') ? 'selected' : ''}>
-                    <Link to={`/notifications`}>
-                        <div className="img-btn">
-                            <img src={notificationButton} />
-                        </div>
-                    </Link>
+                <label>Bem vindo, Carlos</label> 
+                <li onClick={openModal}>
+                    <img src={userButton} />
                 </li>
             </ul>
-
-            <label>Bem vindo, Carlos</label>
         </nav>
     )
 }
