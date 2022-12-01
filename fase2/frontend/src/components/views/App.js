@@ -3,7 +3,9 @@ import GamesListView from "./GamesListView";
 import { NavBar } from "../blocks/NavBar";
 import "../../css/index.scss";
 import NotificationsModalView from "./NotificationsModalView";
+import FunctionsView from "./FunctionsView";
 import BetsHistoryView from "./BetsHistoryView";
+import TransactionsHistoryView from "./TransactionsHistoryView";
 
 export const App = ({ type, game }) => {
     return (
@@ -15,8 +17,12 @@ export const App = ({ type, game }) => {
                 </div>
             ) : type === "notifications" ? (
                 <NotificationsModalView />
-            ) : (
+            ) : type === "functions" ? (
+                <FunctionsView />
+            ) : type === "bets" ? (
                 <BetsHistoryView />
+            ) : (
+                <TransactionsHistoryView />
             )}
         </main>
     );

@@ -1,6 +1,6 @@
 import "../../css/blocks/NavBar.scss";
 import { Link } from "react-router-dom";
-import notificationIcon from "../../imgs/notificationRead.png";
+import userButton from "../../imgs/user_button.png";
 import { useHistory, useLocation } from "react-router-dom";
 
 export const NavBar = () => {
@@ -28,12 +28,9 @@ export const NavBar = () => {
                 <li className={isSelected("/motogp") ? "selected" : ""}>
                     <Link to={`/motogp`}>MotoGP</Link>
                 </li>
-                <li className={isSelected("/mybets") ? "selected" : ""}>
-                    <Link to={`/mybets`}>Apostas</Link>
-                </li>
-                <li className={isSelected("/notifications") ? "selected" : ""}>
-                    <Link to={`/notifications`}>
-                        <img src={notificationIcon} />{" "}
+                <li className={isSelected("/functions") ? "selected" : ""}>
+                    <Link to={`/functions`}>
+                        <img src={userButton} />{" "}
                     </Link>
                 </li>
             </ul>

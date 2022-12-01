@@ -43,12 +43,24 @@ const router = createBrowserRouter([
         // element: <GamesListView game={'motoGP'} />,
     },
     {
-        path: "/notifications",
+        path: "/functions",
+        element: <App type={"functions"} game={""} />,
+    },
+    {
+        path: "/functions/notifications",
         element: <App type={"notifications"} game={""} />,
     },
     {
-        path: "/mybets",
+        path: "/functions/mybets",
         element: <App type={"bets"} game={""} />,
+    },
+    {
+        path: "/functions/profile",
+        element: <App type={"profile"} game={""} />,
+    },
+    {
+        path: "/functions/mytransactions",
+        element: <App type={"transactions"} game={""} />,
     },
 ]);
 
