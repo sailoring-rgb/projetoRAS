@@ -1,9 +1,12 @@
 import "../../css/blocks/NavBar.scss";
 import { Link } from "react-router-dom";
 import notificationIcon from "../../imgs/notificationRead.png";
+import { useHistory, useLocation } from "react-router-dom";
 
 export const NavBar = () => {
     const isSelected = (path) => path === window.location.pathname;
+    const location = useLocation();
+    const pathName = location.pathname;
 
     return (
         <nav>
@@ -24,6 +27,9 @@ export const NavBar = () => {
                 </li>
                 <li className={isSelected("/motogp") ? "selected" : ""}>
                     <Link to={`/motogp`}>MotoGP</Link>
+                </li>
+                <li className={isSelected("/mybets") ? "selected" : ""}>
+                    <Link to={`/mybets`}>Apostas</Link>
                 </li>
                 <li className={isSelected("/notifications") ? "selected" : ""}>
                     <Link to={`/notifications`}>

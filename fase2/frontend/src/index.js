@@ -10,6 +10,7 @@ import { StateProvider } from "./state";
 import { initialState, globalStateReducer } from "./globalState";
 import NotificationsModalView from "./components/views/NotificationsModalView.js";
 import { App } from "./components/views/App";
+import { useHistory, useLocation } from "react-router-dom";
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
     {
         path: "/notifications",
         element: <App type={"notifications"} game={""} />,
+    },
+    {
+        path: "/mybets",
+        element: <App type={"bets"} game={""} />,
     },
 ]);
 
