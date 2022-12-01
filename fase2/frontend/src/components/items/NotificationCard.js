@@ -1,6 +1,10 @@
 import "../../css/items/NotificationCard.scss";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const NotificationCard = ({ notification }) => {
+    const isSelected = (select) => select === true;
+
     const parseTimestamp = (timestamp) => {
         const date = new Date(timestamp);
         const currDate = new Date();
@@ -18,9 +22,11 @@ export const NotificationCard = ({ notification }) => {
 
     return (
         <div className="notification-card">
-            <label className="label">
-                {parseTimestamp(notification.date)}h
-            </label>
+            <div className="id-labels">
+                <label className="label">
+                    {parseTimestamp(notification.date)}h
+                </label>
+            </div>
             <p> {notification.msg} </p>
         </div>
     );

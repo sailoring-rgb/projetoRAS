@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { NotificationsModal } from "../blocks/NotificationsModal.js";
 
-function NotificationsModalView({ notificationsList, closeModal }) {
+function NotificationsModalView({ closeModal }) {
     const [displayNotificationsModal, setDisplayNotificationsModal] =
         useState(false);
 
+    let notificationsList = [];
     return (
         <main className="container" onClick={closeModal}>
             <NotificationsModal

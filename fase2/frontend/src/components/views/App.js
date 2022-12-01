@@ -13,7 +13,7 @@ export const App = ({ type, game }) => {
                     <GamesListView game={game} />
                 </div>
             ) : (
-                <NotificationsModalView notificationsList={[]} />
+                <NotificationsModalView />
             )}
         </main>
     );

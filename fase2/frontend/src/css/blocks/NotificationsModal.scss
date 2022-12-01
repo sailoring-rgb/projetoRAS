@@ -13,14 +13,20 @@
             text-align: center;
             font-size: 3.0rem;
         }
-
-        .no-notifications-label {
+        .notifications-modal{
             
-            p{
-                font-size: 1.2rem;
-                text-align: center;
-                margin-top: 1em;
-                color: #758994;
+            &.selected {
+                background-color: $light-yellow;
+            }
+
+            .no-notifications-label {
+            
+                p{
+                    font-size: 1.2rem;
+                    text-align: center;
+                    margin-top: 1em;
+                    color: #758994;
+                }
             }
         }
     }
