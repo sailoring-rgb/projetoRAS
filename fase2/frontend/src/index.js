@@ -19,32 +19,31 @@ const router = createBrowserRouter([
     {
         path: "/todos",
         // element: <GamesListView game={'football'} />,
-        element: <App game={"football"} />,
+        element: <App type={"game"} game={"football"} />,
     },
     {
         path: "/football",
-        element: <App game={"football"} />,
+        element: <App type={"game"} game={"football"} />,
         // element: <GamesListView game={'football'} />,
     },
     {
         path: "/basketball",
-        element: <App game={"basketball"} />,
+        element: <App type={"game"} game={"basketball"} />,
         // element: <GamesListView game={'basketball'} />,
     },
     {
         path: "/tenis",
-        element: <App game={"tenis"} />,
+        element: <App type={"game"} game={"tenis"} />,
         // element: <GamesListView game={'tenis'} />,
     },
     {
         path: "/motogp",
-        element: <App game={"motoGP"} />,
+        element: <App type={"game"} game={"motoGP"} />,
         // element: <GamesListView game={'motoGP'} />,
     },
     {
         path: "/notifications",
-        element: <NotificationsModalView notification={"notifications"} />,
-        // element: <GamesListView game={'motoGP'} />,
+        element: <App type={"notifications"} game={""} />,
     },
 ]);
 
