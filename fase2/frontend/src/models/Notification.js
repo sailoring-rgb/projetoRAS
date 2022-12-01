@@ -5,6 +5,5 @@ export class Notification {
         this.date = date;
         // this.userDest = userDest
         // this.checked = checked
-        this.bgColor = "$light-yellow";
     }
 }

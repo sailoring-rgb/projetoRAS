@@ -3,8 +3,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const NotificationCard = ({ notification }) => {
-    const isSelected = (select) => select === true;
-
     const parseTimestamp = (timestamp) => {
         const date = new Date(timestamp);
         const currDate = new Date();
