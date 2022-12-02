@@ -2,15 +2,16 @@
 
 
     ul {
-        display:inline-block;
+
         button {
             padding: 1.0rem 25rem;
             margin: 0.5em 1em;
             background-color: white;
             border: 1px solid $primary-green;
             border-radius: 0.5em;
-            width:75em;
+            width:100em;
             box-shadow: $box-shadow-light;
+
             p{
                 text-align: center;
                 font-size: 1.0rem;           
