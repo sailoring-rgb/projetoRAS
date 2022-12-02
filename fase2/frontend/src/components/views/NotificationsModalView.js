@@ -14,12 +14,12 @@ function NotificationsModalView({ closeModal }) {
         {
             id: "akdkahdskd",
             msg: "O jogo Vitória SC - Arouca no qual apostou chegou ao fim. Oops, não teve sorte!",
-            date: "2022-11-19T12:30:00.000Z",
+            date: "2022-12-19T12:30:00.000Z",
         },
         {
             id: "019382jdks",
             msg: "O jogo Braga - Famalicão no qual apostou chegou ao fim. Parabéns, ganhou!",
-            date: "2022-10-30T08:22:00.000Z",
+            date: "2022-11-30T08:22:00.000Z",
         },
         {
             id: "0392dakcnh",
@@ -29,7 +29,7 @@ function NotificationsModalView({ closeModal }) {
         {
             id: "skjjsjdans",
             msg: "O jogo Oeiras - Marítimo no qual apostou chegou ao fim. Oops, não teve sorte!",
-            date: "2022-10-12T20:02:00.000Z",
+            date: "2022-09-12T20:02:00.000Z",
         },
     ];
     const notifications = JSON.stringify(notifs);
