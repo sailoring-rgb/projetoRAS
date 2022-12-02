@@ -1,22 +1,26 @@
-import "../../css/items/BetCard.scss";
+import "../../css/items/TransactionCard.scss";
 
-export const TransactionCard = ({ bet, onCardClick, onRemoveBetClick }) => {
+export const TransactionCard = ({ transaction }) => {
+    const parseTimestamp = (timestamp) => {
+        const date = new Date(timestamp);
+        const currDate = new Date();
+        const currDayString = `${currDate.getDate()}/${currDate.getMonth()}/${currDate.getFullYear()}`;
+        const dayString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+        const hourString = `${String(date.getHours()).padStart(
+            2,
+            "0"
+        )}:${String(date.getMinutes()).padStart(2, "0")}`;
+
+        return currDayString === dayString
+            ? `Hoje  ${hourString}`
+            : `${dayString}  ${hourString}`;
+    };
+
     return (
-        <div className="transaction-card" onClick={() => onCardClick(bet)}>
-            <header>
-                <label> {bet.gameName} </label>
-                <button onClick={() => onRemoveBetClick(bet.id)}>X</button>
-            </header>
-
-            <hr />
-
-            <div className="bet-info">
-                <label>
-                    Resultado:
-                    {bet.result === "Draw" ? " Empate" : ` ${bet.result} vence`}
-                </label>
-                <div className="bet-odd-label">Cota: {bet.odd}</div>
-                <label>{bet.total}€</label>
+        <div className="transaction-card">
+            {parseTimestamp(transaction.date)}h
+            <div className="transaction-value-info">
+                {transaction.transactionType === "deposit" ? <p>+ {transaction.value}€</p> : <p>- {transaction.value}€</p>}
             </div>
         </div>
     );
