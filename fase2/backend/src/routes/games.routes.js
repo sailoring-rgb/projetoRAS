@@ -1,12 +1,16 @@
 const express = require('express')
-
+const gamesApi = require('../utils/apis')
 const gamesRouter = express.Router()
 
-gamesRouter.get('/', async (_req, res) => {
-  const msg = {
-    msg: 'GET request to /games'
+gamesRouter.get('/:game/', async (req, res) => {
+  const gameFetchFunctions = {
+    football: gamesApi.fetchFootballGames,
+    basketball: gamesApi.fetchBasketballGames,
+    // tenis: ,
+    // motoGP: ,
   }
-  return res.status(200).send(msg)
+  
+  return res.status(200).send(await gameFetchFunctions[req.params.game]())
 })
 
 gamesRouter.post('/', async (req, res) => {

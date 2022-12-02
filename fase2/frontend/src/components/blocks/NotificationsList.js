@@ -12,6 +12,5 @@ export const NotificationsList = ({
             <h2>Notifications</h2>
 
         </div>
-
     )
 }
