@@ -1,0 +1,49 @@
+@import "../general.scss";
+@import '../vars.scss';
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    height: 100vh;
+
+    .content {
+        gap: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        box-shadow: $box-shadow;
+        background-color: $light-grey;
+        max-width: 350px;
+        padding: 20px;
+        border-radius: 5px;
+    }
+}
+
+.label {
+    font-size: 18px;
+    font-weight: 600;
+    color: $light-green;
+}
+
+.labelSignUp {
+    font-size: 16px;
+    color: $primary-green;
+}
+
+.labelError {
+    font-size: 14px;
+    color: red;
+}
+
+.strong {
+    cursor: pointer;
+    a {
+        text-decoration: none;
+        color: $orange;
+    }
+}
