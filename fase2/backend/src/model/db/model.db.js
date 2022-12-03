@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require('sequelize')
 const { sequelizeConnection } = require('../../db/db.init');
 
-class Games extends Model {}
-Games.init({
+class Game extends Model {}
+Game.init({
     id: {
         type: DataTypes.STRING,
         primaryKey: true
@@ -13,24 +13,24 @@ Games.init({
     oddsKey: DataTypes.STRING,
 }, {
     sequelize: sequelizeConnection,
-    modelName: 'Games'
+    modelName: 'game'
 });
 
-class Bets extends Model {}
-Bets.init({
-    id: {
-        type: DataTypes.STRING,
-        primaryKey: true
-    },
+class Bet extends Model {}
+Bet.init({
+    // id: {
+    //     type: DataTypes.STRING,
+    //     primaryKey: true
+    // },
     total: DataTypes.FLOAT,
 }, {
     timestamps: true,
     sequelize: sequelizeConnection,
-    modelName: 'Bets'
+    modelName: 'bet'
 });
 
-class Odds extends Model {}
-Odds.init({
+class Odd extends Model {}
+Odd.init({
     id: {
         type: DataTypes.STRING,
         primaryKey: true
@@ -39,11 +39,11 @@ Odds.init({
     value: DataTypes.FLOAT,
 }, {
     sequelize: sequelizeConnection,
-    modelName: 'Odds'
+    modelName: 'odd'
 });
 
-class Users extends Model {}
-Users.init({
+class User extends Model {}
+User.init({
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     username: DataTypes.STRING,
@@ -55,22 +55,22 @@ Users.init({
     wallet: DataTypes.FLOAT,
 }, {
     sequelize: sequelizeConnection,
-    modelName: 'Users'
+    modelName: 'user'
 });
 
-Users.hasMany(Bets)
-Bets.belongsTo(Users)
+User.hasMany(Bet)
+Bet.belongsTo(User)
 
-Bets.belongsTo(Games)
-Games.hasMany(Bets)
+Bet.belongsTo(Game)
+Game.hasMany(Bet)
 
-Odds.hasMany(Bets)
-Bets.belongsTo(Odds)
+Odd.hasMany(Bet)
+Bet.belongsTo(Odd)
 
-Games.hasMany(Odds)
-Odds.belongsTo(Games)
+Game.hasMany(Odd)
+Odd.belongsTo(Game)
 
-exports.Users = Users
-exports.Games = Games
-exports.Odds = Odds
-exports.Bets = Bets
+exports.User = User
+exports.Game = Game
+exports.Odd = Odd
+exports.Bet = Bet

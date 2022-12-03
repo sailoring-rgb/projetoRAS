@@ -1,13 +1,33 @@
-const { Users } = require('../model/db/model.db')
+const { User } = require('../model/db/model.db')
 const bcrypt = require('bcryptjs')
 const jsonwebtoken = require("jsonwebtoken");
 
 const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
 
+exports.validateJWT = (req, res, next) => {
+    if (req.headers['authorization']) {
+        try {
+            let authorization = req.headers['authorization'].split(' ');
+            if (authorization[0] !== 'Bearer') {
+                return res.status(401).send();
+            } else {
+                console.log(authorization)
+                req.jwt = jsonwebtoken.verify(authorization[1], JWT_SECRET);
+                return next();
+            }
+        } catch (err) {
+            console.log(err)
+            return res.status(403).send();
+        }
+    } else {
+        return res.status(401).send();
+    }
+};
+
 exports.login = async (req, res) => {
     const { email, password } = req.body;
     
-    const user = await Users.findOne({
+    const user = await User.findOne({
         where: {
             email: email,
         }
@@ -17,7 +37,7 @@ exports.login = async (req, res) => {
         return res
             .status(200)
             .json({
-                token: jsonwebtoken.sign({ user: "admin" }, JWT_SECRET)
+                token: jsonwebtoken.sign(user.dataValues, JWT_SECRET)
             });
 
     return res
@@ -27,6 +47,7 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
     const userData = req.body;
+    console.log(userData)
 
     if(userData.password.trim() !== userData.confPassword.trim())
         return res
@@ -41,7 +62,7 @@ exports.register = async (req, res) => {
         password: bcrypt.hashSync(userData.password, 10),
         birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
     }
-    const newUser = await Users.create(newUserData);
+    const newUser = await User.create(newUserData);
 
     return res
         .status(200)

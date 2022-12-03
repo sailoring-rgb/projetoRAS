@@ -1,28 +1,31 @@
 const gamesApi = require('../utils/apis')
-const { Games, Odds } = require('../model/db/model.db')
+const { Game, Odd } = require('../model/db/model.db')
 // const { Odds } = require('../model/db/Odds')
 
 const updateDbGames = async (gamesData) => {
-    Object.values(gamesData).forEach(game => {
-        Games.upsert({
+    Object.values(gamesData).forEach(async game => {
+        const newGame = (await Game.upsert({
             id: game.id,
             homeTeam: game.homeTeam,
             awayTeam: game.awayTeam,
             commenceTime: game.commenceTime,
             oddsKey: game.oddsKey,
-            odds: Object.keys(game.odds).map(async oddKey => {
-                const odd = game.odds[oddKey]
-                return await Odds.upsert({
-                    id: oddKey,
-                    name: odd.name,
-                    value: odd.value
-                })
-            })
+        }))[0]
+
+        Object.keys(game.odds).map(async oddKey => {
+            const odd = game.odds[oddKey]
+            return await Odd.upsert({
+                id: oddKey,
+                name: odd.name,
+                value: odd.value,
+                gameId: newGame.dataValues.id
+            }, { include: [ Game ] })
         })
     })
 }
 
 exports.getGames = async (req, res) => {
+    console.log(req.jwt)
     const gameFetchFunctions = {
       football: gamesApi.fetchFootballGames,
       basketball: gamesApi.fetchBasketballGames,
