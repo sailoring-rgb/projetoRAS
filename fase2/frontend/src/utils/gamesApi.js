@@ -31,13 +31,41 @@ const parseGame = (gameData) => {
 }
 
 export const getFootballGames = async () => {
-    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games/football/`)
-        .then(res => res.json());
+    const userToken = localStorage.getItem("user_token")
+
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games/football/`, {
+        headers: {
+            Authorization: `Bearer ${userToken}`
+        }
+    }).then(res => {
+        if(res.status != 200)
+            return new Error(res.status)
+        return res.json()
+    })
+    .catch(res => res)
+        
+    if(data.name == 'Error')
+        return data
+
     return parseGame(data)
 }
 
 export const getBasketballGames = async () => {
-    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games/basketball/`)
-        .then(res => res.json());
+    const userToken = localStorage.getItem("user_token")
+
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games/basketball/`, {
+        headers: {
+            Authorization: `Bearer ${userToken}`
+        }
+    }).then(res => {
+        if(res.status != 200)
+            return new Error(res.status)
+        return res.json()
+    })
+    .catch(res => res)
+
+    if(data.name == 'Error')
+        return data
+
     return parseGame(data)
 }

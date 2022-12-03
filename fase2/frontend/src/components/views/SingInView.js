@@ -6,8 +6,8 @@ import { useUserAuth } from '../../hooks/useAuth'
 import '../../css/views/SignInView.scss'
 
 export const SignInView = () => {
-  const { signin } = useUserAuth();
-  const nav = useNavigate();
+  const { signin } = useUserAuth()
+  const nav = useNavigate()
 
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
@@ -19,10 +19,12 @@ export const SignInView = () => {
       return
     }
     const res = await signin({ email, password })
-    if(!res) {
+    console.log(res)
+    if(!res.status) {
       setError(res.message)
       return
     }
+    console.log(res)
     nav('/todos')
   }
 
@@ -53,5 +55,5 @@ export const SignInView = () => {
         </label>
       </div>
     </div>
-  );
-};
+  )
+}

@@ -4,15 +4,16 @@ import '../../css/views/GamesListView.scss'
 import { PaymentModal } from '../blocks/PaymentModal.js'
 import { BetsList } from '../blocks/BetsList.js'
 import { GamesList } from '../blocks/GamesList.js'
+import { useUserAuth } from '../../hooks/useAuth'
 // import { useStateValue } from '../../state';
+import { useNavigate } from "react-router-dom";
 
-/*
-Future todo:
-  - Use barrels
-*/
 function GamesListView({game}) {
   // const { state, dispatch } = useStateValue();
   // const { betsList } = state;
+  // const { signout } = useUserAuth()
+  const { signout } = useUserAuth()
+  const nav = useNavigate()
   const [ betsList, setBetsList ] = useState([])
   const [ gamesList, setGamesList ] = useState({})
   const [ displayPaymentModal, setDisplayPaymentModal ] = useState(false)
@@ -28,10 +29,22 @@ function GamesListView({game}) {
         break
       default:
     }
-    console.log(newGamesList)
+    if(newGamesList.name == 'Error') {
+      switch(parseInt(newGamesList.message)) {
+        case 401:
+        case 403:
+          signout()
+          nav('/signin')
+        default:
+          console.log("An error occured")
+      }
+      return 
+    }
+
     const currGamesList = { ...gamesList }
     currGamesList[game] = newGamesList
     setGamesList(currGamesList)
+
   }, [game])
 
   const clearBets = () => {

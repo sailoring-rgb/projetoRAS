@@ -6,28 +6,22 @@ export const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
     const [ user, setUser ] = useState()
 
-    useEffect(() => {
-        const userToken = localStorage.getItem("user_token")
-        const userStorage = localStorage.getItem("users_db")
-        if(userToken && userStorage) {
-            const hasUser = JSON.parse(userStorage)?.filter(
-                (user) = user.email == JSON.parse(userToken).email
-            )
-            if(hasUser) setUser(hasUser[0])
-        }
-    }, [])
-
     const signin = async creds => {
-        const { token, user } = await login(creds)
-        localStorage.setItem("user_token", token)
-        setUser(user)
+        try {
+            const { token, user } = await login(creds)
+            localStorage.setItem("user_token", token)
+            setUser(user)
+        } catch(err) {
+            return { status: false,  msg: err }
+        }
 
-        return "Os dados inseridos não são válidos"
+        return {
+            status: true,
+        }
     }
 
     const signup = async (userData) => {
-        const res = await register(userData)
-        return res
+        return await register(userData)
     }
 
     const signout = () => {

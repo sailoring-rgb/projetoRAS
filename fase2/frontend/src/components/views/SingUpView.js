@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { SignInInput } from "../items/SignInInput"
 import { SignInButton } from "../items/SignInButton";
-import { Link, useNavigate, useResolvedPath } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserAuth } from '../../hooks/useAuth'
 import '../../css/views/SignInView.scss'
 
