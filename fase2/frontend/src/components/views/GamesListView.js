@@ -60,7 +60,10 @@ function GamesListView({game}) {
       />
       
       { displayPaymentModal &&
-        <PaymentModal bets={betsList} closeModal={() => setDisplayPaymentModal(false)}/>
+          <PaymentModal
+            bets={betsList}
+            closeModal={() => setDisplayPaymentModal(false)}
+          />
       }
 
       <BetsList
@@ -72,8 +75,15 @@ function GamesListView({game}) {
         setDisplayPaymentModal={setDisplayPaymentModal}
       />
 
-    </main>
-  );
+            <BetsList
+                gamesList={gamesList}
+                setGamesList={setGamesList}
+                betsList={betsList}
+                setBetsList={setBetsList}
+                setDisplayPaymentModal={setDisplayPaymentModal}
+            />
+        </main>
+    );
 }
 
 export default GamesListView;

@@ -1,0 +1,33 @@
+@import '../vars.scss';
+
+.notifications-modal-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .notifications-modal-main{
+
+        h2 {
+            margin-top: 7;
+            margin-left: 5;
+            text-align: center;
+            font-size: 3.0rem;
+        }
+        .notifications-modal{
+            
+            &.selected {
+                background-color: $light-yellow;
+            }
+
+            .no-notifications-label {
+            
+                p{
+                    font-size: 1.2rem;
+                    text-align: center;
+                    margin-top: 1em;
+                    color: #758994;
+                }
+            }
+        }
+    }
+}
