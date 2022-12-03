@@ -1,13 +1,8 @@
 const express = require('express')
-
 const gamesRouter = express.Router()
+const gamesController = require('../controller/games.controller')
 
-gamesRouter.get('/', async (_req, res) => {
-  const msg = {
-    msg: 'GET request to /games'
-  }
-  return res.status(200).send(msg)
-})
+gamesRouter.get('/:game/', gamesController.getGames)
 
 gamesRouter.post('/', async (req, res) => {
   const msg = {
