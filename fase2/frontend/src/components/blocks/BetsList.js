@@ -81,10 +81,10 @@ export const BetsList = ({
             <div className='bets-list'>
                 { betsList.map(bet =>
                     <BetCard
-                    key={bet.id}
-                    bet={bet}
-                    onRemoveBetClick={removeBet}
-                    onCardClick={setSelectedBet} />)
+                        key={bet.id}
+                        bet={bet}
+                        onRemoveBetClick={removeBet}
+                        onCardClick={setSelectedBet} />)
                 }
             </div>
             

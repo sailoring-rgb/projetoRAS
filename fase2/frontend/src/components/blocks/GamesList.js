@@ -45,7 +45,7 @@ export const GamesList = ({
                     value={searchText}/>
             </div>
             
-            { game !== 'football'
+            { game !== 'football' && game !== 'basketball'
             ?
                 <div className='gameslist'>
                     <h1 className='game-available-soon'>Jogo disponível brevemente</h1>
@@ -54,7 +54,7 @@ export const GamesList = ({
                 {
                 (gamesList && Object.values(gamesList).length > 0) ?
                     Object.values(gamesList).map((game, i) => 
-                    <GameCard key={i} game={game} onOddClick={selectOdd} />
+                        <GameCard key={i} game={game} onOddClick={selectOdd} />
                     )
                 : <label className='no-games-label'>Sem jogos disponíveis</label>
                 }

@@ -3,21 +3,7 @@ const { Games, Odds } = require('../model/db/model.db')
 // const { Odds } = require('../model/db/Odds')
 
 const updateDbGames = async (gamesData) => {
-    console.log(gamesData)
-    // const registeredGames = await Games.findAll({
-    //     where: {
-    //         id: Object.keys(gamesData)
-    //     }
-    // })
-
-    // registeredGames.forEach(game => {
-    //     game.upsert({
-
-    //     })
-    // })
-
     Object.values(gamesData).forEach(game => {
-        // game = game.dataValues
         Games.upsert({
             id: game.id,
             homeTeam: game.homeTeam,
@@ -46,6 +32,8 @@ exports.getGames = async (req, res) => {
 
     const gamesData = await gameFetchFunctions[req.params.game]()
 
+    // No await here because the client doesn't need to wait for this
+    // to finish to continue
     updateDbGames(gamesData)
     
     return res.status(200).json(gamesData)

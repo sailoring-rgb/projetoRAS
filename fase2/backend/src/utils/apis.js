@@ -35,6 +35,8 @@ exports.fetchBasketballGames = async () => {
     const games = {}
 
     data.forEach(game => {
+        if(!game.bookmakers[0]) return
+
         const oddsListKey = game.bookmakers[0].markets[0].key
         const newGame = new Game(
             game.id,
