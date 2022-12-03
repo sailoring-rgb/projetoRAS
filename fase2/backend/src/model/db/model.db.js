@@ -52,6 +52,7 @@ Users.init({
     NIC: DataTypes.STRING,
     NIF: DataTypes.STRING,
     birthday: DataTypes.DATE,
+    wallet: DataTypes.FLOAT,
 }, {
     sequelize: sequelizeConnection,
     modelName: 'Users'

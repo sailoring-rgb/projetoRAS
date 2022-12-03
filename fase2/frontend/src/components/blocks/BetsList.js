@@ -6,6 +6,7 @@ import { BetType } from '../../models/BetType.js';
 // import { useStateValue } from '../../state';
 
 export const BetsList = ({
+    game,
     gamesList,
     setGamesList,
     betsList,
@@ -30,7 +31,7 @@ export const BetsList = ({
     const removeBet = (betId) => {
       const updatedBetsList = [...betsList].filter(bet => bet.id !== betId)
   
-      const updatedGames = gamesList
+      const updatedGames = gamesList[game]
       const [ gameId ] = betId.split('_')
       updatedGames[gameId].odds[betId].selected = !updatedGames[gameId].odds[betId].selected
   

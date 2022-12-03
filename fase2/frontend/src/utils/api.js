@@ -18,7 +18,7 @@ const parseGame = (gameData) => {
             const odd = game.odds[oddId]
             newGame.odds[oddId] = {
                 name: odd.name,
-                value: odd.price,
+                value: odd.value,
                 selected: false
             }
         })

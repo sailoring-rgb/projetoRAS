@@ -64,6 +64,7 @@ function GamesListView({game}) {
       }
 
       <BetsList
+        game={game}
         gamesList={gamesList[game]}
         setGamesList={updateGamesList}
         betsList={betsList}

@@ -1,5 +1,4 @@
 const express = require('express')
-const gamesApi = require('../utils/apis')
 const gamesRouter = express.Router()
 const gamesController = require('../controller/games.controller')
 
