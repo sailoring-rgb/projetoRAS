@@ -10,6 +10,7 @@ import { StateProvider } from "./state";
 import { initialState, globalStateReducer } from "./globalState";
 import NotificationsModalView from "./components/views/NotificationsModalView.js";
 import { App } from "./components/views/App";
+import { SignInView } from "./components/views/SingInView";
 import { useHistory, useLocation } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
     {
         path: "/functions/mytransactions",
         element: <App type={"transactions"} game={""} />,
+    },
+    {
+        path: "/signin",
+        element: <SignInView />,
     },
 ]);
 
