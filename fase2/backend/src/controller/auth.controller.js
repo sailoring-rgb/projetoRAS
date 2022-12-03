@@ -25,7 +25,11 @@ exports.validateJWT = (req, res, next) => {
 };
 
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
+    const data = req.body
+    console.log("=>", data)
+    const { email, password } = data
+
+    console.log(email, password)
     
     const user = await User.findOne({
         where: {
@@ -37,7 +41,8 @@ exports.login = async (req, res) => {
         return res
             .status(200)
             .json({
-                token: jsonwebtoken.sign(user.dataValues, JWT_SECRET)
+                token: jsonwebtoken.sign(user.dataValues, JWT_SECRET),
+                user: user.dataValues,
             });
 
     return res

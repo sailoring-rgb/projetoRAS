@@ -11,7 +11,9 @@ import { initialState, globalStateReducer } from "./globalState";
 import NotificationsModalView from "./components/views/NotificationsModalView.js";
 import { App } from "./components/views/App";
 import { SignInView } from "./components/views/SingInView";
+import { SignUpView } from "./components/views/SingUpView";
 import { useHistory, useLocation } from "react-router-dom";
+import { AuthProvider } from "./utils/auth";
 
 const router = createBrowserRouter([
     {
@@ -67,6 +69,10 @@ const router = createBrowserRouter([
         path: "/signin",
         element: <SignInView />,
     },
+    {
+        path: "/signup",
+        element: <SignUpView />,
+    },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -76,7 +82,7 @@ root.render(
             {/* <main className='main-container'>
         <NavBar />
         <div className='main-content'> */}
-            <RouterProvider router={router} />
+            <AuthProvider children={<RouterProvider router={router} />} />
             {/* </div>
       </main> */}
         </StateProvider>

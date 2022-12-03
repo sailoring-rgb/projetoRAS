@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { getFootballGames, getBasketballGames } from '../../utils/api.js'
+import { getFootballGames, getBasketballGames } from '../../utils/gamesApi'
 import '../../css/views/GamesListView.scss'
 import { PaymentModal } from '../blocks/PaymentModal.js'
 import { BetsList } from '../blocks/BetsList.js'
