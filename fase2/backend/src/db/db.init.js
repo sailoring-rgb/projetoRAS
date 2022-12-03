@@ -13,6 +13,8 @@ const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
 
 const dbInit = (sequelize) => {
     sequelize.sync({ alter: true });
+
+    
 }
 
 exports.sequelizeConnection = sequelizeConnection
