@@ -1,8 +1,8 @@
-const gamesApi = require('../utils/apis')
-const { Bets, Users } = require('../model/db/model.db')
+const { Bet } = require('../model/db/model.db')
 
 exports.placeBet = async (req, res) => {
     const bets = req.body
+    const userData = req.jwt
 
     bets.forEach(async bet => {
         const {
@@ -11,9 +11,8 @@ exports.placeBet = async (req, res) => {
             value
         } = bet
 
-        await Bets.create({
-            // id: betId, 
-            userId: 123,
+        await Bet.create({
+            userId: userData.id,
             gameId: gameId,
             oddId: oddId,
             total: value

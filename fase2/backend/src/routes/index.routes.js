@@ -5,8 +5,8 @@ const { betsRouter } = require('./bets.routes.js')
 
 const router = express.Router()
 
-router.use('/auth', (req, res) => authRouter(req, res))
-router.use('/games', (req, res) => gamesRouter(req, res))
-router.use('/bets', (req, res) => betsRouter(req, res))
+router.use('/auth', authRouter)
+router.use('/games', gamesRouter)
+router.use('/bets', betsRouter)
 
 module.exports = router

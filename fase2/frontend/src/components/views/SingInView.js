@@ -31,9 +31,9 @@ export const SignInView = () => {
   };
 
   return (
-    <div className='container'> 
+    <div className='signin-container'> 
       <label className="label"> RASBET </label>
-      <div className='content'>
+      <div className='gl-content'>
         <SignInInput
           type="email"
           placeholder="Insira o seu E-mail"

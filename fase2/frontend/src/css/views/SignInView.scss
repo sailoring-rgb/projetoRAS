@@ -1,7 +1,7 @@
 @import "../general.scss";
 @import '../vars.scss';
 
-.container {
+.signin-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,7 +9,7 @@
     gap: 10px;
     height: 100vh;
 
-    .content {
+    .gl-content {
         gap: 15px;
         display: flex;
         align-items: center;
@@ -22,28 +22,28 @@
         padding: 20px;
         border-radius: 5px;
     }
-}
 
-.label {
-    font-size: 18px;
-    font-weight: 600;
-    color: $light-green;
-}
-
-.label-signup {
-    font-size: 16px;
-    color: $primary-green;
-}
-
-.label-error {
-    font-size: 14px;
-    color: red;
-}
-
-.strong {
-    cursor: pointer;
-    a {
-        text-decoration: none;
-        color: $orange;
+    .label {
+        font-size: 18px;
+        font-weight: 600;
+        color: $light-green;
+    }
+    
+    .label-signup {
+        font-size: 16px;
+        color: $primary-green;
+    }
+    
+    .label-error {
+        font-size: 14px;
+        color: red;
+    }
+    
+    .strong {
+        cursor: pointer;
+        a {
+            text-decoration: none;
+            color: $orange;
+        }
     }
 }

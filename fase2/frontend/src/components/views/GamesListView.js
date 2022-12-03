@@ -50,7 +50,7 @@ function GamesListView({game}) {
   }
 
   return (
-    <main className="container">
+    <main className="gameslistview-container">
       <GamesList
         game={game}
         gamesList={gamesList[game]}
@@ -74,16 +74,8 @@ function GamesListView({game}) {
         setBetsList={setBetsList}
         setDisplayPaymentModal={setDisplayPaymentModal}
       />
-
-            <BetsList
-                gamesList={gamesList}
-                setGamesList={setGamesList}
-                betsList={betsList}
-                setBetsList={setBetsList}
-                setDisplayPaymentModal={setDisplayPaymentModal}
-            />
-        </main>
-    );
+    </main>
+  );
 }
 
 export default GamesListView;
