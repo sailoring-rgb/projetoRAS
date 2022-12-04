@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import {
@@ -8,17 +8,17 @@ import {
 } from "react-router-dom";
 import { StateProvider } from "./state";
 import { initialState, globalStateReducer } from "./globalState";
-import NotificationsModalView from "./components/views/NotificationsModalView.js";
 import { App } from "./components/views/App";
 import { SignInView } from "./components/views/SingInView";
+import { SignUpView } from "./components/views/SingUpView";
+import { AuthProvider } from "./utils/auth";
 import { CreatePromotionsView } from "./components/views/CreatePromotionsView";
 import { CreateGameView } from "./components/views/CreateGameView";
-import { useHistory, useLocation } from "react-router-dom";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Navigate to="/todos" />,
+        element: <Navigate to="/tenis" />,
     },
     {
         path: "/todos",
@@ -70,6 +70,10 @@ const router = createBrowserRouter([
         element: <SignInView />,
     },
     {
+        path: "/signup",
+        element: <SignUpView />,
+    },
+    {
         path: "/createGame",
         element: <CreateGameView />,
     },
@@ -83,15 +87,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <StateProvider initialState={initialState} reducer={globalStateReducer}>
-            {/* <main className='main-container'>
-        <NavBar />
-        <div className='main-content'> */}
-            <RouterProvider router={router} />
-            {/* </div>
-      </main> */}
+            <AuthProvider children={<RouterProvider router={router} />} />
         </StateProvider>
     </React.StrictMode>
-);
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

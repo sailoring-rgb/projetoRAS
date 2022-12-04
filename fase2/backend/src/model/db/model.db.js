@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require('sequelize')
 const { sequelizeConnection } = require('../../db/db.init');
 
-class Games extends Model {}
-Games.init({
+class Game extends Model {}
+Game.init({
     id: {
         type: DataTypes.STRING,
         primaryKey: true
@@ -11,26 +11,27 @@ Games.init({
     awayTeam: DataTypes.STRING,
     commenceTime: DataTypes.DATE,
     oddsKey: DataTypes.STRING,
+    gameType: DataTypes.STRING
 }, {
     sequelize: sequelizeConnection,
-    modelName: 'Games'
+    modelName: 'game'
 });
 
-class Bets extends Model {}
-Bets.init({
-    id: {
-        type: DataTypes.STRING,
-        primaryKey: true
-    },
+class Bet extends Model {}
+Bet.init({
+    // id: {
+    //     type: DataTypes.STRING,
+    //     primaryKey: true
+    // },
     total: DataTypes.FLOAT,
 }, {
     timestamps: true,
     sequelize: sequelizeConnection,
-    modelName: 'Bets'
+    modelName: 'bet'
 });
 
-class Odds extends Model {}
-Odds.init({
+class Odd extends Model {}
+Odd.init({
     id: {
         type: DataTypes.STRING,
         primaryKey: true
@@ -39,38 +40,70 @@ Odds.init({
     value: DataTypes.FLOAT,
 }, {
     sequelize: sequelizeConnection,
-    modelName: 'Odds'
+    modelName: 'odd'
 });
 
-class Users extends Model {}
-Users.init({
+class User extends Model {}
+User.init({
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    username: DataTypes.STRING,
+    username: { 
+        type: DataTypes.STRING,
+        unique: true
+    },
     password: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: { 
+        type: DataTypes.STRING,
+        unique: true
+    },
     NIC: DataTypes.STRING,
     NIF: DataTypes.STRING,
     birthday: DataTypes.DATE,
     wallet: DataTypes.FLOAT,
 }, {
     sequelize: sequelizeConnection,
-    modelName: 'Users'
+    modelName: 'user'
 });
 
-Users.hasMany(Bets)
-Bets.belongsTo(Users)
+class MbWayPayment extends Model {}
+MbWayPayment.init({
+    phone: DataTypes.STRING,
+    value: DataTypes.FLOAT
+},{
+    sequelize: sequelizeConnection,
+    modelName: 'mbwaypayment'
+})
 
-Bets.belongsTo(Games)
-Games.hasMany(Bets)
+class CardPayment extends Model {}
+CardPayment.init({
+    phone: DataTypes.STRING,
+    value: DataTypes.FLOAT
+},{
+    sequelize: sequelizeConnection,
+    modelName: 'cardpayment'
+})
 
-Odds.hasMany(Bets)
-Bets.belongsTo(Odds)
+User.hasMany(Bet)
+Bet.belongsTo(User)
 
-Games.hasMany(Odds)
-Odds.belongsTo(Games)
+Bet.belongsTo(Game)
+Game.hasMany(Bet)
 
-exports.Users = Users
-exports.Games = Games
-exports.Odds = Odds
-exports.Bets = Bets
+Odd.hasMany(Bet)
+Bet.belongsTo(Odd)
+
+Game.hasMany(Odd)
+Odd.belongsTo(Game)
+
+// MbWayPayment.hasOne(Bet)
+Bet.hasOne(MbWayPayment)
+
+// CardPayment.hasOne(Bet)
+Bet.hasOne(CardPayment)
+
+exports.User = User
+exports.Game = Game
+exports.Odd = Odd
+exports.Bet = Bet
+exports.CardPayment = CardPayment
+exports.MbWayPayment = MbWayPayment

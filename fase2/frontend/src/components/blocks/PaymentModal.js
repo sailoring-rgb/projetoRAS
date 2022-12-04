@@ -3,20 +3,11 @@ import mbLogo from '../../imgs/mb_logo.png'
 import mbWayLogo from '../../imgs/mbway_logo.png'
 import visaMstCardLogo from '../../imgs/visa_mastercard_logo.png'
 import '../../css/blocks/PaymentModal.scss'
+import { placeBet } from "../../utils/betsApis"
 
 
 export const PaymentModal = ({bets, closeModal}) => {
     const [ step, setStep ] = useState(1)
-    const [ phoneNumber, setPhoneNumber ] = useState(0)
-
-    const onPhoneNumberChange = e => {
-        console.log(e.currentTarget.value)
-        console.log(parseInt(e.currentTarget.value))
-        if(e.currentTarget.value === '' || e.currentTarget.value.length > 9)
-            setPhoneNumber(parseInt(phoneNumber))
-        else
-            setPhoneNumber(parseInt(e.currentTarget.value))
-    }
 
     const isActive = (currStep) => {
         if(step === currStep) return ' bubble-active'
@@ -26,6 +17,21 @@ export const PaymentModal = ({bets, closeModal}) => {
     const onBgClick = e => {
         e.stopPropagation()
         closeModal()
+    }
+
+    const makePayment = async (paymentType, paymentData) => {
+        const parsedBets = bets.map(bet => {
+            console.log(bet)
+            return {
+                gameId: bet.gameId,
+                oddId: bet.oddId,
+                value: bet.total
+            }
+        })
+        const payment = { paymentType, paymentData }
+
+        const res = await placeBet(parsedBets, payment)
+        if(res.status) setStep(3)
     }
 
     return (
@@ -41,8 +47,11 @@ export const PaymentModal = ({bets, closeModal}) => {
                     step === 2 &&
                         <MbWayPayment
                             setStep={setStep}
-                            phoneNumber={phoneNumber}
-                            onPhoneNumberChange={onPhoneNumberChange} />
+                            makePayment={makePayment}/>
+                }
+                {
+                    step === 3 &&
+                        <h2> Pagamento efetuado com sucesso! </h2>
                 }
                 
                 <div className="steps-container">
@@ -74,7 +83,24 @@ const PaymentSelection = ({setStep}) => {
     )
 }
 
-const MbWayPayment = ({phoneNumber, onPhoneNumberChange, setStep}) => {
+const MbWayPayment = ({ setStep, makePayment }) => {
+    const [ phoneNumber, setPhoneNumber ] = useState(0)
+
+    const onPhoneNumberChange = e => {
+        console.log(e.currentTarget.value)
+        console.log(parseInt(e.currentTarget.value))
+        if(e.currentTarget.value === '' || e.currentTarget.value.length > 9)
+            setPhoneNumber(parseInt(phoneNumber))
+        else
+            setPhoneNumber(parseInt(e.currentTarget.value))
+    }
+
+    const payButtonClick = () => {
+        makePayment('MBWAY', {
+            phone: phoneNumber
+        })
+    }
+
     return (
         <main className="content">
             <div className="mbway-payment-container">
@@ -91,7 +117,9 @@ const MbWayPayment = ({phoneNumber, onPhoneNumberChange, setStep}) => {
                 </div>
 
                 <div className="btns">
-                    <button>Pagar</button>
+                    <button onClick={payButtonClick}>
+                        Pagar
+                    </button>
                     <button onClick={() => setStep(1)}>Cancelar</button>
                 </div>
             </div>

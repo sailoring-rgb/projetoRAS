@@ -1,18 +1,19 @@
 import { useState, useEffect, useCallback } from 'react'
-import { getFootballGames, getBasketballGames } from '../../utils/api.js'
+import { getFootballGames, getBasketballGames } from '../../utils/gamesApi'
 import '../../css/views/GamesListView.scss'
 import { PaymentModal } from '../blocks/PaymentModal.js'
 import { BetsList } from '../blocks/BetsList.js'
 import { GamesList } from '../blocks/GamesList.js'
+import { useUserAuth } from '../../hooks/useAuth'
 // import { useStateValue } from '../../state';
+import { useNavigate } from "react-router-dom";
 
-/*
-Future todo:
-  - Use barrels
-*/
 function GamesListView({game}) {
   // const { state, dispatch } = useStateValue();
   // const { betsList } = state;
+  // const { signout } = useUserAuth()
+  const { signout } = useUserAuth()
+  const nav = useNavigate()
   const [ betsList, setBetsList ] = useState([])
   const [ gamesList, setGamesList ] = useState({})
   const [ displayPaymentModal, setDisplayPaymentModal ] = useState(false)
@@ -28,10 +29,23 @@ function GamesListView({game}) {
         break
       default:
     }
-    console.log(newGamesList)
+    if(newGamesList.name == 'Error') {
+      switch(parseInt(newGamesList.message)) {
+        case 401:
+        case 403:
+          signout()
+          nav('/signin')
+        default:
+          console.log("An error occured")
+      }
+      return 
+    }
+
     const currGamesList = { ...gamesList }
     currGamesList[game] = newGamesList
+    console.log(currGamesList)
     setGamesList(currGamesList)
+
   }, [game])
 
   const clearBets = () => {
@@ -44,13 +58,14 @@ function GamesListView({game}) {
   }, [game, fetchGamesList])
 
   const updateGamesList = newGamesList => {
+    const currGame = game
     const currGamesList = { ...gamesList }
-    currGamesList[game] = newGamesList
+    currGamesList[currGame] = newGamesList
     setGamesList(currGamesList)
   }
 
   return (
-    <main className="container">
+    <main className="gameslistview-container">
       <GamesList
         game={game}
         gamesList={gamesList[game]}
@@ -74,16 +89,8 @@ function GamesListView({game}) {
         setBetsList={setBetsList}
         setDisplayPaymentModal={setDisplayPaymentModal}
       />
-
-            <BetsList
-                gamesList={gamesList}
-                setGamesList={setGamesList}
-                betsList={betsList}
-                setBetsList={setBetsList}
-                setDisplayPaymentModal={setDisplayPaymentModal}
-            />
-        </main>
-    );
+    </main>
+  );
 }
 
 export default GamesListView;

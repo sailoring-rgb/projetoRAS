@@ -1,37 +1,79 @@
-const { Users } = require('../model/db/model.db')
+const { User } = require('../model/db/model.db')
 const bcrypt = require('bcryptjs')
-const jsonwebtoken = require("jsonwebtoken");
+const jsonwebtoken = require("jsonwebtoken")
 
-const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
+const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu"
+
+exports.validateJWT = (req, res, next) => {
+    if (req.headers['authorization']) {
+        try {
+            let authorization = req.headers['authorization'].split(' ')
+            if (authorization[0] !== 'Bearer') {
+                return res.status(401).send()
+            } else {
+                req.jwt = jsonwebtoken.verify(authorization[1], JWT_SECRET)
+                console.log(Date.now() - req.jwt.lastOnline >= 18000000)
+                if(Date.now() - req.jwt.lastOnline >= 18000000)
+                    return res.status(401).send()
+                return next()
+            }
+        } catch (err) {
+            console.log(err)
+            return res.status(403).send()
+        }
+    } else {
+        return res.status(401).send()
+    }
+}
+
+exports.validateToken = async (req, res) => {
+    const userData = req.jwt
+    console.log(userData)
+    return res.status(200).json(userData)
+}
 
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
-    
-    const user = await Users.findOne({
+    const data = req.body
+    const { email, password } = data
+
+    const user = await User.findOne({
         where: {
             email: email,
         }
     })
 
-    if(bcrypt.compareSync(password, user.dataValues.password))
+    if(user && bcrypt.compareSync(password, user.dataValues.password)) {
+        const userData = { ...user.dataValues }
+        delete userData.password
+
         return res
             .status(200)
             .json({
-                token: jsonwebtoken.sign({ user: "admin" }, JWT_SECRET)
-            });
+                status: true,
+                token: jsonwebtoken.sign({
+                    ...userData,
+                    lastLogin: Date.now()
+                }, JWT_SECRET),
+                user: userData,
+            })
+    }
 
     return res
-        .status(401)
-        .json({ message: "The username and password your provided are invalid" });
+        .status(200)
+        .json({
+            status: false,
+            message: "The username and password your provided are invalid"
+        })
 }
 
 exports.register = async (req, res) => {
-    const userData = req.body;
+    const { userData } = req.body
+    console.log(userData)
 
     if(userData.password.trim() !== userData.confPassword.trim())
         return res
             .status(400)
-            .json({ message: "The passwords don't match" });
+            .json({ message: "The passwords don't match" })
 
     delete userData.confPassword
 
@@ -41,12 +83,12 @@ exports.register = async (req, res) => {
         password: bcrypt.hashSync(userData.password, 10),
         birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
     }
-    const newUser = await Users.create(newUserData);
+    await User.create(newUserData)
 
     return res
         .status(200)
         .json({
             status: true,
             message: "User registered successfully."
-        });
+        })
 }
