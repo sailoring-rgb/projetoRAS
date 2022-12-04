@@ -11,6 +11,7 @@ Game.init({
     awayTeam: DataTypes.STRING,
     commenceTime: DataTypes.DATE,
     oddsKey: DataTypes.STRING,
+    gameType: DataTypes.STRING
 }, {
     sequelize: sequelizeConnection,
     modelName: 'game'

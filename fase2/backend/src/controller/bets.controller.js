@@ -11,18 +11,27 @@ exports.getBetsHistory = async (req, res) => {
         ],
     })
 
-    const parsedBets = []
-    for(let i = 0; i < dbBets.length; i++) {
-        const bet = dbBets[i].dataValues
+    const parsedBets = await Promise.all(await dbBets.map(async dbBet => {
+        const bet = dbBet.dataValues
         bet.odd = await Odd.findOne({ where: { id: bet.oddId }})
         bet.game = await Game.findOne({ where: { id: bet.gameId }})
 
         bet.odd = bet.odd.dataValues
         bet.game = bet.game.dataValues
 
+        return bet
+    }))
+    // for(let i = 0; i < dbBets.length; i++) {
+    //     const bet = dbBets[i].dataValues
+    //     bet.odd = await Odd.findOne({ where: { id: bet.oddId }})
+    //     bet.game = await Game.findOne({ where: { id: bet.gameId }})
 
-        parsedBets.push(bet)
-    }
+    //     bet.odd = bet.odd.dataValues
+    //     bet.game = bet.game.dataValues
+
+
+    //     parsedBets.push(bet)
+    // }
 
     return res.status(200).json(parsedBets)
 }

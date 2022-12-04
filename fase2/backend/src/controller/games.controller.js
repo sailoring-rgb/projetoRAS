@@ -2,7 +2,15 @@ const gamesApi = require('../utils/apis')
 const { Game, Odd } = require('../model/db/model.db')
 // const { Odds } = require('../model/db/Odds')
 
-const updateDbGames = async (gamesData) => {
+const updateDbGames = async (gameType) => {
+    const gameFetchFunctions = {
+      football: gamesApi.fetchFootballGames,
+      basketball: gamesApi.fetchBasketballGames,
+      // tenis: ,
+      // motoGP: ,
+    }
+    const gamesData = await gameFetchFunctions[gameType]()
+
     Object.values(gamesData).forEach(async game => {
         const newGame = (await Game.upsert({
             id: game.id,
@@ -10,6 +18,7 @@ const updateDbGames = async (gamesData) => {
             awayTeam: game.awayTeam,
             commenceTime: game.commenceTime,
             oddsKey: game.oddsKey,
+            gameType: gameType.toUpperCase()
         }))[0]
 
         Object.keys(game.odds).map(async oddKey => {
@@ -26,18 +35,35 @@ const updateDbGames = async (gamesData) => {
 
 exports.getGames = async (req, res) => {
     console.log(req.jwt)
-    const gameFetchFunctions = {
-      football: gamesApi.fetchFootballGames,
-      basketball: gamesApi.fetchBasketballGames,
-      // tenis: ,
-      // motoGP: ,
-    }
+    const { game } = req.params
 
-    const gamesData = await gameFetchFunctions[req.params.game]()
+    // First fetch the existing data in the db since it's faster
+    let gamesData = await Game.findAll({
+        where: {
+            gameType: game.toUpperCase(),
+        },
+        order: [
+            ['commenceTime', 'ASC']
+        ]
+    })
 
-    // No await here because the client doesn't need to wait for this
-    // to finish to continue
-    updateDbGames(gamesData)
+    gamesData = await Promise.all(await gamesData.map(async game => {
+        const odds = {}
+        const dbOdds = await Odd.findAll({ where: { gameId: game.id }})
+        dbOdds.forEach(odd => {
+            odd = odd.dataValues
+            odds[game.id + '_' + odd.name] = odd
+        })
+
+        return {
+            ...game.dataValues,
+            odds
+        }
+    }))
+
+    // Then fetches the apis and updates the games in the db in async mode
+    // so the client doensn't have to wait as much
+    updateDbGames(game)
     
     return res.status(200).json(gamesData)
 }

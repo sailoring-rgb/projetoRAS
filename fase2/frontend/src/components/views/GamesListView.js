@@ -43,6 +43,7 @@ function GamesListView({game}) {
 
     const currGamesList = { ...gamesList }
     currGamesList[game] = newGamesList
+    console.log(currGamesList)
     setGamesList(currGamesList)
 
   }, [game])
