@@ -8,16 +8,15 @@ export const AuthProvider = ({ children }) => {
 
     const signin = async creds => {
         try {
-            const { token, user } = await login(creds)
-            localStorage.setItem("user_token", token)
-            setUser(user)
+            const data = await login(creds)
+            const userData = data.user
+            localStorage.setItem("user_token", data.token)
+            setUser(userData)
+            return { status: true, userData }
         } catch(err) {
-            return { status: false,  msg: err }
+            return { status: false, msg: err }
         }
 
-        return {
-            status: true,
-        }
     }
 
     const signup = async (userData) => {
@@ -36,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{
-                user,
+                authUser: user,
                 signed: !!user,
                 signin,
                 signup,

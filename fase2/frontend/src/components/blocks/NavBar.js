@@ -1,12 +1,14 @@
 import "../../css/blocks/NavBar.scss";
 import { Link } from "react-router-dom";
 import userButton from "../../imgs/user_button.png";
-import { useHistory, useLocation } from "react-router-dom";
+import { useStateValue } from "../../state";
+import { useEffect } from "react";
 
 export const NavBar = () => {
+    const { state } = useStateValue()
     const isSelected = (path) => path === window.location.pathname;
-    const location = useLocation();
-    const pathName = location.pathname;
+
+    useEffect(() => {console.log(state.authUser)}, [state.authUser])
 
     return (
         <nav>
@@ -34,8 +36,7 @@ export const NavBar = () => {
                     </Link>
                 </li>
             </ul>
-
-            <label>Bem vindo, Carlos</label>
+            <label>Bem vindo, { state.authUser && state.authUser.firstName }</label>
         </nav>
     );
 };

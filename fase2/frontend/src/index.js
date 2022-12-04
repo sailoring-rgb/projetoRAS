@@ -1,24 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import {
     createBrowserRouter,
     RouterProvider,
     Navigate,
+    useNavigate,
 } from "react-router-dom";
 import { StateProvider } from "./state";
 import { initialState, globalStateReducer } from "./globalState";
-import NotificationsModalView from "./components/views/NotificationsModalView.js";
 import { App } from "./components/views/App";
 import { SignInView } from "./components/views/SingInView";
 import { SignUpView } from "./components/views/SingUpView";
-import { useHistory, useLocation } from "react-router-dom";
 import { AuthProvider } from "./utils/auth";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Navigate to="/todos" />,
+        element: <Navigate to="/tenis" />,
     },
     {
         path: "/todos",
@@ -79,15 +78,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <StateProvider initialState={initialState} reducer={globalStateReducer}>
-            {/* <main className='main-container'>
-        <NavBar />
-        <div className='main-content'> */}
             <AuthProvider children={<RouterProvider router={router} />} />
-            {/* </div>
-      </main> */}
         </StateProvider>
     </React.StrictMode>
-);
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

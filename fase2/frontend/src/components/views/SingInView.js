@@ -4,9 +4,11 @@ import { SignInButton } from "../items/SignInButton";
 import { Link, useNavigate, useResolvedPath } from "react-router-dom";
 import { useUserAuth } from '../../hooks/useAuth'
 import '../../css/views/SignInView.scss'
+import { useStateValue } from '../../state';
 
 export const SignInView = () => {
   const { signin } = useUserAuth()
+  const { dispatch } = useStateValue()
   const nav = useNavigate()
 
   const [ email, setEmail ] = useState('')
@@ -19,12 +21,14 @@ export const SignInView = () => {
       return
     }
     const res = await signin({ email, password })
-    console.log(res)
+    
     if(!res.status) {
       setError(res.message)
       return
     }
-    console.log(res)
+
+    dispatch({ type: 'setAuthUser', value: res.userData })
+
     nav('/todos')
   }
 
