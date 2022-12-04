@@ -12,6 +12,3 @@ export const CreateGame = ({value, onChange, type, placeholder}) => {
         />
     );
 }
-
-//<label for="Name">Name:</label>
-//<input type="text" id="Name" name="Name" placeholder="Jane Doe"></input>
