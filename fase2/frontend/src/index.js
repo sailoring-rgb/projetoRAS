@@ -11,6 +11,7 @@ import { initialState, globalStateReducer } from "./globalState";
 import NotificationsModalView from "./components/views/NotificationsModalView.js";
 import { App } from "./components/views/App";
 import { SignInView } from "./components/views/SingInView";
+import { CreatePromotionsView } from "./components/views/CreatePromotionsView";
 import { CreateGameView } from "./components/views/CreateGameView";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
     {
         path: "/createGame",
         element: <CreateGameView />,
+    },
+    {
+        path: "/createPromotions",
+        element: <CreatePromotionsView />,
     },
 ]);
 
