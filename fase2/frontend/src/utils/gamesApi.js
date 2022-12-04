@@ -17,6 +17,7 @@ const parseGame = (gameData) => {
         Object.keys(game.odds).forEach(oddId => {
             const odd = game.odds[oddId]
             newGame.odds[oddId] = {
+                id: oddId,
                 name: odd.name,
                 value: odd.value,
                 selected: false
