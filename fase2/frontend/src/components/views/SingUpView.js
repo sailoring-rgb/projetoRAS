@@ -17,11 +17,12 @@ export const SignUpView = () => {
     email: '',
     password: '',
     confPassword: '',
+    birthday: '',
     NIF: '',
     NIC: '',
   })
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const isMissing = Object.values(userData).reduce((prev, curr) => (prev + curr).trim())
     if (isMissing === '') {
       setError("Preencha todos os campos")
@@ -32,12 +33,13 @@ export const SignUpView = () => {
       return
     }
 
-    const res = signup(userData)
-    if(res) {
-      setError(res)
+    const res = await signup({ ...userData, birthday: (new Date(userData.birthday)).getTime() })
+    console.log(res)
+    if(!res.status) {
+      setError(res.msg)
       return
     }
-    console.log(res)
+    nav('/signin')
   }
 
   return (
@@ -81,7 +83,7 @@ export const SignUpView = () => {
           onChange={(e) => [setUserData({ ...userData, confPassword: e.target.value}), setError("")]}
           />
         <SignInInput
-          type="text"
+          type="date"
           placeholder="Insira a sua data de nascimento"
           value={userData.birthday}
           onChange={(e) => [setUserData({ ...userData, birthday: e.target.value}), setError("")]}

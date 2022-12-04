@@ -46,9 +46,15 @@ class User extends Model {}
 User.init({
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    username: DataTypes.STRING,
+    username: { 
+        type: DataTypes.STRING,
+        unique: true
+    },
     password: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: { 
+        type: DataTypes.STRING,
+        unique: true
+    },
     NIC: DataTypes.STRING,
     NIF: DataTypes.STRING,
     birthday: DataTypes.DATE,

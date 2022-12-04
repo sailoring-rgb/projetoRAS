@@ -57,8 +57,9 @@ function GamesListView({game}) {
   }, [game, fetchGamesList])
 
   const updateGamesList = newGamesList => {
+    const currGame = game
     const currGamesList = { ...gamesList }
-    currGamesList[game] = newGamesList
+    currGamesList[currGame] = newGamesList
     setGamesList(currGamesList)
   }
 

@@ -51,7 +51,7 @@ exports.login = async (req, res) => {
 }
 
 exports.register = async (req, res) => {
-    const userData = req.body;
+    const { userData } = req.body;
     console.log(userData)
 
     if(userData.password.trim() !== userData.confPassword.trim())
@@ -67,7 +67,7 @@ exports.register = async (req, res) => {
         password: bcrypt.hashSync(userData.password, 10),
         birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
     }
-    const newUser = await User.create(newUserData);
+    await User.create(newUserData);
 
     return res
         .status(200)
