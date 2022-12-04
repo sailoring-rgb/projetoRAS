@@ -6,6 +6,15 @@ import NotificationsModalView from "./NotificationsModalView";
 import FunctionsView from "./FunctionsView";
 import BetsHistoryView from "./BetsHistoryView";
 import TransactionsHistoryView from "./TransactionsHistoryView";
+import BetStateView from "./BetStateView";
+import ManageNotificationsView from "./ManageNotificationsView";
+import CreatePromotionsView from "./CreatePromotionsView";
+import CreateGameView from "./CreateGameView";
+import RemoveGameView from "./RemoveGameView";
+import ChangeOddView from "./ChangeOddView";
+import InsertOddView from "./InsertOddView";
+import AdminFunctionsView from "./AdminFunctionsView";
+import EspFunctionsView from "./EspFunctionsView";
 import { useUserAuth } from "../../hooks/useAuth";
 import { useStateValue } from "../../state";
 import { validateToken } from "../../utils/authApi";
@@ -47,6 +56,24 @@ export const App = ({ type, game }) => {
                 <FunctionsView />
             ) : type === "bets" ? (
                 <BetsHistoryView />
+            )/* : type === "betState" ? (
+                <BetStateView />
+            ) : type === "manageNotifications" ? (
+                <ManageNotificationsView />
+            ) : type === "createPromotions" ? (
+                <CreatePromotionsView />
+            ) : type === "addGame" ? (
+                <CreateGameView />
+            ) : type === "removeGame" ? (
+                <RemoveGameView />
+            ) : type === "changeOdd" ? (
+                <ChangeOddView />
+            ) : type === "insert" ? (
+                <InsertOddView />
+            )*/ : type === "adminFunctions" ? (
+                <AdminFunctionsView />
+            ) : type === "espFunctions" ? (
+                <EspFunctionsView />
             ) : (
                 <TransactionsHistoryView />
             )}

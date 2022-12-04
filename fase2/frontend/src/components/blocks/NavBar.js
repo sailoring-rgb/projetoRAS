@@ -1,6 +1,8 @@
 import "../../css/blocks/NavBar.scss";
 import { Link } from "react-router-dom";
 import userButton from "../../imgs/user_button.png";
+import adminButton from "../../imgs/adminIcon.png";
+import espButton from "../../imgs/especialistaIcon.png";
 import { useStateValue } from "../../state";
 import { useEffect } from "react";
 
@@ -29,6 +31,16 @@ export const NavBar = () => {
                 </li>
                 <li className={isSelected("/motogp") ? "selected" : ""}>
                     <Link to={`/motogp`}>MotoGP</Link>
+                </li>
+                <li className={isSelected("/adminFunctions") ? "selected" : ""}>
+                    <Link to={`/adminFunctions`}>
+                        <img src={adminButton} />{" "}
+                    </Link>
+                </li>
+                <li className={isSelected("/espFunctions") ? "selected" : ""}>
+                    <Link to={`/espFunctions`}>
+                        <img src={espButton} />{" "}
+                    </Link>
                 </li>
                 <li className={isSelected("/functions") ? "selected" : ""}>
                     <Link to={`/functions`}>

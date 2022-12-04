@@ -12,8 +12,17 @@ import { App } from "./components/views/App";
 import { SignInView } from "./components/views/SingInView";
 import { SignUpView } from "./components/views/SingUpView";
 import { AuthProvider } from "./utils/auth";
+import { BetStateView }  from "./components/views/BetStateView";
+import { ManageNotificationsView }  from "./components/views/ManageNotificationsView";
 import { CreatePromotionsView } from "./components/views/CreatePromotionsView";
 import { CreateGameView } from "./components/views/CreateGameView";
+import { RemoveGameView } from "./components/views/RemoveGameView";
+import { ChangeOddView } from "./components/views/ChangeOddView";
+import { InsertOddView } from "./components/views/InsertOddView";
+import { AdminFunctionsView } from "./components/views/AdminFunctionsView";
+import { EspFunctionsView } from "./components/views/EspFunctionsView";
+
+
 
 const router = createBrowserRouter([
     {
@@ -73,13 +82,58 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <SignUpView />,
     },
-    {
+    /*{
         path: "/createGame",
         element: <CreateGameView />,
     },
     {
         path: "/createPromotions",
         element: <CreatePromotionsView />,
+    },*/
+    {
+        path: "/adminFunctions",
+        element: <App type={"adminFunctions"} game={""} />,
+        //element: <AdminFunctionsView />
+    },
+    {
+        path: "/espFunctions",
+        element: <App type={"espFunctions"} game={""} />,
+        //element: <EspFunctionsView />
+    },
+    {
+        path: "/adminFunctions/betState",
+        //element: <App type={"betState"} game={""} />,
+        element : <BetStateView />,
+    },
+    {
+        path: "/adminFunctions/manageNotifications",
+        //element: <App type={"manageNotifications"} game={""} />,
+        element : <ManageNotificationsView />,
+    },
+    {
+        path: "/adminFunctions/createPromotions",
+        //element: <App type={"createPromotions"} game={""} />,
+        element: <CreatePromotionsView />,
+    },
+    {
+        path: "/espFunctions/addGame",
+        //element: <App type={"addGame"} game={""} />,
+        element: <CreateGameView />,
+    },
+    {
+        path: "/espFunctions/removeGame",
+        //element: <App type={"removeGame"} game={""} />,
+        element: <RemoveGameView />,
+    },
+    {
+        path: "/espFunctions/changeOdd",
+        //element: <App type={"changeOdd"} game={""} />,
+        element: <ChangeOddView />,
+    },
+    {
+        path: "/espFunctions/insertOdd",
+        //element: <App type={"insertOdd"} game={""} />,
+        element: <InsertOddView />,
     },
 ]);
 
