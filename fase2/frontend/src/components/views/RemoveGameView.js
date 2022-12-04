@@ -4,6 +4,7 @@ import '../../css/views/RemoveGameView.scss'
 export const RemoveGameView = () => {
     const [ sport, setSport ] = useState('')
     const [ gameID, setGameID ] = useState('')
+    const [error, setError] = useState("");
     
     return (
         <div className='remove-game-container'> 
