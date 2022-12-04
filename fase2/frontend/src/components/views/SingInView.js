@@ -23,7 +23,7 @@ export const SignInView = () => {
     const res = await signin({ email, password })
     
     if(!res.status) {
-      setError(res.message)
+      setError(res.msg)
       return
     }
 

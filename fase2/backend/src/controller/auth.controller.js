@@ -42,13 +42,14 @@ exports.login = async (req, res) => {
         }
     })
 
-    if(bcrypt.compareSync(password, user.dataValues.password)) {
+    if(user && bcrypt.compareSync(password, user.dataValues.password)) {
         const userData = { ...user.dataValues }
         delete userData.password
 
         return res
             .status(200)
             .json({
+                status: true,
                 token: jsonwebtoken.sign({
                     ...userData,
                     lastLogin: Date.now()
@@ -56,9 +57,13 @@ exports.login = async (req, res) => {
                 user: userData,
             })
     }
+
     return res
-        .status(401)
-        .json({ message: "The username and password your provided are invalid" })
+        .status(200)
+        .json({
+            status: false,
+            message: "The username and password your provided are invalid"
+        })
 }
 
 exports.register = async (req, res) => {

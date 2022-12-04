@@ -9,10 +9,16 @@ export const AuthProvider = ({ children }) => {
     const signin = async creds => {
         try {
             const data = await login(creds)
-            const userData = data.user
-            localStorage.setItem("user_token", data.token)
-            setUser(userData)
-            return { status: true, userData }
+            if(data.status) {
+                const userData = data.user
+                localStorage.setItem("user_token", data.token)
+                setUser(userData)
+                return { status: true, userData }
+            } else 
+                return {
+                    status: data.status,
+                    msg: data.message
+                }
         } catch(err) {
             return { status: false, msg: err }
         }
