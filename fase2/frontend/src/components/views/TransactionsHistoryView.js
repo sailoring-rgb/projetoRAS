@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TransactionsHistoryModal } from "../blocks/TransactionsHistoryModal.js";
 
 function TransactionsHistoryView({ closeModal }) {
+
     const [displayTransactionsHistoryModal, setDisplayTransactionsHistoryModal] =
         useState(false);
 
@@ -24,12 +25,15 @@ function TransactionsHistoryView({ closeModal }) {
     ];
 
     const transactions = JSON.stringify(trans);
-    const transactionsList = JSON.parse(transactions);
+    const transList = JSON.parse(transactions);
+
+    //const [ transactionsList, setTransactionsList] = useState([])
 
     return (
         <main className="container" onClick={closeModal}>
             <TransactionsHistoryModal
-                transactions={transactionsList}
+                transactionsList={transList}
+                //setTransactionsList={setTransactionsList}
                 closeModal={() => setDisplayTransactionsHistoryModal(false)}
             />
         </main>

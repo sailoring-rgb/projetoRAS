@@ -1,0 +1,26 @@
+@import "../general.scss";
+@import '../vars.scss';
+
+.create-game-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    height: 100vh;
+
+    button {
+        background-color: $orange;
+        border: 0;
+        border-radius: 5em;
+        padding: 1em;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: .2s;
+
+        &:hover {
+            background-color: $light-orange;
+            cursor: pointer;
+        }
+    }
+}
