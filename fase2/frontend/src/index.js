@@ -5,7 +5,6 @@ import {
     createBrowserRouter,
     RouterProvider,
     Navigate,
-    useNavigate,
 } from "react-router-dom";
 import { StateProvider } from "./state";
 import { initialState, globalStateReducer } from "./globalState";
@@ -13,6 +12,8 @@ import { App } from "./components/views/App";
 import { SignInView } from "./components/views/SingInView";
 import { SignUpView } from "./components/views/SingUpView";
 import { AuthProvider } from "./utils/auth";
+import { CreatePromotionsView } from "./components/views/CreatePromotionsView";
+import { CreateGameView } from "./components/views/CreateGameView";
 
 const router = createBrowserRouter([
     {
@@ -71,6 +72,14 @@ const router = createBrowserRouter([
     {
         path: "/signup",
         element: <SignUpView />,
+    },
+    {
+        path: "/createGame",
+        element: <CreateGameView />,
+    },
+    {
+        path: "/createPromotions",
+        element: <CreatePromotionsView />,
     },
 ]);
 
