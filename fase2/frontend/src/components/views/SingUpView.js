@@ -103,13 +103,7 @@ export const SignUpView = () => {
 
         <label className='label-error'> {error} </label>
 
-        <SignInButton Text="Registar" onClick={handleLogin} />
-        <label className='label-signup'>
-          Não tem conta?
-          <b className='strong'>
-            <Link to="/signup">&nbsp;Registe-se</Link>
-          </b>
-        </label>
+        <SignInButton text="Registar" onClick={handleLogin} />
       </div>
     </div>
   );

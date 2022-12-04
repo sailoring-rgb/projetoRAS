@@ -8,6 +8,7 @@
     flex-direction: column;
     gap: 10px;
     height: 100vh;
+    background-color: $light-green;
 
     .gl-content {
         gap: 15px;
@@ -17,7 +18,7 @@
         flex-direction: column;
         width: 100%;
         box-shadow: $box-shadow;
-        background-color: $light-grey;
+        background-color: $primary-green;
         max-width: 350px;
         padding: 20px;
         border-radius: 5px;
@@ -31,7 +32,7 @@
     
     .label-signup {
         font-size: 16px;
-        color: $primary-green;
+        color: black;
     }
     
     .label-error {
@@ -43,7 +44,7 @@
         cursor: pointer;
         a {
             text-decoration: none;
-            color: $orange;
+            color: orangered;
         }
     }
 }
