@@ -20,10 +20,8 @@ export const NotificationCard = ({ notification }) => {
 
     return (
         <div className="notification-card">
-            <div className="id-labels">
-                <label className="label">
-                    {parseTimestamp(notification.date)}h
-                </label>
+            <div className="id">
+                <p>{parseTimestamp(notification.date)}h</p>
             </div>
             <p> {notification.msg} </p>
         </div>
