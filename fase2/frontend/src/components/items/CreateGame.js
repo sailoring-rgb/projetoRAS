@@ -8,6 +8,7 @@ export const CreateGame = ({value, onChange, type, placeholder}) => {
             value={value}
             type={type}
             placeholder={placeholder}
+            onChange={onChange}
         />
     );
 }
