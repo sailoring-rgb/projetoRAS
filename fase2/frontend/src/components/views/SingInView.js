@@ -50,7 +50,7 @@ export const SignInView = () => {
           />
         <label className='label-error'> {error} </label>
 
-        <SignInButton Text="Entrar" onClick={handleLogin} />
+        <SignInButton text="Entrar" onClick={handleLogin} />
         <label className='label-signup'>
           Não tem conta?
           <b className='strong'>
