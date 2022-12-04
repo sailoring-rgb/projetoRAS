@@ -5,8 +5,9 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 10px;
-    height: 100vh;
+    gap: 8px;
+    height: 90vh;
+    width: auto;
 
     button {
         background-color: $orange;
