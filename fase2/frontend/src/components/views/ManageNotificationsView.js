@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 
 function ManageNotificationsView ({}) {
     const [ gameID, setGameId ] = useState('')
-    const [error, setError] = useState("");
+    const [ error, setError ] = useState("");
 
+    return <h1>Gerir notificações (coming soon)</h1>
 }
 
 export default ManageNotificationsView;

@@ -1,12 +1,8 @@
-import { useState } from "react";
-import { TransactionsHistoryModal } from "../blocks/TransactionsHistoryModal.js";
+import "../../css/blocks/TransactionsHistoryModal.scss";
+import { TransactionCard } from "../items/TransactionCard.js";
 
-function TransactionsHistoryView({ closeModal }) {
-
-    const [displayTransactionsHistoryModal, setDisplayTransactionsHistoryModal] =
-        useState(false);
-
-    const trans = [
+export const TransactionsHistoryView = () => {
+    const transactionsList = [
         {
             transactionType: "deposit",
             value: "20",
@@ -22,21 +18,23 @@ function TransactionsHistoryView({ closeModal }) {
             value: "100",
             date: "2022-10-09T14:15:00.000Z",
         },
-    ];
-
-    const transactions = JSON.stringify(trans);
-    const transList = JSON.parse(transactions);
-
-    //const [ transactionsList, setTransactionsList] = useState([])
+    ]
 
     return (
-        <main className="container" onClick={closeModal}>
-            <TransactionsHistoryModal
-                transactionsList={transList}
-                //setTransactionsList={setTransactionsList}
-                closeModal={() => setDisplayTransactionsHistoryModal(false)}
-            />
-        </main>
-    );
+        <div className="transactions-history-container">
+            <h2>Histórico de Transações</h2>
+            <div className="transactions-modal">
+                {transactionsList && Object.values(transactionsList).length > 0 ? (
+                    Object.values(transactionsList).map((transaction, i) => (
+                        <TransactionCard key={i} transaction={transaction} />
+                    ))
+                ) : (
+                    <dic className="no-transactions-label">
+                        <hr className="solid"></hr>
+                        <p>Sem Transações</p>
+                    </dic>
+                )}
+            </div>
+        </div>
+    )
 }
-export default TransactionsHistoryView;

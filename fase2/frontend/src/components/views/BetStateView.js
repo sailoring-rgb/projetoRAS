@@ -1,45 +1,41 @@
 import React, { useState } from 'react';
 import '../../css/views/BetStateView.scss'
 
-function BetStateView ({}) {
+export const BetStateView = () => {
     const [ gameID, setGameID] = useState('')
     const [ betState, setBetState ] = useState('')
-    const [error, setError] = useState("");
+    const [ error, setError ] = useState("")
     
     return (
         <div className='bet-state-container'> 
-            <form action="action_page.php">
+            <form>
                 <div class="row">
                     <div class="col-25">
                         <label for="GameID">Game ID:</label>
                     </div>
-                    <div>
-                        <input
+                    <input
                         value={gameID}
                         type="text"
                         placeholder="Game ID"
-                        onChange={(e) => [setGameID(e.target.value), setError("")]}
-                        />
-                    </div>
+                        onChange={(e) => [ setGameID(e.target.value), setError("") ]}
+                    />
                 </div>
 
                 <div class="row">
                     <div class="col-25">
                         <label for="betState">Estado da aposta:</label>
                     </div>
-                    <div>
-                        <input
+                    <input
                         value={betState}
                         type="text"
                         placeholder="Estado da aposta"
-                        onChange={(e) => [setBetState(e.target.value), setError("")]}
-                        />
-                    </div>
+                        onChange={(e) => [ setBetState(e.target.value), setError("") ]}
+                    />
                 </div>
+
+                { error.trim() !== '' && <label className='error-label'>{error}</label>}
+                <button>Alterar</button>
             </form>
-            <button>Alterar</button>
         </div>
     )
 }
-
-export default BetStateView;

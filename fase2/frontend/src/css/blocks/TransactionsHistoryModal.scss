@@ -1,32 +1,24 @@
 @import '../vars.scss';
 
-.transactions-history-modal-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-
-    .transactions-history-modal-main{
-
-        h2 {
-            margin-top: 7;
-            margin-left: 5;
-            text-align: center;
-            font-size: 3.0rem;
+.transactions-history-container {
+    h2 {
+        margin-top: 7;
+        margin-left: 5;
+        text-align: center;
+        font-size: 3.0rem;
+    }
+    
+    .transactions-modal{
+        &.selected {
+            background-color: $light-yellow;
         }
-        .transactions-modal{
-            
-            &.selected {
-                background-color: $light-yellow;
-            }
 
-            .no-transactions-label {
-            
-                p{
-                    font-size: 1.2rem;
-                    text-align: center;
-                    margin-top: 1em;
-                    color: #758994;
-                }
+        .no-transactions-label {
+            p{
+                font-size: 1.2rem;
+                text-align: center;
+                margin-top: 1em;
+                color: #758994;
             }
         }
     }

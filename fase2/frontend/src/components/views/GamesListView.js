@@ -5,13 +5,9 @@ import { PaymentModal } from '../blocks/PaymentModal.js'
 import { BetsList } from '../blocks/BetsList.js'
 import { GamesList } from '../blocks/GamesList.js'
 import { useUserAuth } from '../../hooks/useAuth'
-// import { useStateValue } from '../../state';
 import { useNavigate } from "react-router-dom";
 
 function GamesListView({game}) {
-  // const { state, dispatch } = useStateValue();
-  // const { betsList } = state;
-  // const { signout } = useUserAuth()
   const { signout } = useUserAuth()
   const nav = useNavigate()
   const [ betsList, setBetsList ] = useState([])

@@ -1,16 +1,26 @@
-import { useState } from "react";
-import { AdminFunctions } from "../blocks/AdminFunctions.js";
+import "../../css/blocks/Functions.scss";
+import { Link } from "react-router-dom";
 
-function AdminFunctionsView({ closeModal }) {
-    const [displayFunctions, setDisplayFunctions] =
-        useState(false);
+export const AdminFunctionsView = () => {
+    const isSelected = (path) => path === window.location.pathname;
 
     return (
-        <main className="container" onClick={closeModal}>
-            <AdminFunctions
-                closeModal={() => setDisplayFunctions(false)}
-            />
-        </main>
-    );
+        <ul>
+            <Link to={`/adminFunctions/betState`}>
+                <button className={isSelected("/betState") ? "selected" : ""}>
+                    Alterar estado da aposta
+                </button>
+            </Link>
+            <Link to={`/adminFunctions/manageNotifications`}>
+                <button className={isSelected("/manageNotifications") ? "selected" : ""}>
+                    Gerir Notificações
+                </button>
+            </Link>
+            <Link to={`/adminFunctions/createPromotions`}>
+                <button className={isSelected("/createPromotions") ? "selected" : ""}>
+                    Criar Promoções
+                </button>
+            </Link>
+        </ul>
+    )
 }
-export default AdminFunctionsView;

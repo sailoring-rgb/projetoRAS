@@ -1,44 +1,41 @@
 import React, { useState } from 'react';
 import '../../css/views/RemoveGameView.scss'
 
-function RemoveGameView ({}) {
+export const RemoveGameView = () => {
     const [ sport, setSport ] = useState('')
     const [ gameID, setGameID ] = useState('')
     const [error, setError] = useState("");
     
     return (
         <div className='remove-game-container'>             
-            <form action="action_page.php">
+            <form>
                 <div class="row">
                     <div class="col-25">
                         <label for="sport">Desporto:</label>
                     </div>
-                    <div>
-                        <input
+                    <input
                         value={sport}
                         type="text"
                         placeholder="Desporto"
                         onChange={(e) => [setSport(e.target.value), setError("")]}
                         />
-                    </div>                        
                 </div>
+
                 <div class="row">
                     <div class="col-25">
                         <label for="gameID">Game ID:</label>
                     </div>
-                    <div>
-                        <input
+                    <input
                         value={gameID}
                         type="text"
                         placeholder="Game ID"
                         onChange={(e) => [setGameID(e.target.value), setError("")]}
                         />
-                    </div>                        
                 </div>
+
+                { error.trim() !== '' && <label className='error-label'>{error}</label>}
+                <button>Remover</button>
             </form>
-            <button>Remover</button>
         </div>
     )
 }
-
-export default RemoveGameView;

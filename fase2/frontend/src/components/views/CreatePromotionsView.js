@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cardsIcon from "../../imgs/cards.png";
 import cardIcon from "../../imgs/card.png";
 import bonusIcon from "../../imgs/bonusIcon.png";

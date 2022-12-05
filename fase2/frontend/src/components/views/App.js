@@ -1,20 +1,19 @@
-// import '../../css/views/App.css';
 import GamesListView from "./GamesListView";
 import { NavBar } from "../blocks/NavBar";
 import "../../css/index.scss";
-import NotificationsModalView from "./NotificationsModalView";
-import FunctionsView from "./FunctionsView";
-import BetsHistoryView from "./BetsHistoryView";
-import TransactionsHistoryView from "./TransactionsHistoryView";
-import BetStateView from "./BetStateView";
+import { NotificationsView } from "./NotificationsView";
+import { FunctionsView } from "./FunctionsView";
+import { BetsHistoryView } from "./BetsHistoryView";
+import { TransactionsHistoryView } from "./TransactionsHistoryView";
+import { BetStateView } from "./BetStateView";
 import ManageNotificationsView from "./ManageNotificationsView";
 import CreatePromotionsView from "./CreatePromotionsView";
-import CreateGameView from "./CreateGameView";
-import RemoveGameView from "./RemoveGameView";
-import ChangeOddView from "./ChangeOddView";
-import InsertOddView from "./InsertOddView";
-import AdminFunctionsView from "./AdminFunctionsView";
-import EspFunctionsView from "./EspFunctionsView";
+import { CreateGameView } from "./CreateGameView";
+import { RemoveGameView } from "./RemoveGameView";
+import { ChangeOddView } from "./ChangeOddView";
+import { InsertOddView } from "./InsertOddView";
+import { AdminFunctionsView } from "./AdminFunctionsView";
+import { EspFunctionsView } from "./EspFunctionsView";
 import { useUserAuth } from "../../hooks/useAuth";
 import { useStateValue } from "../../state";
 import { validateToken } from "../../utils/authApi";
@@ -23,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 export const App = ({ type, game }) => {
     const { signout } = useUserAuth()
-    const { _, dispatch } = useStateValue()
+    const { dispatch } = useStateValue()
     const nav = useNavigate()
 
     const validateTokenRequest = async () => {
@@ -51,7 +50,7 @@ export const App = ({ type, game }) => {
                     <GamesListView game={game} />
                 </div>
             ) : type === "notifications" ? (
-                <NotificationsModalView />
+                <NotificationsView />
             ) : type === "functions" ? (
                 <FunctionsView />
             ) : type === "bets" ? (
