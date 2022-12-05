@@ -2,27 +2,25 @@ import { Link } from "react-router-dom";
 import "../../css/blocks/Functions.scss";
 
 export const FunctionsView = () => {
-    const isSelected = (path) => path === window.location.pathname;
-
     return (
         <ul>
-            <Link to={`/functions/profile`}>
-                <button className={isSelected("/profile") ? "selected" : ""}>
+            <Link to={`/user/profile`}>
+                <button>
                     <p>Perfil</p>
                 </button>
             </Link>
-            <Link to={`/functions/notifications`}>
-                <button className={isSelected("/notificações") ? "selected" : ""}>
+            <Link to={`/user/notifications`}>
+                <button>
                     <p>Notificações</p>
                 </button>
             </Link>
-            <Link to={`/functions/mybets`}>
-                <button className={isSelected("/mybets") ? "selected" : ""}>
+            <Link to={`/user/mybets`}>
+                <button>
                     <p>Histórico de apostas</p>
                 </button>
             </Link>
-            <Link to={`/functions/mytransactions`}>
-                <button className={isSelected("/mytransactions") ? "selected" : ""}>
+            <Link to={`/user/mytransactions`}>
+                <button>
                     <p>Histórico de transações</p>
                 </button>
             </Link>

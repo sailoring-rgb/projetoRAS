@@ -4,7 +4,6 @@ import userButton from "../../imgs/user_button.png";
 import adminButton from "../../imgs/adminIcon.png";
 import espButton from "../../imgs/especialistaIcon.png";
 import { useStateValue } from "../../state";
-import { useEffect } from "react";
 import { useUserAuth } from "../../hooks/useAuth";
 
 export const NavBar = () => {
@@ -55,18 +54,18 @@ export const NavBar = () => {
                     </li>
                 </Link>
 
-                <Link to={`/adminFunctions`}>
-                    <li className={isSelected("/adminFunctions") ? "selected" : ""}>
+                <Link to={`/admin`}>
+                    <li className={isSelected("/admin") ? "selected" : ""}>
                         <img src={adminButton} />{" "}
                     </li>
                 </Link>
-                <Link to={`/espFunctions`}>
-                    <li className={isSelected("/espFunctions") ? "selected" : ""}>
+                <Link to={`/specialist`}>
+                    <li className={isSelected("/specialist") ? "selected" : ""}>
                         <img src={espButton} />{" "}
                     </li>
                 </Link>
-                <Link to={`/functions`}>
-                    <li className={isSelected("/functions") ? "selected" : ""}>
+                <Link to={`/user`}>
+                    <li className={isSelected("/user") ? "selected" : ""}>
                         <img src={userButton} />{" "}
                     </li>
                 </Link>

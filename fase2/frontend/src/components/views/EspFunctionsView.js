@@ -2,27 +2,25 @@ import { Link } from "react-router-dom";
 import "../../css/blocks/Functions.scss";
 
 export const EspFunctionsView = () => {
-    const isSelected = (path) => path === window.location.pathname;
-
     return (
         <ul>
-            <Link to={`/espFunctions/addGAme`}>
-                <button className={isSelected("/addGame") ? "selected" : ""}>
+            <Link to={`/specialist/addGame`}>
+                <button>
                     <p>Adicionar evento desportivo</p>
                 </button>
             </Link>
-            <Link to={`/espFunctions/removeGame`}>
-                <button className={isSelected("/removeGAme") ? "selected" : ""}>
+            <Link to={`/specialist/removeGame`}>
+                <button>
                     <p>Remover evento desportivo</p>
                 </button>
             </Link>
-            <Link to={`/espFunctions/changeOdd`}>
-                <button className={isSelected("/changeOdd") ? "selected" : ""}>
+            <Link to={`/specialist/changeOdd`}>
+                <button>
                     <p>Alterar odd de evento desportivo</p>
                 </button>
             </Link>
-            <Link to={`/espFunctions/insert`}>
-                <button className={isSelected("/insertOdd") ? "selected" : ""}>
+            <Link to={`/specialist/insert`}>
+                <button>
                     <p>Inserir odd de evento desportivo</p>
                 </button>
             </Link>
