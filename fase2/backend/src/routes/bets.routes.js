@@ -15,4 +15,6 @@ betsRouter.get('/',[
     betsController.getBetsHistory
 ]) 
 
+
+
 exports.betsRouter = betsRouter

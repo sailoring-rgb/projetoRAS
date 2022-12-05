@@ -8,6 +8,7 @@ export class Bet {
         this.oddId = odd.id
         this.odd = odd.value
         this.total = 1.0
+        this.commenceTime = game.commenceTime
     }
 }
 
