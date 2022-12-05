@@ -18,9 +18,9 @@ export const TransactionCard = ({ transaction }) => {
 
     return (
         <div className="transaction-card">
-            <p>{parseTimestamp(transaction.date)}h</p>
+            <p>{parseTimestamp(transaction.createdAt)}h</p>
             <div className="transaction-value-info">
-                {transaction.transactionType === "deposit" ? (
+                {transaction.type === "ADD" ? (
                     <p>+ {transaction.value}€</p>
                 ) : (
                     <p>- {transaction.value}€</p>

@@ -47,7 +47,7 @@ class User extends Model {}
 User.init({
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    username: { 
+    username: {
         type: DataTypes.STRING,
         unique: true
     },
@@ -63,6 +63,15 @@ User.init({
 }, {
     sequelize: sequelizeConnection,
     modelName: 'user'
+});
+
+class Transaction extends Model {}
+Transaction.init({
+    type: DataTypes.STRING,
+    value: DataTypes.FLOAT
+}, {
+    sequelize: sequelizeConnection,
+    modelName: 'transactions'
 });
 
 class MbWayPayment extends Model {}
@@ -95,6 +104,9 @@ Bet.belongsTo(Odd)
 Game.hasMany(Odd)
 Odd.belongsTo(Game)
 
+User.hasMany(Transaction)
+Transaction.belongsTo(User)
+
 // MbWayPayment.hasOne(Bet)
 Bet.hasOne(MbWayPayment)
 
@@ -102,6 +114,7 @@ Bet.hasOne(MbWayPayment)
 Bet.hasOne(CardPayment)
 
 exports.User = User
+exports.Transaction = Transaction
 exports.Game = Game
 exports.Odd = Odd
 exports.Bet = Bet
