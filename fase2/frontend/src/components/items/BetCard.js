@@ -1,11 +1,39 @@
 import "../../css/items/BetCard.scss";
 
-export const BetCard = ({ bet, onCardClick, onRemoveBetClick }) => {
+export const BetCard = ({ bet, onCardClick, onRemoveBetClick, cancel }) => {
+    const parseTimestamp = (timestamp) => {
+        const date = new Date(timestamp);
+        const currDate = new Date();
+        const currDayString = `${currDate.getDate()}/${currDate.getMonth()}/${currDate.getFullYear()}`;
+        const dayString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+        const hourString = `${String(date.getHours()).padStart(
+            2,
+            "0"
+        )}:${String(date.getMinutes()).padStart(2, "0")}`;
+
+        return currDayString === dayString
+            ? `Hoje  ${hourString}`
+            : `${dayString}  ${hourString}`;
+    }
+
+    const cardClick = (bet) => {
+        if(onCardClick) onCardClick(bet)
+    }
+
     return (
-        <div className="bet-card" onClick={() => onCardClick(bet)}>
+        <div className="bet-card" onClick={() => cardClick(bet)}>
             <header>
-                <label> {bet.gameName} </label>
-                <button onClick={() => onRemoveBetClick(bet.id)}>X</button>
+                <div className="betcard-id">
+                    <label> {bet.gameName} </label>
+                    <label> {parseTimestamp(bet.commenceTime)} </label>
+                </div>
+
+            <button
+                className={cancel ? 'cancel-btn' : ''}
+                onClick={() => onRemoveBetClick(bet.id)}>
+                    { cancel ? 'Cancelar' : 'X' }
+            </button>
+                
             </header>
 
             <hr />

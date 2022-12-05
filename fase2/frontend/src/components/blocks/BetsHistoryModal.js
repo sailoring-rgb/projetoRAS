@@ -2,24 +2,24 @@ import React from "react";
 import { BetCard } from "../items/BetCard.js";
 import "../../css/blocks/BetsHistoryModal.scss";
 
-export const BetsHistoryModal = ({ bets, closeModal }) => {
+export const BetsHistoryModal = ({ bets }) => {
     return (
-        <div className="bets-history-modal-container" onClick={closeModal}>
-            <div
-                className="bets-history-modal-main"
-                onClick={(e) => e.stopPropagation()}
-            >
+        <div className="bets-history-modal-container">
+            <div className="bets-history-modal-main">
                 <h2>Histórico de Apostas</h2>
                 <div className="bets-modal">
-                    {bets && Object.values(bets).length > 0 ? (
-                        Object.values(bets).map((bet, i) => (
-                            <BetCard key={i} bet={bet} />
-                        ))
-                    ) : (
-                        <dic className="no-bets-label">
+                    {(bets && bets.length > 0)
+                    ? bets.map(bet => 
+                        <BetCard
+                            key={bet.id}
+                            bet={bet}
+                            cancel={true} />
+                    )
+                    : (
+                        <div className="no-bets-label">
                             <hr className="solid"></hr>
                             <p>Sem Apostas</p>
-                        </dic>
+                        </div>
                     )}
                 </div>
             </div>

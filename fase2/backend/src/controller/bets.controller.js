@@ -1,10 +1,9 @@
 const { Bet, MbWayPayment, CardPayment, Odd, Game } = require('../model/db/model.db')
 
-exports.getBetsHistory = async (req, res) => {
-    const userData = req.jwt
+const getBets = async userId => {
     const dbBets = await Bet.findAll({
         where: {
-            userId: userData.id
+            userId: userId
         },
         order: [    
             ['createdAt', 'DESC'],
@@ -21,19 +20,38 @@ exports.getBetsHistory = async (req, res) => {
 
         return bet
     }))
-    // for(let i = 0; i < dbBets.length; i++) {
-    //     const bet = dbBets[i].dataValues
-    //     bet.odd = await Odd.findOne({ where: { id: bet.oddId }})
-    //     bet.game = await Game.findOne({ where: { id: bet.gameId }})
 
-    //     bet.odd = bet.odd.dataValues
-    //     bet.game = bet.game.dataValues
+    return parsedBets
+}
 
+exports.getBetsHistory = async (req, res) => {
+    const userData = req.jwt
+    const betsHistory = await getBets(userData.id)
 
-    //     parsedBets.push(bet)
-    // }
+    return res.status(200).json(betsHistory)
+}
 
-    return res.status(200).json(parsedBets)
+exports.cancelBet = async (req, res) => {
+    const {
+        betId
+    } = req.body
+    const userData = req.jwt
+    
+    const result = await Bet.destroy({
+        where: {
+            userId: userData.id,
+            id: betId
+        }
+    })
+
+    console.log(result)
+
+    const betsHistory = await getBets(userData.id)
+    
+    return res.status(200).json({
+        status: true,
+        betsHistory
+    })
 }
 
 exports.placeBet = async (req, res) => {
