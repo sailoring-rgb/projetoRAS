@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CreateGame} from "../items/CreateGame"
 import '../../css/views/CreateGameView.scss'
 
-export const CreateGameView = () => {
+function CreateGameView ({}) {
     const [ gameID, setGameId ] = useState('')
     const [ homeTeam, setHomeTeam ] = useState('')
     const [ awayTeam, setAwayTeam ] = useState('')
@@ -87,3 +87,5 @@ export const CreateGameView = () => {
         </div>
     )
 }
+
+export default CreateGameView;

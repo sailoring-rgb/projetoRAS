@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/views/BetStateView.scss'
 
-export const BetStateView = () => {
+function BetStateView ({}) {
     const [ gameID, setGameID] = useState('')
     const [ betState, setBetState ] = useState('')
     const [error, setError] = useState("");
@@ -41,3 +41,5 @@ export const BetStateView = () => {
         </div>
     )
 }
+
+export default BetStateView;

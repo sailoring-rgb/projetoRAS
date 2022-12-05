@@ -102,38 +102,38 @@ const router = createBrowserRouter([
     },
     {
         path: "/adminFunctions/betState",
-        //element: <App type={"betState"} game={""} />,
-        element : <BetStateView />,
+        element: <App type={"betState"} game={""} />,
+        //element : <BetStateView />,
     },
     {
         path: "/adminFunctions/manageNotifications",
-        //element: <App type={"manageNotifications"} game={""} />,
-        element : <ManageNotificationsView />,
+        element: <App type={"manageNotifications"} game={""} />,
+        //element : <ManageNotificationsView />,
     },
     {
         path: "/adminFunctions/createPromotions",
-        //element: <App type={"createPromotions"} game={""} />,
-        element: <CreatePromotionsView />,
+        element: <App type={"createPromotions"} game={""} />,
+        //element: <CreatePromotionsView />,
     },
     {
         path: "/espFunctions/addGame",
-        //element: <App type={"addGame"} game={""} />,
-        element: <CreateGameView />,
+        element: <App type={"addGame"} game={""} />,
+        //element: <CreateGameView />,
     },
     {
         path: "/espFunctions/removeGame",
-        //element: <App type={"removeGame"} game={""} />,
-        element: <RemoveGameView />,
+        element: <App type={"removeGame"} game={""} />,
+        //element: <RemoveGameView />,
     },
     {
         path: "/espFunctions/changeOdd",
-        //element: <App type={"changeOdd"} game={""} />,
-        element: <ChangeOddView />,
+        element: <App type={"changeOdd"} game={""} />,
+        //element: <ChangeOddView />,
     },
     {
         path: "/espFunctions/insertOdd",
-        //element: <App type={"insertOdd"} game={""} />,
-        element: <InsertOddView />,
+        element: <App type={"insertOdd"} game={""} />,
+        //element: <InsertOddView />,
     },
 ]);
 

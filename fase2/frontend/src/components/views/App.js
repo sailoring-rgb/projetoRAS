@@ -56,7 +56,7 @@ export const App = ({ type, game }) => {
                 <FunctionsView />
             ) : type === "bets" ? (
                 <BetsHistoryView />
-            )/* : type === "betState" ? (
+            ) : type === "betState" ? (
                 <BetStateView />
             ) : type === "manageNotifications" ? (
                 <ManageNotificationsView />
@@ -70,7 +70,7 @@ export const App = ({ type, game }) => {
                 <ChangeOddView />
             ) : type === "insert" ? (
                 <InsertOddView />
-            )*/ : type === "adminFunctions" ? (
+            ) : type === "adminFunctions" ? (
                 <AdminFunctionsView />
             ) : type === "espFunctions" ? (
                 <EspFunctionsView />

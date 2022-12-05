@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/views/ChangeOddView.scss'
 
-export const ChangeOddView = () => {
+function ChangeOddView ({}) {
     const [ gameID, setGameId ] = useState('')
     const [ odd, setOdd ] = useState('')
     const [error, setError] = useState("");
@@ -41,3 +41,5 @@ export const ChangeOddView = () => {
         </div>
     )
 }
+
+export default ChangeOddView;

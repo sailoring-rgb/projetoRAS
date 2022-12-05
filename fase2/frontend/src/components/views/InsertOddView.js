@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/views/InsertOddView.scss'
 
-export const InsertOddView = () => {
+function InsertOddView ({}) {
     const [ gameID, setGameId ] = useState('')
     const [ odd, setOdd ] = useState('')
     const [error, setError] = useState("");
@@ -41,3 +41,5 @@ export const InsertOddView = () => {
         </div>
     )
 }
+
+export default InsertOddView;

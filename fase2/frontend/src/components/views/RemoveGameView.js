@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/views/RemoveGameView.scss'
 
-export const RemoveGameView = () => {
+function RemoveGameView ({}) {
     const [ sport, setSport ] = useState('')
     const [ gameID, setGameID ] = useState('')
     const [error, setError] = useState("");
@@ -40,3 +40,5 @@ export const RemoveGameView = () => {
         </div>
     )
 }
+
+export default RemoveGameView;

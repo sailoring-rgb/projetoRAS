@@ -4,7 +4,7 @@ import cardIcon from "../../imgs/card.png";
 import bonusIcon from "../../imgs/bonusIcon.png";
 import '../../css/views/CreatePromotionsView.scss'
 
-export const CreatePromotionsView = () => {
+function CreatePromotionsView ({}) {
     
     return(
         <div className='create-promotion-container'>
@@ -30,3 +30,4 @@ export const CreatePromotionsView = () => {
     )
 }
  
+export default CreatePromotionsView;
