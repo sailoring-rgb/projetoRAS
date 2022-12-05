@@ -16,8 +16,12 @@ export const BetCard = ({ bet, onCardClick, onRemoveBetClick, cancel }) => {
             : `${dayString}  ${hourString}`;
     }
 
+    const cardClick = (bet) => {
+        if(onCardClick) onCardClick(bet)
+    }
+
     return (
-        <div className="bet-card" onClick={() => onCardClick(bet)}>
+        <div className="bet-card" onClick={() => cardClick(bet)}>
             <header>
                 <div className="betcard-id">
                     <label> {bet.gameName} </label>

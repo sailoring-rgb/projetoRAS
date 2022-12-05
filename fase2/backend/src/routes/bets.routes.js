@@ -7,7 +7,7 @@ const authController = require('../controller/auth.controller')
 betsRouter.post('/',[
     authController.validateJWT,
     betsController.placeBet
-]) 
+])
 
 // Get bets history
 betsRouter.get('/',[
@@ -15,6 +15,10 @@ betsRouter.get('/',[
     betsController.getBetsHistory
 ]) 
 
-
+// Get bets history
+betsRouter.delete('/',[
+    authController.validateJWT,
+    betsController.cancelBet
+]) 
 
 exports.betsRouter = betsRouter

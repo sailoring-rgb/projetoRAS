@@ -1,7 +1,7 @@
 
 export class Bet {
-    constructor(game, odd) {
-        this.id = game.id + '_' + odd.name
+    constructor(id, game, odd) {
+        this.id = id
         this.gameId = game.id
         this.gameName = `${game.homeTeam} - ${game.awayTeam}`
         this.result = odd.name

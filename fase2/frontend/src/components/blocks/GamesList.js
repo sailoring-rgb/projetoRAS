@@ -26,7 +26,8 @@ export const GamesList = ({
         updatedGames[tmpGame.id] = tmpGame
 
         if(tmpGame.odds[oddId].selected) {
-            const newBet = new Bet(tmpGame, odd)
+            const betId = tmpGame.id + '_' + odd.name
+            const newBet = new Bet(betId, tmpGame, odd)
             newBets.push(newBet)
         } else
             newBets = newBets.filter(bet => bet.id !== oddId)

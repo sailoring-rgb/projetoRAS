@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
-import { getBetsHistory } from "../../utils/betsApis.js";
+import { cancelBet, getBetsHistory } from "../../utils/betsApis.js";
 import { BetCard } from "../items/BetCard.js";
 import '../../css/views/BetsHistoryView.scss'
 
 function BetsHistoryView() {
     const [ bets, setBets ] = useState([])
-    // const [displayBetsHistoryModal, setDisplayBetsHistoryModal] =
-    //     useState(false);
+
+    const cancelBetRequest = async (betId) => {
+        const response = await cancelBet(betId)
+        console.log(response)
+        if(response.status)
+            setBets(response.betsHistory)
+    }
 
     const fetchBetsHistory = async () => {
         const betsHistory = await getBetsHistory()
@@ -26,7 +31,8 @@ function BetsHistoryView() {
                     <BetCard
                         key={bet.id}
                         bet={bet}
-                        cancel={true} />
+                        cancel={true}
+                        onRemoveBetClick={cancelBetRequest} />
                 )
                 : (
                     <div className="no-bets-label">
