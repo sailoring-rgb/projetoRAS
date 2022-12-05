@@ -1,6 +1,4 @@
-import { useState } from "react"
 import '../../css/blocks/NotificationsList.scss'
-import { Notification } from '../../models/Notification.js';
 
 export const NotificationsList = ({
     notification,

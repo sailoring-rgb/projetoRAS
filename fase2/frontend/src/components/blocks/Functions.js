@@ -1,8 +1,5 @@
 import "../../css/blocks/Functions.scss";
 import { Link } from "react-router-dom";
-import notificationIcon from "../../imgs/notificationRead.png";
-import NotificationsModalView from "../views/NotificationsModalView";
-import userButton from "../../imgs/user_button.png";
 
 export const Functions = ({ closeModal }) => {
     const isSelected = (path) => path === window.location.pathname;
