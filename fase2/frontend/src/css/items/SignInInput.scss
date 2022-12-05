@@ -2,11 +2,11 @@
 
 .signin-input {
     outline: none;
-    padding: 16px 20px;
-    width: 100%;
+    padding: 1em 1.25em;
+    width: calc(100% - 2.5em);
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1em;
 
-    background-color: #f3f4f3;
+    background-color: #ebebeb;
     border: none;
 }

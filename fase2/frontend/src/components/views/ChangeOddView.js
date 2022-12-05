@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import '../../css/views/ChangeOddView.scss'
+import '../../css/views/FormView.scss'
+import { Input } from '../items/Input';
+
 
 export const ChangeOddView = () => {
     const [ gameID, setGameId ] = useState('')
@@ -9,11 +11,10 @@ export const ChangeOddView = () => {
     return (
         <div className='change-odd-container'> 
             <form>
+                <h1>Alterar odd de um evento desportivo</h1>
                 <div class="row">
-                    <div class="col-25">
-                        <label for="GameID">Game ID:</label>
-                    </div>
-                    <input
+                    <label for="GameID">Game ID:</label>
+                    <Input
                         value={gameID}
                         type="text"
                         placeholder="Game ID"
@@ -22,10 +23,8 @@ export const ChangeOddView = () => {
                 </div>
 
                 <div class="row">
-                    <div class="col-25">
-                        <label for="odd">Odd do jogo:</label>
-                    </div>
-                    <input
+                    <label for="odd">Odd do jogo:</label>
+                    <Input
                         value={odd}
                         type="text"
                         placeholder="Odd"

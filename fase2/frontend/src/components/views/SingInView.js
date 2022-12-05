@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SignInInput } from "../items/SignInInput"
+import { Input } from "../items/Input"
 import { SignInButton } from "../items/SignInButton";
-import { Link, useNavigate, useResolvedPath } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserAuth } from '../../hooks/useAuth'
 import '../../css/views/SignInView.scss'
 import { useStateValue } from '../../state';
@@ -21,29 +21,28 @@ export const SignInView = () => {
       return
     }
     const res = await signin({ email, password })
-    
+    console.log(res)
     if(!res.status) {
       setError(res.msg)
       return
     }
 
     dispatch({ type: 'setAuthUser', value: res.userData })
-
     nav('/todos')
   }
 
   return (
     <div className='signin-container'> 
-      <label className="label"> RASBET </label>
       <div className='gl-content'>
-        <SignInInput
-          type="text"
+        <label className="label"> RASBET </label>
+        <Input
+          type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => [setEmail(e.target.value), setError("")]}
           />
-        <SignInInput
-          type="text"
+        <Input
+          type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => [setPassword(e.target.value), setError("")]}

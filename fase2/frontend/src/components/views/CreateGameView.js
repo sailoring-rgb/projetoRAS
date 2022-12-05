@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { CreateGame} from "../items/CreateGame"
-import '../../css/views/CreateGameView.scss'
+import '../../css/views/FormView.scss'
+import { Input } from '../items/Input';
 
 export const CreateGameView = () => {
     const [ gameID, setGameId ] = useState('')
@@ -13,23 +13,20 @@ export const CreateGameView = () => {
     return (
         <div className='create-game-container'> 
             <form>
+                <h1>Adicionar evento desportivo</h1>
                 <div class="row">
-                    <div class="col-25">
-                        <label for="GameID">Game ID:</label>
-                    </div>
-                        <CreateGame
-                            value={gameID}
-                            type="text"
-                            placeholder="Game ID"
-                            onChange={(e) => [setGameId(e.target.value), setError("")]}
-                        />
+                    <label for="GameID">Game ID:</label>
+                    <Input
+                        value={gameID}
+                        type="text"
+                        placeholder="Game ID"
+                        onChange={(e) => [setGameId(e.target.value), setError("")]}
+                    />
                 </div>
 
                 <div class="row">
-                    <div class="col-25">
-                        <label for="homeTeam">Home Team:</label>
-                    </div>
-                    <CreateGame
+                    <label for="homeTeam">Home Team:</label>
+                    <Input
                         value={homeTeam}
                         type="text"
                         placeholder="Equipa que joga em Casa"
@@ -38,10 +35,8 @@ export const CreateGameView = () => {
                 </div>
 
                 <div class="row">
-                    <div class="col-25">
-                        <label for="awayTeam">Away Team:</label>
-                    </div>
-                    <CreateGame
+                    <label for="awayTeam">Away Team:</label>
+                    <Input
                         value={awayTeam}
                         type="text"
                         placeholder="Equipa que joga fora de casa"
@@ -50,10 +45,8 @@ export const CreateGameView = () => {
                 </div>
 
                 <div class="row">
-                    <div class="col-25">
-                        <label for="comenceTime">Início do jogo:</label>
-                    </div>
-                    <CreateGame
+                    <label for="comenceTime">Início do jogo:</label>
+                    <Input
                         value={comenceTime}
                         type="text"
                         placeholder="Início do jogo"
@@ -62,10 +55,8 @@ export const CreateGameView = () => {
                 </div>
 
                 <div class="row">
-                    <div class="col-25">
-                        <label for="odd">Odd do jogo:</label>
-                    </div>
-                    <CreateGame
+                    <label for="odd">Odd do jogo:</label>
+                    <Input
                         value={odd}
                         type="text"
                         placeholder="Odd"

@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../css/items/SignInInput.scss'
 
-export const SignInInput = ({type, placeholder, value, onChange}) => {
+export const Input = ({type, placeholder, value, onChange}) => {
   return ( 
         <input
             className='signin-input'

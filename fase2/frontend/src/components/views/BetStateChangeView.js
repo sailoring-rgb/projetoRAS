@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import '../../css/views/BetStateView.scss'
+// import '../../css/views/BetStateView.scss'
+import '../../css/views/FormView.scss'
+import { Input } from '../items/Input';
 
-export const BetStateView = () => {
+export const BetStateChangeView = () => {
     const [ gameID, setGameID] = useState('')
     const [ betState, setBetState ] = useState('')
     const [ error, setError ] = useState("")
@@ -9,11 +11,12 @@ export const BetStateView = () => {
     return (
         <div className='bet-state-container'> 
             <form>
+                <h1>Alterar estado da aposta</h1>
                 <div class="row">
                     <div class="col-25">
                         <label for="GameID">Game ID:</label>
                     </div>
-                    <input
+                    <Input
                         value={gameID}
                         type="text"
                         placeholder="Game ID"
@@ -25,7 +28,7 @@ export const BetStateView = () => {
                     <div class="col-25">
                         <label for="betState">Estado da aposta:</label>
                     </div>
-                    <input
+                    <Input
                         value={betState}
                         type="text"
                         placeholder="Estado da aposta"

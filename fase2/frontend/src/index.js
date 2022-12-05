@@ -12,7 +12,7 @@ import { App } from "./components/views/App";
 import { SignInView } from "./components/views/SingInView";
 import { SignUpView } from "./components/views/SingUpView";
 import { AuthProvider } from "./utils/auth";
-import { BetStateView }  from "./components/views/BetStateView";
+import { BetStateView }  from "./components/views/BetStateChangeView";
 import { ManageNotificationsView }  from "./components/views/ManageNotificationsView";
 import { CreatePromotionsView } from "./components/views/CreatePromotionsView";
 import { CreateGameView } from "./components/views/CreateGameView";

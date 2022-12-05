@@ -5,7 +5,7 @@ import { NotificationsView } from "./NotificationsView";
 import { FunctionsView } from "./FunctionsView";
 import { BetsHistoryView } from "./BetsHistoryView";
 import { TransactionsHistoryView } from "./TransactionsHistoryView";
-import { BetStateView } from "./BetStateView";
+import { BetStateChangeView } from "./BetStateChangeView";
 import ManageNotificationsView from "./ManageNotificationsView";
 import CreatePromotionsView from "./CreatePromotionsView";
 import { CreateGameView } from "./CreateGameView";
@@ -56,7 +56,7 @@ export const App = ({ type, game }) => {
             ) : type === "bets" ? (
                 <BetsHistoryView />
             ) : type === "betState" ? (
-                <BetStateView />
+                <BetStateChangeView />
             ) : type === "manageNotifications" ? (
                 <ManageNotificationsView />
             ) : type === "createPromotions" ? (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import '../../css/views/RemoveGameView.scss'
+import '../../css/views/FormView.scss'
+import { Input } from '../items/Input';
 
 export const RemoveGameView = () => {
     const [ sport, setSport ] = useState('')
@@ -9,23 +10,11 @@ export const RemoveGameView = () => {
     return (
         <div className='remove-game-container'>             
             <form>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="sport">Desporto:</label>
-                    </div>
-                    <input
-                        value={sport}
-                        type="text"
-                        placeholder="Desporto"
-                        onChange={(e) => [setSport(e.target.value), setError("")]}
-                        />
-                </div>
+                <h1>Remover evento desportivo</h1>
 
                 <div class="row">
-                    <div class="col-25">
-                        <label for="gameID">Game ID:</label>
-                    </div>
-                    <input
+                    <label for="gameID">Game ID:</label>
+                    <Input
                         value={gameID}
                         type="text"
                         placeholder="Game ID"

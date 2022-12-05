@@ -9,32 +9,35 @@ const updateDbGames = async (gameType) => {
       // tenis: ,
       // motoGP: ,
     }
-    const gamesData = await gameFetchFunctions[gameType]()
+    try{
+        const gamesData = await gameFetchFunctions[gameType]()
 
-    Object.values(gamesData).forEach(async game => {
-        const newGame = (await Game.upsert({
-            id: game.id,
-            homeTeam: game.homeTeam,
-            awayTeam: game.awayTeam,
-            commenceTime: game.commenceTime,
-            oddsKey: game.oddsKey,
-            gameType: gameType.toUpperCase()
-        }))[0]
-
-        Object.keys(game.odds).map(async oddKey => {
-            const odd = game.odds[oddKey]
-            return await Odd.upsert({
-                id: oddKey,
-                name: odd.name,
-                value: odd.value,
-                gameId: newGame.dataValues.id
-            }, { include: [ Game ] })
+        Object.values(gamesData).forEach(async game => {
+            const newGame = (await Game.upsert({
+                id: game.id,
+                homeTeam: game.homeTeam,
+                awayTeam: game.awayTeam,
+                commenceTime: game.commenceTime,
+                oddsKey: game.oddsKey,
+                gameType: gameType.toUpperCase()
+            }))[0]
+    
+            Object.keys(game.odds).map(async oddKey => {
+                const odd = game.odds[oddKey]
+                return await Odd.upsert({
+                    id: oddKey,
+                    name: odd.name,
+                    value: odd.value,
+                    gameId: newGame.dataValues.id
+                }, { include: [ Game ] })
+            })
         })
-    })
+    } catch(err) {
+        console.error(err)
+    }
 }
 
 exports.getGames = async (req, res) => {
-    console.log(req.jwt)
     const { game } = req.params
 
     // First fetch the existing data in the db since it's faster

@@ -1,54 +1,80 @@
 import "../../css/blocks/NavBar.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import userButton from "../../imgs/user_button.png";
 import adminButton from "../../imgs/adminIcon.png";
 import espButton from "../../imgs/especialistaIcon.png";
 import { useStateValue } from "../../state";
 import { useEffect } from "react";
+import { useUserAuth } from "../../hooks/useAuth";
 
 export const NavBar = () => {
     const { state } = useStateValue()
+    const { signout } = useUserAuth()
     const isSelected = (path) => path === window.location.pathname;
+    const nav = useNavigate()
 
-    useEffect(() => {console.log(state.authUser)}, [state.authUser])
+    // useEffect(() => {console.log(state.authUser)}, [state.authUser])
+
+    const logout = () => {
+        signout()
+        nav('/signin')
+    }
 
     return (
         <nav>
             <h2>RasBet</h2>
 
             <ul>
-                <li className={isSelected("/todos") ? "selected" : ""}>
-                    <Link to={`/todos`}>Todos</Link>
-                </li>
-                <li className={isSelected("/football") ? "selected" : ""}>
-                    <Link to={`/football`}>Futebol</Link>
-                </li>
-                <li className={isSelected("/basketball") ? "selected" : ""}>
-                    <Link to={`/basketball`}>Basquetebol</Link>
-                </li>
-                <li className={isSelected("/tenis") ? "selected" : ""}>
-                    <Link to={`/tenis`}>Ténis</Link>
-                </li>
-                <li className={isSelected("/motogp") ? "selected" : ""}>
-                    <Link to={`/motogp`}>MotoGP</Link>
-                </li>
-                <li className={isSelected("/adminFunctions") ? "selected" : ""}>
-                    <Link to={`/adminFunctions`}>
+                <Link to={`/todos`}>
+                    <li className={isSelected("/todos") ? "selected" : ""}>
+                        Todos
+                    </li>
+                </Link>
+
+                <Link to={`/football`}>
+                    <li className={isSelected("/football") ? "selected" : ""}>
+                        Futebol
+                    </li>
+                </Link>
+
+                <Link to={`/basketball`}>
+                    <li className={isSelected("/basketball") ? "selected" : ""}>
+                        Basquetebol
+                    </li>
+                </Link>
+
+                <Link to={`/tenis`}>
+                    <li className={isSelected("/tenis") ? "selected" : ""}>
+                        Ténis
+                    </li>
+                </Link>
+
+                <Link to={`/motogp`}>
+                    <li className={isSelected("/motogp") ? "selected" : ""}>
+                        MotoGP
+                    </li>
+                </Link>
+
+                <Link to={`/adminFunctions`}>
+                    <li className={isSelected("/adminFunctions") ? "selected" : ""}>
                         <img src={adminButton} />{" "}
-                    </Link>
-                </li>
-                <li className={isSelected("/espFunctions") ? "selected" : ""}>
-                    <Link to={`/espFunctions`}>
+                    </li>
+                </Link>
+                <Link to={`/espFunctions`}>
+                    <li className={isSelected("/espFunctions") ? "selected" : ""}>
                         <img src={espButton} />{" "}
-                    </Link>
-                </li>
-                <li className={isSelected("/functions") ? "selected" : ""}>
-                    <Link to={`/functions`}>
+                    </li>
+                </Link>
+                <Link to={`/functions`}>
+                    <li className={isSelected("/functions") ? "selected" : ""}>
                         <img src={userButton} />{" "}
-                    </Link>
-                </li>
+                    </li>
+                </Link>
             </ul>
-            <label>Bem vindo, { state.authUser && state.authUser.firstName }</label>
+            <div className="flex-vertical">
+                <label>Bem vindo, { state.authUser && state.authUser.firstName }</label>
+                <label className="logout-btn" onClick={logout}>Sair</label>
+            </div>
         </nav>
     );
 };

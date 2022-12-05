@@ -11,17 +11,14 @@
     background-color: $light-green;
 
     .gl-content {
-        gap: 15px;
         display: flex;
-        align-items: center;
-        justify-content: center;
         flex-direction: column;
-        width: 100%;
+        gap: 15px;
+        align-items: center;
         box-shadow: $box-shadow;
         background-color: $primary-green;
-        max-width: 350px;
-        padding: 20px;
         border-radius: 5px;
+        padding: 2em;
     }
 
     .label {
@@ -32,7 +29,7 @@
     
     .label-signup {
         font-size: 16px;
-        color: black;
+        color: $light-green;
     }
     
     .label-error {
@@ -43,8 +40,9 @@
     .strong {
         cursor: pointer;
         a {
+            color: $lighter-orange;
+            font-weight: bold;
             text-decoration: none;
-            color: orangered;
         }
     }
 }

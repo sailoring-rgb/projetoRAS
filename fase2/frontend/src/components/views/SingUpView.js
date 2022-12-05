@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { SignInInput } from "../items/SignInInput"
+import { Input } from "../items/Input"
 import { SignInButton } from "../items/SignInButton";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserAuth } from '../../hooks/useAuth'
@@ -44,57 +44,57 @@ export const SignUpView = () => {
 
   return (
     <div className='signin-container'> 
-      <label className="label"> RASBET </label>
       <div className='gl-content'>
-        <SignInInput
+        <label className="label"> RASBET </label>
+        <Input
           type="text"
           placeholder="Insira o seu primeiro nome"
           value={userData.firstName}
           onChange={(e) => [setUserData({ ...userData, firstName: e.target.value}), setError("")]}
           />
-        <SignInInput
+        <Input
           type="text"
           placeholder="Insira o seu último nome"
           value={userData.lastName}
           onChange={(e) => [setUserData({ ...userData, lastName: e.target.value}), setError("")]}
           />
-        <SignInInput
+        <Input
           type="text"
           placeholder="Insira o seu username"
           value={userData.username}
           onChange={(e) => [setUserData({ ...userData, username: e.target.value}), setError("")]}
           />
-        <SignInInput
+        <Input
           type="email"
           placeholder="Insira o seu e-mail"
           value={userData.email}
           onChange={(e) => [setUserData({ ...userData, email: e.target.value}), setError("")]}
           />
-        <SignInInput
+        <Input
           type="password"
           placeholder="Insira a sua password"
           value={userData.password}
           onChange={(e) => [setUserData({ ...userData, password: e.target.value}), setError("")]}
           />
-        <SignInInput
+        <Input
           type="password"
           placeholder="Confirme a password"
           value={userData.confPassword}
           onChange={(e) => [setUserData({ ...userData, confPassword: e.target.value}), setError("")]}
           />
-        <SignInInput
+        <Input
           type="date"
           placeholder="Insira a sua data de nascimento"
           value={userData.birthday}
           onChange={(e) => [setUserData({ ...userData, birthday: e.target.value}), setError("")]}
           />
-        <SignInInput
+        <Input
           type="text"
           placeholder="Insira o seu NIF"
           value={userData.NIF}
           onChange={(e) => [setUserData({ ...userData, NIF: e.target.value}), setError("")]}
           />
-        <SignInInput
+        <Input
           type="text"
           placeholder="Insira o seu NIC"
           value={userData.NIC}
@@ -104,6 +104,13 @@ export const SignUpView = () => {
         <label className='label-error'> {error} </label>
 
         <SignInButton text="Registar" onClick={handleLogin} />
+
+        <label className='label-signup'>
+          Já tem conta?
+          <b className='strong'>
+            <Link to="/signin">&nbsp;Faça login</Link>
+          </b>
+        </label>
       </div>
     </div>
   );
