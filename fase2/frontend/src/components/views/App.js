@@ -68,7 +68,7 @@ export const App = ({ type, game }) => {
                 <RemoveGameView />
             ) : type === "changeOdd" ? (
                 <ChangeOddView />
-            ) : type === "insert" ? (
+            ) : type === "insertOdd" ? (
                 <InsertOddView />
             ) : type === "adminFunctions" ? (
                 <AdminFunctionsView />
