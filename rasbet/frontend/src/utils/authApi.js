@@ -9,6 +9,7 @@ export const login = async creds => {
 }
 
 export const register = async userData => {
+    console.log(userData)
     const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/register`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

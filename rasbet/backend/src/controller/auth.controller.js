@@ -70,6 +70,10 @@ exports.register = async (req, res) => {
     const { userData } = req.body
     console.log(userData)
 
+    if(!userData) return res
+        .status(500)
+        .json({ message: "Missing fields" })
+
     if(userData.password.trim() !== userData.confPassword.trim())
         return res
             .status(400)
@@ -83,7 +87,18 @@ exports.register = async (req, res) => {
         password: bcrypt.hashSync(userData.password, 10),
         birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
     }
-    await User.create(newUserData)
+    try {
+        await User.create(newUserData)
+    } catch(e) {
+        console.error(e)
+        switch(e.original.code) {
+            case 'ER_DUP_ENTRY':
+                return res.status(500).json({
+                    status: false,
+                    message: `User already registered with same ${Object.keys(e.fields).join(', ')}.`
+                })
+        }
+    }
 
     return res
         .status(200)

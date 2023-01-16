@@ -101,7 +101,7 @@ export const SignUpView = () => {
           onChange={(e) => [setUserData({ ...userData, NIC: e.target.value}), setError("")]}
           />
 
-        <label className='label-error'> {error} </label>
+        <label className='label-error'> { error } </label>
 
         <SignInButton text="Registar" onClick={handleLogin} />
 

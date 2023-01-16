@@ -27,7 +27,11 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (userData) => {
         try {
-            return await register(userData)
+            const data = await register(userData)
+            console.log(data)
+            if(!data.status)
+                return { status: false,  msg: data.message }
+            return data
         } catch(err) {
             return { status: false,  msg: err }
         }

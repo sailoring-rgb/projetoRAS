@@ -2,35 +2,37 @@ const gamesApi = require('../utils/apis')
 const { Game, Odd } = require('../model/db/model.db')
 // const { Odds } = require('../model/db/Odds')
 
-const updateDbGames = async (gameType) => {
+exports.updateDbGames = () => {
     const gameFetchFunctions = {
       football: gamesApi.fetchFootballGames,
       basketball: gamesApi.fetchBasketballGames,
-      // tenis: ,
-      // motoGP: ,
     }
-    try{
-        const gamesData = await gameFetchFunctions[gameType]()
-
-        Object.values(gamesData).forEach(async game => {
-            const newGame = (await Game.upsert({
-                id: game.id,
-                homeTeam: game.homeTeam,
-                awayTeam: game.awayTeam,
-                commenceTime: game.commenceTime,
-                oddsKey: game.oddsKey,
-                gameType: gameType.toUpperCase()
-            }))[0]
     
-            Object.keys(game.odds).map(async oddKey => {
-                const odd = game.odds[oddKey]
-                return await Odd.upsert({
-                    id: oddKey,
-                    name: odd.name,
-                    value: odd.value,
-                    gameId: newGame.dataValues.id
-                }, { include: [ Game ] })
+    try{
+        Object.keys(gameFetchFunctions).forEach(async gameType => {
+            const gamesData = await gameFetchFunctions[gameType]()
+
+            Object.values(gamesData).forEach(async game => {
+                const newGame = (await Game.upsert({
+                    id: game.id,
+                    homeTeam: game.homeTeam,
+                    awayTeam: game.awayTeam,
+                    commenceTime: game.commenceTime,
+                    oddsKey: game.oddsKey,
+                    gameType: gameType.toUpperCase()
+                }))[0]
+        
+                Object.keys(game.odds).map(async oddKey => {
+                    const odd = game.odds[oddKey]
+                    return await Odd.upsert({
+                        id: oddKey,
+                        name: odd.name,
+                        value: odd.value,
+                        gameId: newGame.dataValues.id
+                    }, { include: [ Game ] })
+                })
             })
+            console.log("[CONTROLLER] Games updated on DB")
         })
     } catch(err) {
         console.error(err)
@@ -66,7 +68,7 @@ exports.getGames = async (req, res) => {
 
     // Then fetches the apis and updates the games in the db in async mode
     // so the client doensn't have to wait as much
-    updateDbGames(game)
+    // updateDbGames(game)
     
     return res.status(200).json(gamesData)
 }

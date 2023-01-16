@@ -60,6 +60,7 @@ User.init({
     NIF: DataTypes.STRING,
     birthday: DataTypes.DATE,
     wallet: DataTypes.FLOAT,
+    type: DataTypes.STRING
 }, {
     sequelize: sequelizeConnection,
     modelName: 'user'
