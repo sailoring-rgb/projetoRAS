@@ -22,6 +22,17 @@ export const SignUpView = () => {
     NIC: '',
   })
 
+  function getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+  }
+
   const handleLogin = async () => {
     const isMissing = Object.values(userData).reduce((prev, curr) => (prev + curr).trim())
     if (isMissing === '') {
@@ -30,6 +41,10 @@ export const SignUpView = () => {
     }
     if (userData.password !== userData.confPassword) {
       setError("As passwords têm de ser iguais")
+      return
+    }
+    if (getAge(userData.birthDate) < 18) {
+      setError("Utilizador deve ser maior de 18 anos")
       return
     }
 
