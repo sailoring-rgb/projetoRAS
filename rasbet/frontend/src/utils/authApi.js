@@ -18,6 +18,26 @@ export const register = async userData => {
     return data
 }
 
+export const registerAdmin = async userData => {
+    console.log(userData)
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/admin/register`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ userData })
+    }).then(res => res.json());
+    return data
+}
+
+export const registerSpecialist = async userData => {
+    console.log(userData)
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/specialist/register`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ userData })
+    }).then(res => res.json());
+    return data
+}
+
 export const validateToken = async () => {
     const userToken = localStorage.getItem("user_token")
     const userData = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/validateToken`, {

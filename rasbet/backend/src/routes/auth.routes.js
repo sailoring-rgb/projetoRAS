@@ -6,6 +6,8 @@ const authController = require('../controller/auth.controller')
 
 authRouter.post("/login", authController.login);
 authRouter.post("/register", authController.register);
+authRouter.post("/admin/register", authController.registerAdmin);
+authRouter.post("/specialist/register", authController.registerSpecialist);
 authRouter.get("/validateToken", [
     authController.validateJWT,
     authController.validateToken

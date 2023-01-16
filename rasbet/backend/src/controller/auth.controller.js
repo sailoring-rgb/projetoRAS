@@ -1,6 +1,7 @@
 const { User } = require('../model/db/model.db')
 const bcrypt = require('bcryptjs')
 const jsonwebtoken = require("jsonwebtoken")
+const { UserType } = require('../model/UserType')
 
 const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu"
 
@@ -66,27 +67,15 @@ exports.login = async (req, res) => {
         })
 }
 
-exports.register = async (req, res) => {
-    const { userData } = req.body
-    console.log(userData)
-
-    if(!userData) return res
-        .status(500)
-        .json({ message: "Missing fields" })
-
-    if(userData.password.trim() !== userData.confPassword.trim())
-        return res
-            .status(400)
-            .json({ message: "The passwords don't match" })
-
-    delete userData.confPassword
-
+const registerUser = async (userData, userType, res) => {
     const newUserData = {
         ...userData,
         wallet: 0.0,
         password: bcrypt.hashSync(userData.password, 10),
         birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
+        type: userType
     }
+
     try {
         await User.create(newUserData)
     } catch(e) {
@@ -106,4 +95,72 @@ exports.register = async (req, res) => {
             status: true,
             message: "User registered successfully."
         })
+}
+
+
+exports.register =  async (req, res) => {
+    const { userData } = req.body
+    console.log(userData)
+
+    if(!userData) return res
+        .status(400)
+        .json({ message: "Missing fields" })
+
+    if(userData.password.trim() !== userData.confPassword.trim())
+        return res
+            .status(400)
+            .json({ message: "The passwords don't match" })
+
+    delete userData.confPassword
+
+    return await registerUser(userData, UserType.NORMAL, res)
+}
+
+exports.registerAdmin = async (req, res) => {
+    const { userData } = req.body
+    console.log(userData)
+
+    if(!userData) return res
+        .status(500)
+        .json({ message: "Missing fields" })
+
+    if(userData.password.trim() !== userData.confPassword.trim())
+        return res
+            .status(400)
+            .json({ message: "The passwords don't match" })
+
+    console.log(process.env.ADMIN_REGISTER_CODE)
+    if(userData.adminCode !== process.env.ADMIN_REGISTER_CODE)
+        return res
+            .status(400)
+            .json({ message: "Wrong admin code" })
+
+    delete userData.confPassword
+    delete userData.adminCode
+    
+    return await registerUser(userData, UserType.ADMIN, res)
+}
+
+exports.registerSpecialist = async (req, res) => {
+    const { userData } = req.body
+    const emailRegex =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@rasbet.com$/
+    console.log(userData)
+
+    if(!userData) return res
+        .status(500)
+        .json({ message: "Missing fields" })
+
+    if(userData.password.trim() !== userData.confPassword.trim())
+        return res
+            .status(400)
+            .json({ message: "The passwords don't match" })
+
+    if(!emailRegex.test(userData.email.trim()))
+        return res
+            .status(400)
+            .json({ message: "Invalid specialist email" })
+
+    delete userData.confPassword
+    
+    return await registerUser(userData, UserType.ADMIN, res)
 }

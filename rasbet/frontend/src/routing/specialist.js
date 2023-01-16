@@ -4,11 +4,16 @@ import { CreateGameView } from "../components/views/CreateGameView";
 import { EspFunctionsView } from "../components/views/EspFunctionsView";
 import { InsertOddView } from "../components/views/InsertOddView";
 import { RemoveGameView } from "../components/views/RemoveGameView";
+import { SignUpViewSpecialist } from "../components/views/SingUpViewSpecialist";
 
 export const specialistRoutes = [
     {
         path: "/specialist",
         element:<App child={<EspFunctionsView />} />,
+    },
+    {
+        path: "/specialist/signup",
+        element:  <SignUpViewSpecialist />,
     },
     {
         path: "/specialist/addGame",

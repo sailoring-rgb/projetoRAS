@@ -7,7 +7,7 @@ exports.updateDbGames = () => {
       football: gamesApi.fetchFootballGames,
       basketball: gamesApi.fetchBasketballGames,
     }
-    
+
     try{
         Object.keys(gameFetchFunctions).forEach(async gameType => {
             const gamesData = await gameFetchFunctions[gameType]()
@@ -35,7 +35,7 @@ exports.updateDbGames = () => {
             console.log("[CONTROLLER] Games updated on DB")
         })
     } catch(err) {
-        console.error(err)
+        console.log(err)
     }
 }
 
