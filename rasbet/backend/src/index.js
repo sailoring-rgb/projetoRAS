@@ -8,9 +8,16 @@ const { sequelizeConnection, dbInit } = require('./db/db.init')
 const { updateDbGames } = require('./controller/games.controller')
 const cron = require('node-cron');
 
+const { Server, Socket } = require("socket.io");
+// import SocketController from "./controller/sockets";
+
 const port = process.env.PORT || 3001
 const app = express()
 const server = http.createServer(app)
+const io = new Server(server, {
+    cors: { origin: '*' }
+});
+// const socketController = new SocketController(dataContainer);
 
 dbInit(sequelizeConnection)
 
@@ -26,3 +33,8 @@ const cronJob = cron.schedule('*/20 * * * * *', function() {
 cronJob.start()
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
+
+io.on('connection', (socket) => {
+    console.log(socket)
+    // socketController.onConnect(io, socket)
+});
