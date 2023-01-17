@@ -26,6 +26,7 @@ export const GameCard = ({ game, onOddClick }) => {
                 <label className="secondary-label">
                     {parseTimestamp(game.commenceTime)}h
                 </label>
+                <button>Seguir</button>
             </div>
 
             <div className="odds-list">

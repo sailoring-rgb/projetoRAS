@@ -110,6 +110,19 @@ Odd.belongsTo(Game, { foreignKey: 'gameId', onDelete: 'CASCADE' })
 User.hasMany(Transaction, { foreignKey: 'userId', onDelete: 'CASCADE' })
 Transaction.belongsTo(User, { foreignKey: 'userId', onDelete: 'CASCADE' })
 
+
+User.belongsToMany(Game, {
+    through: "user_games",
+    as: "games",
+    foreignKey: "userId",
+});
+
+Game.belongsToMany(User, {
+    through: "user_games",
+    as: "users",
+    foreignKey: "gameId",
+});
+
 // MbWayPayment.hasOne(Bet)
 Bet.hasOne(MbWayPayment)
 

@@ -13,6 +13,11 @@ gamesRouter.post('/', [
   gamesController.createGame
 ])
 
+gamesRouter.post('/follow', [
+  authController. validateJWT,
+  gamesController.followGame
+])
+
 gamesRouter.get('/id/:gameId', [
   authController. validateJWT,
   gamesController.getGameById

@@ -1,5 +1,5 @@
 const gamesApi = require('../utils/apis')
-const { Game, Odd } = require('../model/db/model.db')
+const { Game, Odd, User } = require('../model/db/model.db')
 const crypto = require('crypto');
 
 // const { Odds } = require('../model/db/Odds')
@@ -125,3 +125,15 @@ exports.getGames = async (req, res) => {
     
     return res.status(200).json(gamesData)
 }
+
+exports.followGame = async (req, res) => {
+    const { gameId } = req.body
+    const userData = req.jwt
+
+    const user = await User.findByPk(userData.id)
+    
+    await user.addGame(gameId)
+
+    return res.status(200).json("Ok")
+}
+
