@@ -118,8 +118,8 @@ exports.filterBet = async (req,res) => {
     const betsHistory = await getBets(userData.id)
 
     betsHistory.forEach(async bet =>{
-        if (bet.state === state){
-            bets[bet.dataValues.id].push(bet)
+        if (bet.dataValues.state === state){
+            bets[bet.dataValues.id].push(bet.dataValues)
         }
     })
         
