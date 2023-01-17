@@ -3,7 +3,5 @@ export class Notification {
         this.id = id;
         this.msg = msg;
         this.date = date;
-        // this.userDest = userDest
-        // this.checked = checked
     }
 }

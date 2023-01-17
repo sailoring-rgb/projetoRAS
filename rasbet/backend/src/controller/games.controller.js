@@ -5,10 +5,6 @@ const crypto = require('crypto');
 // const { Odds } = require('../model/db/Odds')
 
 class GamesController {
-    constructor(io) {
-        this.io = io
-    }
-
     updateDbGames = () => {
         const gameFetchFunctions = {
         football: gamesApi.fetchFootballGames,

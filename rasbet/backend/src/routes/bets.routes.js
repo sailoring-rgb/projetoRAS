@@ -4,9 +4,9 @@ const { BetsController } = require('../controller/bets.controller')
 const { AuthController } = require('../controller/auth.controller')
 
 class BetsRouter {
-    constructor(io) {
-        this.betsController = new BetsController(io)
-        this.authController = new AuthController(io)
+    constructor() {
+        this.betsController = new BetsController()
+        this.authController = new AuthController()
         this.router = express.Router()
 
         // Place bet
@@ -14,20 +14,6 @@ class BetsRouter {
             this.authController.validateJWT,
             this.betsController.placeBet
         ])
-
-        // Place bet
-        this.router.get('/test', async (req, res) => {
-            console.log("Receiving test")
-
-            const clients = io.sockets.sockets
-
-            clients.forEach(c => {
-                console.log(c.handshake.auth.id)
-                c.emit('new_message', 'MSG FROM THE SERVER')
-            });
-
-            return res.status(200).json("ok")
-        })
         
         // Get bets history
         this.router.get('/',[ 
@@ -39,7 +25,13 @@ class BetsRouter {
         this.router.delete('/',[
             this.authController.validateJWT,
             this.betsController.cancelBet
-        ]) 
+        ])
+
+        // Change bet state
+        this.router.post('/',[
+            this.authController.validateJWT,
+            this.betsController.changeState
+        ])
     }
 }
 

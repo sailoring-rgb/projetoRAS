@@ -2,9 +2,9 @@ const express = require('express')
 const { AuthController } = require('../controller/auth.controller')
 
 class AuthRouter {
-    constructor(io) {
+    constructor() {
         this.router = express.Router()
-        this.authController = new AuthController(io)
+        this.authController = new AuthController()
 
         this.router.post("/login", this.authController.login);
         this.router.post("/register", this.authController.register);

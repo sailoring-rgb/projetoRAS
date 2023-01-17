@@ -3,10 +3,10 @@ const { TransactionsController } = require('../controller/transactions.controlle
 const { AuthController } = require('../controller/auth.controller')
 
 class TransactionsRouter {
-    constructor(io) {
+    constructor() {
         this.router = express.Router()
-        this.authController = new AuthController(io)
-        this.transactionsController = new TransactionsController(io)
+        this.authController = new AuthController()
+        this.transactionsController = new TransactionsController()
 
         // Place bet
         this.router.post('/',[

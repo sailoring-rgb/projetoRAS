@@ -7,6 +7,7 @@ export class Bet {
         this.result = odd.name
         this.odd = odd.value
         this.total = 1.0
+        this.state = "fechada"
     }
 }
 

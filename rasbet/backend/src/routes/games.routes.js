@@ -3,10 +3,10 @@ const { GamesController } = require('../controller/games.controller')
 const { AuthController } = require('../controller/auth.controller')
 
 class GamesRouter {
-  constructor(io) {
+  constructor() {
     this.router = express.Router()
-    this.authController = new AuthController(io)
-    this.gamesController = new GamesController(io)
+    this.authController = new AuthController()
+    this.gamesController = new GamesController()
 
     this.router.get('/:game/', [
       this.authController.validateJWT,
@@ -29,6 +29,5 @@ class GamesRouter {
     ])
   }
 }
-
 
 exports.GamesRouter = GamesRouter

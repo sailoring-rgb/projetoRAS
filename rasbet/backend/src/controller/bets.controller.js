@@ -1,10 +1,6 @@
 const { Bet, MbWayPayment, CardPayment, Odd, Game } = require('../model/db/model.db')
 
 class BetsController {
-    constructor(io) {
-        this.io = io
-    }
-
     getBets = async userId => {
         const dbBets = await Bet.findAll({
             where: {
@@ -14,29 +10,25 @@ class BetsController {
                 ['createdAt', 'DESC'],
             ],
         })
-    
+
         const parsedBets = await Promise.all(await dbBets.map(async dbBet => {
             const bet = dbBet.dataValues
             bet.odd = await Odd.findOne({ where: { id: bet.oddId }})
             bet.game = await Game.findOne({ where: { id: bet.gameId }})
-    
+
             bet.odd = bet.odd.dataValues
             bet.game = bet.game.dataValues
-    
+
             return bet
         }))
-    
+
         return parsedBets
     }
-    
-    updateOddDummy = async (req, res) => {
-    
-    }
-    
+
     getBetsHistory = async (req, res) => {
         const userData = req.jwt
         const betsHistory = await getBets(userData.id)
-    
+
         return res.status(200).json(betsHistory)
     }
     
@@ -52,9 +44,9 @@ class BetsController {
                 id: betId
             }
         })
-    
+
         console.log(result)
-    
+
         const betsHistory = await getBets(userData.id)
         
         return res.status(200).json({
@@ -76,14 +68,16 @@ class BetsController {
             const {
                 gameId,
                 oddId,
-                value
+                value,
+                state
             } = bet
     
             const newBet = await Bet.create({
                 userId: userData.id,
                 gameId: gameId,
                 oddId: oddId,
-                total: value
+                total: value,
+                state: state
             })
     
             if(paymentType === 'MBWAY') {
@@ -105,5 +99,36 @@ class BetsController {
             status: true
         })
     }
+
+
+    changeState = async (req,res) => {
+        const { betId,state } = req.body
+        const bet = await Bet.findByPk(betId)
+        await bet.update({ state: state })
+        await bet.save()
+            
+        return res.status(200).json({
+            status: true,
+        })   
+    }
+
+    filterBet = async (req,res) => {
+        const { state } = req.body
+        const bets = {}
+
+        const betsHistory = await getBets(userData.id)
+
+        betsHistory.forEach(async bet =>{
+            if (bet.dataValues.state === state){
+                bets[bet.dataValues.id].push(bet.dataValues)
+            }
+        })
+            
+        return res.status(200).json({
+            status: true,
+            bets
+        })
+    }
 }
+
 exports.BetsController = BetsController

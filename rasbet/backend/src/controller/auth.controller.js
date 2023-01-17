@@ -6,11 +6,6 @@ const { UserType } = require('../model/UserType')
 const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu"
 
 class AuthController {
-    constructor(io) {
-        this.io = io
-        
-    }
-
     validateJWT = (req, res, next) => {
         if (req.headers['authorization']) {
             try {
@@ -81,6 +76,14 @@ class AuthController {
             birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
             type: userType
         }
+
+        if(getAge(newUserData) < 18)
+            return res
+                .status(400)
+                .json({
+                    status: true,
+                    message: "User should be 18 years old to register."
+                })
 
         try {
             await User.create(newUserData)
@@ -169,6 +172,17 @@ class AuthController {
         delete userData.confPassword
         
         return await registerUser(userData, UserType.SPECIALIST, res)
+    }
+
+    getAge = (date) => {
+        var today = new Date();
+        var birthDate = new Date(date);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
     }
 }
 

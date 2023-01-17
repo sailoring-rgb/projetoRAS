@@ -2,10 +2,6 @@ const { User, Transaction } = require('../model/db/model.db')
 // const { Odds } = require('../model/db/Odds')
 
 class TransactionsController {
-    constructor(io) {
-        this.io = io
-    }
-
     createTransaction = async (req, res) => {
         const userData = req.jwt
         const { type, value } = req.body

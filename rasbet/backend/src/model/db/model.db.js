@@ -25,6 +25,7 @@ Bet.init({
         type: DataTypes.STRING,
         primaryKey: true
     },
+    state: DataTypes.STRING,
     total: DataTypes.FLOAT,
 }, {
     timestamps: true,
@@ -78,6 +79,15 @@ Transaction.init({
     modelName: 'transactions'
 });
 
+class Notification extends Model {}
+Notification.init({
+    msg: DataTypes.STRING,
+    time: DataTypes.DATE,
+}, {
+    timestamps: true,
+    sequelize: sequelizeConnection,
+    modelName: 'notification'
+});
 
 class MbWayPayment extends Model {}
 MbWayPayment.init({
@@ -123,6 +133,9 @@ Game.belongsToMany(User, {
     foreignKey: "gameId",
 });
 
+User.hasMany(Transaction)
+Notification.belongsTo(User)
+
 // MbWayPayment.hasOne(Bet)
 Bet.hasOne(MbWayPayment)
 
@@ -131,6 +144,7 @@ Bet.hasOne(CardPayment)
 
 exports.User = User
 exports.Transaction = Transaction
+exports.Notification = Notification
 exports.Game = Game
 exports.Odd = Odd
 exports.Bet = Bet

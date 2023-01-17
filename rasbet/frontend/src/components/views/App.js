@@ -5,7 +5,6 @@ import { useStateValue } from "../../state";
 import { validateToken } from "../../utils/authApi";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { SocketProvider } from "../../utils/sockets";
 
 export const App = ({ child }) => {
     const { signout } = useUserAuth()
@@ -30,11 +29,9 @@ export const App = ({ child }) => {
     }, [])
 
     return (
-        <SocketProvider>
-            <main className="main-container">
-                <NavBar />
-                { child }
-            </main>
-        </SocketProvider>
+        <main className="main-container">
+            <NavBar />
+            { child }
+        </main>
     );
 };
