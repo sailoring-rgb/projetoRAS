@@ -79,8 +79,9 @@ Notification.init({
     msg: DataTypes.STRING,
     time: DataTypes.DATE,
 }, {
+    timestamps: true,
     sequelize: sequelizeConnection,
-    modelName: 'notifications'
+    modelName: 'notification'
 });
 
 class MbWayPayment extends Model {}

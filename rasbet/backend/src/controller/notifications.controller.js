@@ -1,29 +1,4 @@
-const { Bet, MbWayPayment, CardPayment, Odd, Game } = require('../model/db/model.db')
-
-exports.createNotification = async (req, res) => {
-    const userData = req.jwt
-    const { type, value } = req.body
-
-    await Notification.create({
-        userId: userData.id,
-        type: type, // BONUS or END GAME
-        msg: msg
-    })
-
-    // Update user's wallet
-    const user = await User.findByPk(userData.id)
-    if(type === 'BONUS')
-        user.wallet += value
-    else if(type === 'END GAME') {
-        user.wallet -= value
-        if(user.wallet < 0) user.wallet = 0        
-    }
-
-    await user.save()
-    
-    return res.status(200).json()
-}
-
+const { Notification, User } = require('../model/db/model.db')
 
 exports.getNotificationsHistory = async (req, res) => {
     const userData = req.jwt
@@ -51,7 +26,7 @@ exports.eliminateNotification= async (req, res) => {
 
     console.log(result)
 
-    const notificationsHistory = await getNotifications(userData.id)
+    const notificationsHistory = await this.getNotificationsHistory(req,res)
     
     return res.status(200).json({
         status: true,

@@ -1,7 +1,7 @@
 export class Notification{
-    constructor(msg, time, user) {
+    constructor(id, msg, time) {
+        this.id = id
         this.msg = msg
         this.time = time
-        this.user = user
     }
 }
