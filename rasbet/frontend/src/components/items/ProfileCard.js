@@ -5,19 +5,24 @@ import { Link } from "react-router-dom";
 export const ProfileCard = ({ user }) => {
     return (
         <div className="profile-card">
-            <div className="Nome">
+            <div>
+                <p>Nome:</p>
                 <p>{user.firstName}h</p>
             </div>
-            <div className="Apelido">
+            <div>
+                <p>Apelido:</p>
                 <p>{user.lastName}h</p>
             </div>
-            <div className="Data de nascimento">
+            <div>
+                <p>Data de Nascimento:</p>
                 <p>{user.birthday}h</p>
             </div>
-            <div className="NIF">
+            <div>
+                <p>NIF:</p>
                 <p>{user.nif}h</p>
             </div>
-            <div className="NIC">
+            <div>
+                <p>NIC:</p>
                 <p>{user.nic}h</p>
             </div>
         </div>

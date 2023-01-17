@@ -1,0 +1,23 @@
+@import '../vars.scss';
+
+.profile-container{
+    h2 {
+        margin-top: 7;
+        margin-left: 5;
+        text-align: center;
+        font-size: 3.0rem;
+    }
+    
+    .profile-modal{
+        &.selected {
+            background-color: $light-yellow;
+        }
+    }
+
+    .deposit--witdhdrwamodal{
+        &.selected {
+            background-color: $light-yellow;
+        }
+        
+    }
+}
