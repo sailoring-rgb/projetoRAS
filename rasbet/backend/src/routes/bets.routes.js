@@ -3,6 +3,7 @@ const betsRouter = express.Router()
 const betsController = require('../controller/bets.controller')
 const authController = require('../controller/auth.controller')
 
+
 // Place bet
 betsRouter.post('/',[
     authController.validateJWT,

@@ -130,10 +130,17 @@ exports.followGame = async (req, res) => {
     const { gameId } = req.body
     const userData = req.jwt
 
-    const user = await User.findByPk(userData.id)
+    const user = await User.findByPk(userData.id, { include: Game })
+    const userValues = user.dataValues
+    const isGameFollowedByUser = userValues.games.filter(game => game.id === gameId).length > 0
     
-    await user.addGame(gameId)
+    if(isGameFollowedByUser) {
+        const game = await Game.findByPk(gameId)
+        await user.removeGame(game)
+    } else
+        await user.addGame(gameId)
+        
 
-    return res.status(200).json("Ok")
+    return res.status(200).json(user.dataValues)
 }
 
