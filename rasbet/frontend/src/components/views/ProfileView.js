@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProfileCard } from '../items/ProfileCard';
-import "../../css/blocks/ProfileModal.scss";
+import "../../css/views/ProfileModal.scss";
 
 export const ProfileView = () => { 
     const user = {
