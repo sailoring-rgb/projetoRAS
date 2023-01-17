@@ -79,7 +79,7 @@ exports.register = async (req, res) => {
 
     const newUserData = {
         ...userData,
-        wallet: 0.0,
+        wallet: 5.0,
         password: bcrypt.hashSync(userData.password, 10),
         birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
     }

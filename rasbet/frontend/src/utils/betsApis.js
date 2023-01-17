@@ -45,3 +45,19 @@ export const cancelBet = async (betId) => {
 
     return data
 }
+
+export const changeState = async (betId,state) => {
+    const userToken = localStorage.getItem("user_token")
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/bets`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`
+        },
+        body: JSON.stringify({ betId,state })
+    }).then(res => res.json())
+    
+    //data.betsHistory = data.betsHistory.map(bet => new Bet(bet.id, bet.game, bet.odd))
+
+    return data
+}
+

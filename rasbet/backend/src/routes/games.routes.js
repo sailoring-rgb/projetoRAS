@@ -3,6 +3,7 @@ const gamesRouter = express.Router()
 const gamesController = require('../controller/games.controller')
 const authController = require('../controller/auth.controller')
 
+
 gamesRouter.get('/:game/', [
   authController.validateJWT,
   gamesController.getGames

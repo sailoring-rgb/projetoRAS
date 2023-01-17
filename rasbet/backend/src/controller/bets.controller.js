@@ -67,14 +67,16 @@ exports.placeBet = async (req, res) => {
         const {
             gameId,
             oddId,
-            value
+            value,
+            state
         } = bet
 
         const newBet = await Bet.create({
             userId: userData.id,
             gameId: gameId,
             oddId: oddId,
-            total: value
+            total: value,
+            state: state
         })
 
         if(paymentType === 'MBWAY') {
@@ -94,5 +96,35 @@ exports.placeBet = async (req, res) => {
     
     return res.status(200).json({
         status: true
+    })
+}
+
+
+exports.changeState = async (req,res) => {
+    const { betId,state } = req.body
+    const bet = await Bet.findByPk(betId)
+    await bet.update({ state: state })
+    await bet.save()
+        
+    return res.status(200).json({
+        status: true,
+    })   
+}
+
+exports.filterBet = async (req,res) => {
+    const { state } = req.body
+    const bets = {}
+
+    const betsHistory = await getBets(userData.id)
+
+    betsHistory.forEach(async bet =>{
+        if (bet.dataValues.state === state){
+            bets[bet.dataValues.id].push(bet.dataValues)
+        }
+    })
+        
+    return res.status(200).json({
+        status: true,
+        bets
     })
 }
