@@ -77,7 +77,7 @@ class AuthController {
             type: userType
         }
 
-        if(getAge(newUserData) < 18)
+        if(this.getAge(newUserData) < 18)
             return res
                 .status(400)
                 .json({
@@ -122,7 +122,7 @@ class AuthController {
 
         delete userData.confPassword
 
-        return await registerUser(userData, UserType.NORMAL, res)
+        return await this.registerUser(userData, UserType.NORMAL, res)
     }
 
     registerAdmin = async (req, res) => {
@@ -147,7 +147,7 @@ class AuthController {
         delete userData.confPassword
         delete userData.adminCode
         
-        return await registerUser(userData, UserType.ADMIN, res)
+        return await this.registerUser(userData, UserType.ADMIN, res)
     }
 
     registerSpecialist = async (req, res) => {
@@ -171,7 +171,7 @@ class AuthController {
 
         delete userData.confPassword
         
-        return await registerUser(userData, UserType.SPECIALIST, res)
+        return await this.registerUser(userData, UserType.SPECIALIST, res)
     }
 
     getAge = (date) => {

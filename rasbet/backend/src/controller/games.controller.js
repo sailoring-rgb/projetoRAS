@@ -7,8 +7,8 @@ const crypto = require('crypto');
 class GamesController {
     updateDbGames = () => {
         const gameFetchFunctions = {
-        football: gamesApi.fetchFootballGames,
-        //   basketball: gamesApi.fetchBasketballGames,
+            football: gamesApi.fetchFootballGames,
+            //   basketball: gamesApi.fetchBasketballGames,
         }
 
         Object.keys(gameFetchFunctions).forEach(async gameType => {
@@ -102,14 +102,22 @@ class GamesController {
         })).dataValues.games.map(game => game.id)
        
         // First fetch the existing data in the db since it's faster
-        let gamesData = await Game.findAll({
-            where: {
-                gameType: game.toUpperCase()
-            },
-            order: [
-                ['commenceTime', 'ASC']
-            ]
-        })
+        let gamesData;
+        if(game.toUpperCase() === 'ALL')
+            gamesData = await Game.findAll({
+                order: [
+                    ['commenceTime', 'ASC']
+                ]
+            })
+        else
+            gamesData = await Game.findAll({
+                where: {
+                    gameType: game.toUpperCase()
+                },
+                order: [
+                    ['commenceTime', 'ASC']
+                ]
+            })
 
         gamesData = await Promise.all(await gamesData.map(async game => {
             const odds = {}

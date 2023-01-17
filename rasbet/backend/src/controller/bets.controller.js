@@ -1,4 +1,4 @@
-const { Bet, MbWayPayment, CardPayment, Odd, Game } = require('../model/db/model.db')
+const { Bet, MbWayPayment, CardPayment, Notification, Odd, Game, User } = require('../model/db/model.db')
 
 class BetsController {
     getBets = async userId => {
@@ -100,12 +100,47 @@ class BetsController {
         })
     }
 
-
     changeState = async (req,res) => {
         const { betId,state } = req.body
         const bet = await Bet.findByPk(betId)
         await bet.update({ state: state })
         await bet.save()
+            
+        return res.status(200).json({
+            status: true,
+        })   
+    }
+
+    updateOdd = async (req, res) => {
+        const { odd } = req.body
+        const userData = req.jwt
+        const oddObj = await Odd.findByPk(odd.id)
+
+        await oddObj.update({ value: parseFloat(odd.value) })
+        await oddObj.save()
+
+        const bettingUsers = (await Bet.findAll({
+            where: {
+                oddId: odd.id
+            }
+        })).map(bet => bet.dataValues.userId)
+
+        const game = await Game.findByPk(oddObj.dataValues.gameId, { include: User })
+
+        const followers = game.dataValues.users.map(user => user.id)
+
+        console.log(bettingUsers)
+        console.log(followers)
+        
+        const receivingUsers = new Set(bettingUsers.concat(followers))
+
+        receivingUsers.forEach(async userId => {
+            await Notification.create({
+                userId: userId,
+                msg: `A odd '${oddObj.dataValues.name}' do jogo ${game.dataValues.homeTeam} vs ${game.dataValues.awayTeam} foi alterada para ${odd.value}`,
+                time:(new Date(Date.now())).toISOString()
+            })
+        })
             
         return res.status(200).json({
             status: true,

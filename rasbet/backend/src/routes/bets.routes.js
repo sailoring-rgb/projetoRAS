@@ -28,9 +28,15 @@ class BetsRouter {
         ])
 
         // Change bet state
-        this.router.post('/',[
+        this.router.put('/state',[
             this.authController.validateJWT,
             this.betsController.changeState
+        ])
+
+        // Change bet state
+        this.router.put('/odd',[
+            this.authController.validateJWT,
+            this.betsController.updateOdd
         ])
     }
 }

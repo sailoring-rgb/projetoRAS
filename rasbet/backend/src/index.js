@@ -5,7 +5,7 @@ const http = require("http")
 const cors = require("cors")
 const RasbetRouter = require('./routes/index.routes')
 const { sequelizeConnection, dbInit } = require('./db/db.init')
-const { updateDbGames } = require('./controller/games.controller')
+const { GamesController } = require('./controller/games.controller')
 const cron = require('node-cron');
 
 const port = process.env.PORT || 3001
@@ -13,6 +13,7 @@ const app = express()
 const server = http.createServer(app)
 
 const rasbetRouter = new RasbetRouter()
+const gamesController = new GamesController()
 
 dbInit(sequelizeConnection)
 
@@ -21,9 +22,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(rasbetRouter.router)
 
-const cronJob = cron.schedule('*/20 * * * * *', function() {
+const cronJob = cron.schedule('*/10 * * * * *', function() {
     console.log('Cron running');
-    updateDbGames()
+    gamesController.updateDbGames()
 });
 cronJob.start()
 
