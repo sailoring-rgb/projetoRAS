@@ -92,3 +92,17 @@ exports.register = async (req, res) => {
             message: "User registered successfully."
         })
 }
+
+exports.getAge = async (req, res) => {
+    var today = new Date();
+    var birthDate = new Date(req);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    // return age;
+    return res
+           .status(200)
+           .send(age)
+  }
