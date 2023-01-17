@@ -1,8 +1,6 @@
 import "../../css/items/NotificationCard.scss";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 
-export const NotificationCard = ({ notification }) => {
+export const NotificationCard = ({ notification, markAsRead }) => {
     const parseTimestamp = (timestamp) => {
         const date = new Date(timestamp);
         const currDate = new Date();
@@ -20,10 +18,14 @@ export const NotificationCard = ({ notification }) => {
 
     return (
         <div className="notification-card">
-            <div className="id">
-                <p>{parseTimestamp(notification.date)}h</p>
+            <div className="content">
+                <div className="id">
+                    <p>{parseTimestamp(notification.date)}h</p>
+                </div>
+                <p> {notification.msg} </p>
             </div>
-            <p> {notification.msg} </p>
+
+            <button onClick={() => markAsRead(notification.id)}>✔️</button>
         </div>
     );
 };

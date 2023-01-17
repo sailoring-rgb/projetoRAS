@@ -4,7 +4,8 @@ class BetsController {
     getBets = async userId => {
         const dbBets = await Bet.findAll({
             where: {
-                userId: userId
+                userId: userId,
+                state: 'ABERTA'
             },
             order: [    
                 ['createdAt', 'DESC'],
@@ -27,7 +28,7 @@ class BetsController {
 
     getBetsHistory = async (req, res) => {
         const userData = req.jwt
-        const betsHistory = await getBets(userData.id)
+        const betsHistory = await this.getBets(userData.id)
 
         return res.status(200).json(betsHistory)
     }
@@ -47,7 +48,7 @@ class BetsController {
 
         console.log(result)
 
-        const betsHistory = await getBets(userData.id)
+        const betsHistory = await this.getBets(userData.id)
         
         return res.status(200).json({
             status: true,
@@ -75,7 +76,7 @@ class BetsController {
                 userId: userData.id,
                 gameId: gameId,
                 oddId: oddId,
-                total: value,
+                total: parseFloat(value),
                 state: 'ABERTA'
             })
     

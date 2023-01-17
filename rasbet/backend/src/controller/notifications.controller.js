@@ -16,6 +16,8 @@ class NotificationsController {
             notificationId
         } = req.body
         const userData = req.jwt
+
+        console.log("NOTF " + notificationId + "  " + userData.id)
         
         const result = await Notification.destroy({
             where: {
@@ -26,12 +28,11 @@ class NotificationsController {
     
         console.log(result)
     
-        const notificationsHistory = await this.getNotificationsHistory(req,res)
-        
-        return res.status(200).json({
-            status: true,
-            notificationsHistory
-        })
+        return await this.getNotificationsHistory(req,res)
+        // return res.status(200).json({
+        //     status: true,
+        //     notifications
+        // })
     }
     
     placeNotification = async (req, res) => {

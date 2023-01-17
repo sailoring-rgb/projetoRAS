@@ -26,7 +26,7 @@ export const getBetsHistory = async () => {
         }
     }).then(res => res.json());
 
-    const bets = data.map(bet => new Bet(bet.id, bet.game, bet.odd))
+    const bets = data.map(bet => new Bet(bet.id, bet.game, bet.odd, bet.total))
     return bets
 }
 

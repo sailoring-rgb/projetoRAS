@@ -22,10 +22,10 @@ export const ProfileView = () => {
                         notification={notification}
                     /> )
                 ) : (
-                    <dic className="no-notifications-label">
+                    <div className="no-notifications-label">
                         <hr className="solid"></hr>
                         <p>Sem notificações</p>
-                    </dic>
+                    </div>
                 )}
             </div>
         </div>
