@@ -16,7 +16,7 @@ export const placeNotification = async (notifications) => {
     return data
 }
 
-export const getNotifictionsHistory = async () => {
+export const getNotificationsHistory = async () => {
     const userToken = localStorage.getItem("user_token")
 
     const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notifications`, {
@@ -25,11 +25,11 @@ export const getNotifictionsHistory = async () => {
         }
     }).then(res => res.json());
 
-    const notifications = data.map(notification => new Notification(notification.id, notification.msg, notification.time))
+    const notifications = data.notifications.map(notification => new Notification(notification.id, notification.msg, notification.time))
     return notifications
 }
 
-export const eliminateNotification = async (notifId) => {
+export const eliminateNotification = async (notificationId) => {
     const userToken = localStorage.getItem("user_token")
     const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notifications`, {
         method: 'DELETE',
@@ -37,10 +37,10 @@ export const eliminateNotification = async (notifId) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${userToken}`
         },
-        body: JSON.stringify({ notifId })
+        body: JSON.stringify({ notificationId })
     }).then(res => res.json())
     console.log(data)
-    //data.notificationsHistory = data.notificationsHistory.map(notification => new Notification(notification.id, notification.msg, notification.time))
+    const notifications = data.notifications.map(notification => new Notification(notification.id, notification.msg, notification.time))
 
-    return data
+    return notifications
 }

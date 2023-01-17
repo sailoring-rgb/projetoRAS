@@ -6,7 +6,7 @@ import { useUserAuth } from '../../hooks/useAuth'
 import '../../css/views/SignInView.scss'
 import { userType } from '../../models/UserType';
 
-export const SignUpView = () => {
+export const SignUpViewAdmin = () => {
   const { signup } = useUserAuth();
   const nav = useNavigate();
 
@@ -19,8 +19,9 @@ export const SignUpView = () => {
     password: '',
     confPassword: '',
     birthday: '',
-    NIF: '',
+    // NIF: '',
     NIC: '',
+    adminCode: '',
   })
 
   const handleLogin = async () => {
@@ -33,12 +34,8 @@ export const SignUpView = () => {
       setError("As passwords têm de ser iguais")
       return
     }
-    // if (getAge(userData.birthday) < 18) {
-    //   setError("Utilizador deve ser maior de 18 anos")
-    //   return
-    // }
 
-    const res = await signup({ ...userData, birthday: (new Date(userData.birthday)).getTime() }, userType.NORMAL)
+    const res = await signup({ ...userData, birthday: (new Date(userData.birthday)).getTime() }, userType.ADMIN)
     console.log(res)
     if(!res.status) {
       setError(res.msg)
@@ -93,17 +90,23 @@ export const SignUpView = () => {
           value={userData.birthday}
           onChange={(e) => [setUserData({ ...userData, birthday: e.target.value}), setError("")]}
           />
-        <Input
+        {/* <Input
           type="text"
           placeholder="Insira o seu NIF"
           value={userData.NIF}
           onChange={(e) => [setUserData({ ...userData, NIF: e.target.value}), setError("")]}
-          />
+          /> */}
         <Input
           type="text"
           placeholder="Insira o seu NIC"
           value={userData.NIC}
           onChange={(e) => [setUserData({ ...userData, NIC: e.target.value}), setError("")]}
+          />
+        <Input
+          type="text"
+          placeholder="Código de admin"
+          value={userData.admingCode}
+          onChange={(e) => [setUserData({ ...userData, adminCode: e.target.value}), setError("")]}
           />
 
         <label className='label-error'> { error } </label>

@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GameCard } from '../items/GameCard'
 import '../../css/blocks/GamesList.scss'
-import { Bet } from '../../models/Bet'
 
-export const GamesList = ({
-    game,
+export const GamesSelectList = ({
     gamesList,
     setGamesList,
-    betsList,
-    setBetsList
+    setGame,
+    setSelectedOdd,
+    setSelectedGame,
+    showFollow=true,
+    showOdds=true
 }) => {
     const [ searchText, setSearchText ] = useState('')
 
@@ -17,23 +18,27 @@ export const GamesList = ({
     }
 
     const selectOdd = (gameId, odd) => {
-        let newBets = [...betsList]
         let updatedGames = gamesList
         const tmpGame = updatedGames[gameId]
-        const oddId = tmpGame.id + '_' + odd.name
-        tmpGame.odds[oddId].selected = !tmpGame.odds[oddId].selected
+        // const oddId = tmpGame.id + '_' + odd.name
+
+        Object.keys(updatedGames).forEach(g => {
+            const game = updatedGames[g]
+            Object.keys(game.odds).forEach(k => {
+                if(k === odd.id && g === gameId)
+                    game.odds[k].selected = true
+                else
+                    game.odds[k].selected = false
+            })
+        })
+        
 
         updatedGames[tmpGame.id] = tmpGame
 
-        if(tmpGame.odds[oddId].selected) {
-            const betId = tmpGame.id + '_' + odd.name
-            const newBet = new Bet(betId, tmpGame, odd)
-            newBets.push(newBet)
-        } else
-            newBets = newBets.filter(bet => bet.id !== oddId)
         setGamesList(updatedGames)
         // dispatch({ type: 'setBetsList', value: newBets })
-        setBetsList(newBets)
+        setSelectedOdd(odd)
+        setSelectedGame(tmpGame)
     }
 
     const followGame = (gameId, isFollowed) => {
@@ -41,6 +46,10 @@ export const GamesList = ({
         tmpGameList[gameId].isFollowed = isFollowed
         setGamesList(tmpGameList)
     }
+
+    useEffect(() => {
+        console.log(gamesList)
+    }, [gamesList])
 
     return (
         <div className='gameslist-container'>
@@ -51,25 +60,25 @@ export const GamesList = ({
                     placeholder='Pesquisar'
                     value={searchText}/>
             </div>
-            
-            { game === 'motoGP'
-            ?
-                <div className='gameslist'>
-                    <h1 className='game-available-soon'>Jogo disponível brevemente</h1>
-                </div>
-            : <div className='gameslist'>
+
+            <div className='gameslist'>
                 {
                 (gamesList && Object.values(gamesList).length > 0) ?
                     Object.values(gamesList).map((game, i) => 
-                        <GameCard
-                            key={i}
-                            game={game}
-                            onOddClick={selectOdd}
-                            followGameClick={followGame}/>
+                        <div onClick={() => setGame(game)}>
+                            <GameCard
+                                key={i}
+                                game={game}
+                                onOddClick={selectOdd}
+                                followGameClick={followGame}
+                                showOdds={showOdds}
+                                showFollow={showFollow}
+                            />
+                        </div>
                     )
                 : <label className='no-games-label'>Sem jogos disponíveis</label>
                 }
-            </div> }
+            </div>
         
       </div>
     )

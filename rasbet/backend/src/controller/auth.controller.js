@@ -1,108 +1,189 @@
 const { User } = require('../model/db/model.db')
 const bcrypt = require('bcryptjs')
 const jsonwebtoken = require("jsonwebtoken")
+const { UserType } = require('../model/UserType')
 
 const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu"
 
-exports.validateJWT = (req, res, next) => {
-    if (req.headers['authorization']) {
-        try {
-            let authorization = req.headers['authorization'].split(' ')
-            if (authorization[0] !== 'Bearer') {
-                return res.status(401).send()
-            } else {
-                req.jwt = jsonwebtoken.verify(authorization[1], JWT_SECRET)
-                console.log(Date.now() - req.jwt.lastOnline >= 18000000)
-                if(Date.now() - req.jwt.lastOnline >= 18000000)
+class AuthController {
+    validateJWT = (req, res, next) => {
+        if (req.headers['authorization']) {
+            try {
+                let authorization = req.headers['authorization'].split(' ')
+                if (authorization[0] !== 'Bearer') {
                     return res.status(401).send()
-                return next()
+                } else {
+                    req.jwt = jsonwebtoken.verify(authorization[1], JWT_SECRET)
+                    console.log(Date.now() - req.jwt.lastOnline >= 18000000)
+                    if(Date.now() - req.jwt.lastOnline >= 18000000)
+                        return res.status(401).send()
+                    return next()
+                }
+            } catch (err) {
+                console.log(err)
+                return res.status(403).send()
             }
-        } catch (err) {
-            console.log(err)
-            return res.status(403).send()
+        } else {
+            return res.status(401).send()
         }
-    } else {
-        return res.status(401).send()
     }
-}
 
-exports.validateToken = async (req, res) => {
-    const userData = req.jwt
-    console.log(userData)
-    return res.status(200).json(userData)
-}
+    validateToken = async (req, res) => {
+        const userData = req.jwt
+        console.log(userData)
+        return res.status(200).json(userData)
+    }
 
-exports.login = async (req, res) => {
-    const data = req.body
-    const { email, password } = data
+    login = async (req, res) => {
+        const data = req.body
+        const { email, password } = data
 
-    const user = await User.findOne({
-        where: {
-            email: email,
+        const user = await User.findOne({
+            where: {
+                email: email,
+            }
+        })
+
+        if(user && bcrypt.compareSync(password, user.dataValues.password)) {
+            const userData = { ...user.dataValues }
+            delete userData.password
+
+            return res
+                .status(200)
+                .json({
+                    status: true,
+                    token: jsonwebtoken.sign({
+                        ...userData,
+                        lastLogin: Date.now()
+                    }, JWT_SECRET),
+                    user: userData,
+                })
         }
-    })
 
-    if(user && bcrypt.compareSync(password, user.dataValues.password)) {
-        const userData = { ...user.dataValues }
-        delete userData.password
+        return res
+            .status(200)
+            .json({
+                status: false,
+                message: "The username and password your provided are invalid"
+            })
+    }
+
+    registerUser = async (userData, userType, res) => {
+        const newUserData = {
+            ...userData,
+            wallet: 0.0,
+            password: bcrypt.hashSync(userData.password, 10),
+            birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
+            type: userType
+        }
+
+        if(this.getAge(newUserData) < 18)
+            return res
+                .status(400)
+                .json({
+                    status: true,
+                    message: "User should be 18 years old to register."
+                })
+
+        try {
+            await User.create(newUserData)
+        } catch(e) {
+            console.error(e)
+            switch(e.original.code) {
+                case 'ER_DUP_ENTRY':
+                    return res.status(500).json({
+                        status: false,
+                        message: `User already registered with same ${Object.keys(e.fields).join(', ')}.`
+                    })
+            }
+        }
 
         return res
             .status(200)
             .json({
                 status: true,
-                token: jsonwebtoken.sign({
-                    ...userData,
-                    lastLogin: Date.now()
-                }, JWT_SECRET),
-                user: userData,
+                message: "User registered successfully."
             })
     }
 
-    return res
-        .status(200)
-        .json({
-            status: false,
-            message: "The username and password your provided are invalid"
-        })
-}
 
-exports.register = async (req, res) => {
-    const { userData } = req.body
-    console.log(userData)
+    register =  async (req, res) => {
+        const { userData } = req.body
+        console.log(userData)
 
-    if(userData.password.trim() !== userData.confPassword.trim())
-        return res
+        if(!userData) return res
             .status(400)
-            .json({ message: "The passwords don't match" })
+            .json({ message: "Missing fields" })
 
-    delete userData.confPassword
+        if(userData.password.trim() !== userData.confPassword.trim())
+            return res
+                .status(400)
+                .json({ message: "The passwords don't match" })
 
-    const newUserData = {
-        ...userData,
-        wallet: 5.0,
-        password: bcrypt.hashSync(userData.password, 10),
-        birthday: new Date(parseInt(userData.birthday)), // Should receive a timestamp
+        delete userData.confPassword
+
+        return await this.registerUser(userData, UserType.NORMAL, res)
     }
-    await User.create(newUserData)
 
-    return res
-        .status(200)
-        .json({
-            status: true,
-            message: "User registered successfully."
-        })
+    registerAdmin = async (req, res) => {
+        const { userData } = req.body
+        console.log(userData)
+
+        if(!userData) return res
+            .status(500)
+            .json({ message: "Missing fields" })
+
+        if(userData.password.trim() !== userData.confPassword.trim())
+            return res
+                .status(400)
+                .json({ message: "The passwords don't match" })
+
+        console.log(process.env.ADMIN_REGISTER_CODE)
+        if(userData.adminCode !== process.env.ADMIN_REGISTER_CODE)
+            return res
+                .status(400)
+                .json({ message: "Wrong admin code" })
+
+        delete userData.confPassword
+        delete userData.adminCode
+        
+        return await this.registerUser(userData, UserType.ADMIN, res)
+    }
+
+    registerSpecialist = async (req, res) => {
+        const { userData } = req.body
+        const emailRegex =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@rasbet.com$/
+        console.log(userData)
+
+        if(!userData) return res
+            .status(500)
+            .json({ message: "Missing fields" })
+
+        if(userData.password.trim() !== userData.confPassword.trim())
+            return res
+                .status(400)
+                .json({ message: "The passwords don't match" })
+
+        if(!emailRegex.test(userData.email.trim()))
+            return res
+                .status(400)
+                .json({ message: "Invalid specialist email" })
+
+        delete userData.confPassword
+        
+        return await this.registerUser(userData, UserType.SPECIALIST, res)
+    }
+
+    getAge = (date) => {
+        var today = new Date();
+        var birthDate = new Date(date);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
 }
 
-exports.getAge = async (req, res) => {
-    var today = new Date();
-    var birthDate = new Date(req);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    // return age;
-    return res
-           .status(200)
-           .send(age)
-  }
+exports.AuthController = AuthController

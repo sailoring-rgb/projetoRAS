@@ -26,7 +26,7 @@ export const getBetsHistory = async () => {
         }
     }).then(res => res.json());
 
-    const bets = data.map(bet => new Bet(bet.id, bet.game, bet.odd))
+    const bets = data.map(bet => new Bet(bet.id, bet.game, bet.odd, bet.total))
     return bets
 }
 
@@ -48,7 +48,8 @@ export const cancelBet = async (betId) => {
 
 export const changeState = async (betId,state) => {
     const userToken = localStorage.getItem("user_token")
-    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/bets`, {
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/bets/state`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${userToken}`
@@ -57,7 +58,21 @@ export const changeState = async (betId,state) => {
     }).then(res => res.json())
     
     //data.betsHistory = data.betsHistory.map(bet => new Bet(bet.id, bet.game, bet.odd))
+    return data
+}
 
+export const updateOdd = async (odd) => {
+    const userToken = localStorage.getItem("user_token")
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/bets/odd`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`
+        },
+        body: JSON.stringify({ odd })
+    }).then(res => res.json())
+    
+    //data.betsHistory = data.betsHistory.map(bet => new Bet(bet.id, bet.game, bet.odd))
     return data
 }
 

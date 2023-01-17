@@ -1,31 +1,45 @@
 const express = require('express')
-const betsRouter = express.Router()
-const betsController = require('../controller/bets.controller')
-const authController = require('../controller/auth.controller')
+// const betsRouter = express.Router()
+const { BetsController } = require('../controller/bets.controller')
+const { AuthController } = require('../controller/auth.controller')
 
-// Place bet
-betsRouter.post('/',[
-    authController.validateJWT,
-    betsController.placeBet
-])
+class BetsRouter {
+    constructor() {
+        this.betsController = new BetsController()
+        this.authController = new AuthController()
+        this.router = express.Router()
 
-// Get bets history
-betsRouter.get('/',[
-    authController.validateJWT,
-    betsController.getBetsHistory
-]) 
+        // Place bet
+        this.router.post('/',[
+            this.authController.validateJWT,
+            this.betsController.placeBet
+        ])
+        
+        // Get bets history
+        this.router.get('/',[ 
+            this.authController.validateJWT,
+            this.betsController.getBetsHistory
+        ]) 
+        
+        // Get bets history
+        this.router.delete('/',[
+            this.authController.validateJWT,
+            this.betsController.cancelBet
+        ])
 
-// Delete bet
-betsRouter.delete('/',[
-    authController.validateJWT,
-    betsController.cancelBet
-]) 
+        // Change bet state
+        this.router.put('/state',[
+            this.authController.validateJWT,
+            this.betsController.changeState
+        ])
 
-// Change bet state
-betsRouter.post('/',[
-    authController.validateJWT,
-    betsController.changeState
-])
+        // Change bet state
+        this.router.put('/odd',[
+            this.authController.validateJWT,
+            this.betsController.updateOdd
+        ])
+    }
+}
 
 
-exports.betsRouter = betsRouter
+exports.BetsRouter = BetsRouter

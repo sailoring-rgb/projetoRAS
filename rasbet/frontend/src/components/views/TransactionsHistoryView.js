@@ -44,10 +44,10 @@ export const TransactionsHistoryView = () => {
                         <TransactionCard key={i} transaction={transaction} />
                     ))
                 ) : (
-                    <dic className="no-transactions-label">
+                    <div className="no-transactions-label">
                         <hr className="solid"></hr>
                         <p>Sem Transações</p>
-                    </dic>
+                    </div>
                 )}
             </div>
         </div>

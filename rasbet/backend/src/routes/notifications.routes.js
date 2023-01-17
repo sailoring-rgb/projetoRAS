@@ -1,24 +1,32 @@
 const express = require("express");
 const notifsRouter = express.Router();
-const notifsController = require('../controller/notifications.controller')
-const authController = require('../controller/auth.controller')
+const { NotificationsController } = require('../controller/notifications.controller')
+const { AuthController } = require('../controller/auth.controller')
 
-// Place notification
-notifsRouter.post('/',[
-    authController.validateJWT,
-    notifsController.placeNotification
-])
+class NotificationsRouter {
+    constructor() {
+        this.router = express.Router()
+        this.authController = new AuthController()
+        this.notificationsController = new NotificationsController()
 
-// Get notifications history
-notifsRouter.get('/',[
-    authController.validateJWT,
-    notifsController.getNotificationsHistory
-]) 
+        // Place notification
+        this.router.post('/',[
+            this.authController.validateJWT,
+            this.notificationsController.placeNotification
+        ])
 
-// Delete notifications history
-notifsRouter.delete('/',[
-    authController.validateJWT,
-    notifsController.eliminateNotification
-]) 
+        // Get notifications history
+        this.router.get('/',[
+            this.authController.validateJWT,
+            this.notificationsController.getNotificationsHistory
+        ]) 
+        
+        // Delete notifications history
+        this.router.delete('/',[
+            this.authController.validateJWT,
+            this.notificationsController.eliminateNotification
+        ]) 
+    }
+}
 
-exports.notifsRouter = notifsRouter
+exports.NotificationsRouter = NotificationsRouter

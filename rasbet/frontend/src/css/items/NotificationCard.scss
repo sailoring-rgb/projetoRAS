@@ -10,11 +10,32 @@
     border: 1px solid $primary-green;
     border-radius: 0.5em;
     box-shadow: $box-shadow-light;
+    display: flex;
+    flex-direction: row;
 
-    .id{
-        font-size: 1.0rem;
-        font-weight: bold;
-        color: #758994;
+    .content {
+
+        .id{
+            font-size: 1.0rem;
+            font-weight: bold;
+            color: #758994;
+        }
     }
 
+    button {
+        margin-left: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        background-color: white;
+        color: $orange;
+        border: 1px solid $orange;
+        border-radius: 10px;
+        width: 50px;
+        height: 50px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $light-orange;
+        }
+    }
 }

@@ -28,7 +28,6 @@ export const ProfileView = () => {
             <div className="deposit-withdraw-modal">
                 <button>Levantar</button>
                 <button>Depositar</button>
-
             </div>
         </div>
     )

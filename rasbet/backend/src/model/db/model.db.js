@@ -5,13 +5,19 @@ class Game extends Model {}
 Game.init({
     id: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
+        // autoIncrement: true
     },
     homeTeam: DataTypes.STRING,
     awayTeam: DataTypes.STRING,
     commenceTime: DataTypes.DATE,
     oddsKey: DataTypes.STRING,
-    gameType: DataTypes.STRING
+    gameType: DataTypes.STRING,
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    }
+    // state: DataType.STRING
 }, {
     sequelize: sequelizeConnection,
     modelName: 'game'
@@ -19,10 +25,11 @@ Game.init({
 
 class Bet extends Model {}
 Bet.init({
-    // id: {
-    //     type: DataTypes.STRING,
-    //     primaryKey: true
-    // },
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     state: DataTypes.STRING,
     total: DataTypes.FLOAT,
 }, {
@@ -35,7 +42,8 @@ class Odd extends Model {}
 Odd.init({
     id: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
+        // autoIncrement: true
     },
     name: DataTypes.STRING,
     value: DataTypes.FLOAT,
@@ -61,6 +69,7 @@ User.init({
     NIF: DataTypes.STRING,
     birthday: DataTypes.DATE,
     wallet: DataTypes.FLOAT,
+    type: DataTypes.STRING
 }, {
     sequelize: sequelizeConnection,
     modelName: 'user'
@@ -103,20 +112,31 @@ CardPayment.init({
     modelName: 'cardpayment'
 })
 
-User.hasMany(Bet)
-Bet.belongsTo(User)
+User.hasMany(Bet, { foreignKey: 'userId', onDelete: 'CASCADE' })
+Bet.belongsTo(User, { foreignKey: 'userId', onDelete: 'CASCADE' })
 
-Bet.belongsTo(Game)
-Game.hasMany(Bet)
+Bet.belongsTo(Game, { foreignKey: 'gameId', onDelete: 'CASCADE' })
+Game.hasMany(Bet, { foreignKey: 'gameId', onDelete: 'CASCADE' })
 
-Odd.hasMany(Bet)
-Bet.belongsTo(Odd)
+Odd.hasMany(Bet, { foreignKey: 'oddId', onDelete: 'CASCADE' })
+Bet.belongsTo(Odd, { foreignKey: 'oddId', onDelete: 'CASCADE' })
 
-Game.hasMany(Odd)
-Odd.belongsTo(Game)
+Game.hasMany(Odd, { foreignKey: 'gameId', onDelete: 'CASCADE' })
+Odd.belongsTo(Game, { foreignKey: 'gameId', onDelete: 'CASCADE' })
 
-User.hasMany(Transaction)
-Transaction.belongsTo(User)
+User.hasMany(Transaction, { foreignKey: 'userId', onDelete: 'CASCADE' })
+Transaction.belongsTo(User, { foreignKey: 'userId', onDelete: 'CASCADE' })
+
+
+User.belongsToMany(Game, {
+    through: "user_games",
+    foreignKey: "userId",
+});
+
+Game.belongsToMany(User, {
+    through: "user_games",
+    foreignKey: "gameId",
+});
 
 User.hasMany(Transaction)
 Notification.belongsTo(User)

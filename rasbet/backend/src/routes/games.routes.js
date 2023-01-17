@@ -1,20 +1,38 @@
 const express = require('express')
-const gamesRouter = express.Router()
-const gamesController = require('../controller/games.controller')
-const authController = require('../controller/auth.controller')
+const { GamesController } = require('../controller/games.controller')
+const { AuthController } = require('../controller/auth.controller')
 
+class GamesRouter {
+  constructor() {
+    this.router = express.Router()
+    this.authController = new AuthController()
+    this.gamesController = new GamesController()
 
-gamesRouter.get('/:game/', [
-  authController.validateJWT,
-  gamesController.getGames
-])
+    this.router.get('/:game/', [
+      this.authController.validateJWT,
+      this.gamesController.getGames
+    ])
+    
+    this.router.post('/', [
+      this.authController. validateJWT,
+      this.gamesController.createGame
+    ])
+    
+    this.router.post('/follow', [
+      this.authController. validateJWT,
+      this.gamesController.followGame
+    ])
 
-gamesRouter.post('/', async (req, res) => {
-  const msg = {
-    msg: 'POST request to /games',
-    data: req.body
+    this.router.delete('/', [
+      this.authController. validateJWT,
+      this.gamesController.deleteGame
+    ])
+    
+    this.router.get('/id/:gameId', [
+      this.authController. validateJWT,
+      this.gamesController.getGameById
+    ])
   }
-  return res.status(200).send(msg)
-})
+}
 
-exports.gamesRouter = gamesRouter
+exports.GamesRouter = GamesRouter

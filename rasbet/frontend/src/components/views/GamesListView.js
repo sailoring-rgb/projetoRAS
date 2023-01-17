@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { getFootballGames, getBasketballGames } from '../../utils/gamesApi'
+import { getFootballGames, getBasketballGames, getTenisGames } from '../../utils/gamesApi'
 import '../../css/views/GamesListView.scss'
 import { PaymentModal } from '../blocks/PaymentModal.js'
 import { BetsList } from '../blocks/BetsList.js'
@@ -7,8 +7,8 @@ import { GamesList } from '../blocks/GamesList.js'
 import { useUserAuth } from '../../hooks/useAuth'
 import { useNavigate } from "react-router-dom";
 
-function GamesListView({game}) {
-  const { signout } = useUserAuth()
+function GamesListView({game, showOdds=true, showFollow=true}) {
+  const { signout, authUser } = useUserAuth()
   const nav = useNavigate()
   const [ betsList, setBetsList ] = useState([])
   const [ gamesList, setGamesList ] = useState({})
@@ -22,6 +22,9 @@ function GamesListView({game}) {
         break
       case 'basketball':
         newGamesList = await getBasketballGames()
+        break
+      case 'tenis':
+        newGamesList = await getTenisGames()
         break
       default:
     }
@@ -49,6 +52,7 @@ function GamesListView({game}) {
   }
 
   useEffect(() => {
+    console.log(authUser)
     fetchGamesList()
     clearBets()
   }, [game, fetchGamesList])

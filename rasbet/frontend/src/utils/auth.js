@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { login, register } from '../utils/authApi'
+import { login, register, registerAdmin, registerSpecialist } from '../utils/authApi'
 
 export const AuthContext = createContext({});
 
@@ -25,13 +25,24 @@ export const AuthProvider = ({ children }) => {
 
     }
 
-    const signup = async (userData) => {
+    const signup = async (userData, userType) => {
+        const registerFunctions = {
+            NORMAL: register,
+            ADMIN: registerAdmin,
+            SPECIALIST: registerSpecialist
+        }
+
         try {
-            return await register(userData)
+            const data = await registerFunctions[userType](userData)
+            console.log(data)
+            if(!data.status)
+                return { status: false,  msg: data.message }
+            return data
         } catch(err) {
             return { status: false,  msg: err }
         }
     }
+
 
     const signout = () => {
         setUser(null)
@@ -44,7 +55,7 @@ export const AuthProvider = ({ children }) => {
                 authUser: user,
                 signed: !!user,
                 signin,
-                signup,
+                signup: signup,
                 signout
             }}
         >
