@@ -22,6 +22,11 @@ class GamesRouter {
       this.authController. validateJWT,
       this.gamesController.followGame
     ])
+
+    this.router.delete('/', [
+      this.authController. validateJWT,
+      this.gamesController.deleteGame
+    ])
     
     this.router.get('/id/:gameId', [
       this.authController. validateJWT,

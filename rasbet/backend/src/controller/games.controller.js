@@ -15,24 +15,27 @@ class GamesController {
             const gamesData = await gameFetchFunctions[gameType]()
 
             Object.values(gamesData).forEach(async game => {
-                const newGame = (await Game.upsert({
-                    id: game.id,
-                    homeTeam: game.homeTeam,
-                    awayTeam: game.awayTeam,
-                    commenceTime: game.commenceTime,
-                    oddsKey: game.oddsKey,
-                    gameType: gameType.toUpperCase()
-                }))[0]
-        
-                Object.keys(game.odds).map(async oddKey => {
-                    const odd = game.odds[oddKey]
-                    return await Odd.upsert({
-                        id: oddKey,
-                        name: odd.name,
-                        value: odd.value,
-                        gameId: newGame.dataValues.id
-                    }, { include: [ Game ] })
-                })
+                try {
+                    const newGame = (await Game.create({
+                        id: game.id,
+                        homeTeam: game.homeTeam,
+                        awayTeam: game.awayTeam,
+                        commenceTime: game.commenceTime,
+                        oddsKey: game.oddsKey,
+                        gameType: gameType.toUpperCase(),
+                        deleted: false
+                    }))
+            
+                    Object.keys(game.odds).map(async oddKey => {
+                        const odd = game.odds[oddKey]
+                        return await Odd.create({
+                            id: oddKey,
+                            name: odd.name,
+                            value: odd.value,
+                            gameId: newGame.dataValues.id
+                        }, { include: [ Game ] })
+                    })
+                } catch(e) { }
             })
             console.log("[CONTROLLER] Games updated on DB")
         })
@@ -97,14 +100,20 @@ class GamesController {
         const userData = req.jwt
         console.log("[GETTING] " + game)
 
-        const followedGames = (await User.findByPk(userData.id, {
+        let followedGames = (await User.findByPk(userData.id, {
             include: Game
-        })).dataValues.games.map(game => game.id)
+        }))
+        
+        if(followedGames)
+            followedGames = followedGames.dataValues.games.map(game => game.id)
+        else
+            followedGames = []
        
         // First fetch the existing data in the db since it's faster
         let gamesData;
         if(game.toUpperCase() === 'ALL')
             gamesData = await Game.findAll({
+                where: { deleted: false },
                 order: [
                     ['commenceTime', 'ASC']
                 ]
@@ -112,7 +121,8 @@ class GamesController {
         else
             gamesData = await Game.findAll({
                 where: {
-                    gameType: game.toUpperCase()
+                    gameType: game.toUpperCase(),
+                    deleted: false
                 },
                 order: [
                     ['commenceTime', 'ASC']
@@ -169,6 +179,30 @@ class GamesController {
         return res.status(200).json({
             status: true,
             isFollowed
+        })
+    }
+
+    deleteGame = async (req, res) => {
+        const { gameId } = req.body
+        const userData = req.jwt
+
+        if(userData.type !== 'SPECIALIST')
+            return res.status(401).json({
+                status: false
+            })
+
+        try {
+            const game = await Game.findByPk(gameId)
+            await game.update({ deleted: true })
+            await game.save()
+        } catch(e) {
+            return res.status(500).json({
+                status: false
+            })
+        }
+
+        return res.status(200).json({
+            status: true
         })
     }
 }

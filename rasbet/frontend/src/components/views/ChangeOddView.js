@@ -73,6 +73,7 @@ export const ChangeOddView = () => {
                 gamesList={gamesList}
                 setSelectedOdd={setOdd}
                 setGamesList={setGamesList}
+                setGame={() => {}}
                 setSelectedGame={setGame}/>
 
             <form onSubmit={e => e.preventDefault()}>

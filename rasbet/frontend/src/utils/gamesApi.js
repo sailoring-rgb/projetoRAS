@@ -145,3 +145,20 @@ export const followGame = async (gameId) => {
 
     return data
 }
+
+export const deleteGame = async (gameId) => {
+    const userToken = localStorage.getItem("user_token")
+
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`
+        },
+        body: JSON.stringify({ gameId })
+    }).then(res => {
+        return res.json()
+    })
+
+    return data
+}

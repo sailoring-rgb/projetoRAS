@@ -5,9 +5,11 @@ import '../../css/blocks/GamesList.scss'
 export const GamesSelectList = ({
     gamesList,
     setGamesList,
-    odd,
+    setGame,
     setSelectedOdd,
-    setSelectedGame
+    setSelectedGame,
+    showFollow=true,
+    showOdds=true
 }) => {
     const [ searchText, setSearchText ] = useState('')
 
@@ -63,11 +65,16 @@ export const GamesSelectList = ({
                 {
                 (gamesList && Object.values(gamesList).length > 0) ?
                     Object.values(gamesList).map((game, i) => 
-                        <GameCard
-                            key={i}
-                            game={game}
-                            onOddClick={selectOdd}
-                            followGameClick={followGame}/>
+                        <div onClick={() => setGame(game)}>
+                            <GameCard
+                                key={i}
+                                game={game}
+                                onOddClick={selectOdd}
+                                followGameClick={followGame}
+                                showOdds={showOdds}
+                                showFollow={showFollow}
+                            />
+                        </div>
                     )
                 : <label className='no-games-label'>Sem jogos disponíveis</label>
                 }

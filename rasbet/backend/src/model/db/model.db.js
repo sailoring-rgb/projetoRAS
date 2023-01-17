@@ -13,6 +13,10 @@ Game.init({
     commenceTime: DataTypes.DATE,
     oddsKey: DataTypes.STRING,
     gameType: DataTypes.STRING,
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    }
     // state: DataType.STRING
 }, {
     sequelize: sequelizeConnection,

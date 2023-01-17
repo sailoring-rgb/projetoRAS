@@ -7,7 +7,7 @@ import { GamesList } from '../blocks/GamesList.js'
 import { useUserAuth } from '../../hooks/useAuth'
 import { useNavigate } from "react-router-dom";
 
-function GamesListView({game}) {
+function GamesListView({game, showOdds=true, showFollow=true}) {
   const { signout, authUser } = useUserAuth()
   const nav = useNavigate()
   const [ betsList, setBetsList ] = useState([])
