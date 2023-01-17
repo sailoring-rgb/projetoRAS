@@ -110,3 +110,21 @@ exports.changeState = async (req,res) => {
         status: true,
     })   
 }
+
+exports.filterBet = async (req,res) => {
+    const { state } = req.body
+    const bets = {}
+
+    const betsHistory = await getBets(userData.id)
+
+    betsHistory.forEach(async bet =>{
+        if (bet.state === state){
+            bets[bet.dataValues.id].push(bet)
+        }
+    })
+        
+    return res.status(200).json({
+        status: true,
+        bets
+    })
+}
