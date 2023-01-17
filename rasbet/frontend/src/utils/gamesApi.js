@@ -11,7 +11,8 @@ const parseGame = (gameData) => {
             game.homeTeam,
             game.awayTeam,
             game.commenceTime,
-            game.oddsKey
+            game.oddsKey,
+            game.followed
         )
 
         Object.keys(game.odds).forEach(oddId => {
@@ -101,6 +102,23 @@ export const createGame = async (gameData) => {
             Authorization: `Bearer ${userToken}`
         },
         body: JSON.stringify({ gameData })
+    }).then(res => {
+        return res.json()
+    })
+
+    return data
+}
+
+export const followGame = async (gameId) => {
+    const userToken = localStorage.getItem("user_token")
+
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games/follow`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`
+        },
+        body: JSON.stringify({ gameId })
     }).then(res => {
         return res.json()
     })

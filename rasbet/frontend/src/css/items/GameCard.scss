@@ -39,7 +39,7 @@
         margin-top: 1em;
 
         &.followed {
-            color: orange;
+            color: $orange;
             background-color: white;
             border: 1px solid $orange;
         }

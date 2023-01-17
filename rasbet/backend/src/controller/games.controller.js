@@ -98,12 +98,17 @@ class GamesController {
 
     getGames = async (req, res) => {
         const { game } = req.params
+        const userData = req.jwt
         console.log("[GETTING] " + game)
 
+        const followedGames = (await User.findByPk(userData.id, {
+            include: Game
+        })).dataValues.games.map(game => game.id)
+       
         // First fetch the existing data in the db since it's faster
         let gamesData = await Game.findAll({
             where: {
-                gameType: game.toUpperCase(),
+                gameType: game.toUpperCase()
             },
             order: [
                 ['commenceTime', 'ASC']
@@ -117,10 +122,12 @@ class GamesController {
                 odd = odd.dataValues
                 odds[game.id + '_' + odd.name] = odd
             })
+            const isFollowed = followedGames.includes(game.id)
 
             return {
                 ...game.dataValues,
-                odds
+                odds,
+                followed: isFollowed
             }
         }))
 
@@ -134,19 +141,31 @@ class GamesController {
     followGame = async (req, res) => {
         const { gameId } = req.body
         const userData = req.jwt
+        let isFollowed;
 
-        const user = await User.findByPk(userData.id, { include: Game })
-        const userValues = user.dataValues
-        const isGameFollowedByUser = userValues.games.filter(game => game.id === gameId).length > 0
-        
-        if(isGameFollowedByUser) {
-            const game = await Game.findByPk(gameId)
-            await user.removeGame(game)
-        } else
-            await user.addGame(gameId)
+        try {
+            const user = await User.findByPk(userData.id, { include: Game })
+            const userValues = user.dataValues
+            const isGameFollowedByUser = userValues.games.filter(game => game.id === gameId).length > 0
             
+            if(isGameFollowedByUser) {
+                const game = await Game.findByPk(gameId)
+                await user.removeGame(game)
+                isFollowed = false
+            } else {
+                await user.addGame(gameId)
+                isFollowed = true
+            }
+        } catch(e) {
+            return res.status(500).json({
+                status: false
+            })
+        }
 
-        return res.status(200).json(user.dataValues)
+        return res.status(200).json({
+            status: true,
+            isFollowed
+        })
     }
 }
 

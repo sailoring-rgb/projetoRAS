@@ -39,9 +39,6 @@ export const SocketProvider = ({ children }) => {
         console.log("CREATING SOCKET CONN")
         const newSocket = io(`${process.env.REACT_APP_BACKEND_URL}`, {
             reconnectionDelayMax: 10000,
-            // query: {
-            //     uid: authUser.id,
-            // },
             auth: {
                 id: authUser.id,
             }

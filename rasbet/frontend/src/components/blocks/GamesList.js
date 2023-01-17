@@ -36,6 +36,12 @@ export const GamesList = ({
         setBetsList(newBets)
     }
 
+    const followGame = (gameId, isFollowed) => {
+        let tmpGameList = { ...gamesList }
+        tmpGameList[gameId].isFollowed = isFollowed
+        setGamesList(tmpGameList)
+    }
+
     return (
         <div className='gameslist-container'>
             <div className='searchbar-container'>
@@ -55,7 +61,11 @@ export const GamesList = ({
                 {
                 (gamesList && Object.values(gamesList).length > 0) ?
                     Object.values(gamesList).map((game, i) => 
-                        <GameCard key={i} game={game} onOddClick={selectOdd} />
+                        <GameCard
+                            key={i}
+                            game={game}
+                            onOddClick={selectOdd}
+                            followGameClick={followGame}/>
                     )
                 : <label className='no-games-label'>Sem jogos disponíveis</label>
                 }

@@ -1,7 +1,8 @@
 import { OddCard } from "./OddCard";
 import "../../css/items/GameCard.scss";
+import { followGame } from "../../utils/gamesApi";
 
-export const GameCard = ({ game, onOddClick }) => {
+export const GameCard = ({ game, onOddClick, followGameClick }) => {
     const parseTimestamp = (timestamp) => {
         const date = new Date(timestamp);
         const currDate = new Date();
@@ -17,6 +18,12 @@ export const GameCard = ({ game, onOddClick }) => {
             : `${dayString}  ${hourString}`;
     };
 
+    const toggleFollow = async () => {
+        const res = await followGame(game.id)
+        if(res.status)
+            followGameClick(game.id, res.isFollowed)
+    }
+
     return (
         <div className="game-card">
             <div className="id-labels">
@@ -26,7 +33,11 @@ export const GameCard = ({ game, onOddClick }) => {
                 <label className="secondary-label">
                     {parseTimestamp(game.commenceTime)}h
                 </label>
-                <button>Seguir</button>
+                <button
+                    onClick={toggleFollow}
+                    className={game.isFollowed ? 'followed' : ''}>
+                    { !game.isFollowed ? 'Seguir' : 'Não seguir' }
+                </button>
             </div>
 
             <div className="odds-list">
