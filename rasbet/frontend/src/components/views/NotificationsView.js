@@ -1,29 +1,35 @@
 import { NotificationCard } from "../items/NotificationCard";
 import "../../css/blocks/NotificationsModal.scss";
+import { useEffect, useState } from "react";
+import { getNotificationsHistory } from "../../utils/notificationsApi";
+import { useUserAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export const NotificationsView = () => {
-    const notificationsList = [
-        {
-            id: "dnied19e123",
-            msg: "O jogo Benfica - Rio Ave no qual apostou chegou ao fim. Parabéns, ganhou!",
-            date: "2022-12-02T19:30:00.000Z",
-        },
-        {
-            id: "akdkahdskd",
-            msg: "O jogo Vitória SC - Arouca no qual apostou chegou ao fim. Oops, não teve sorte!",
-            date: "2022-12-19T12:30:00.000Z",
-        },
-        {
-            id: "019382jdks",
-            msg: "O jogo Braga - Famalicão no qual apostou chegou ao fim. Parabéns, ganhou!",
-            date: "2022-11-30T08:22:00.000Z",
-        },
-        {
-            id: "0392dakcnh",
-            msg: "O jogo Sporting - Marinhense no qual apostou chegou ao fim. Oops, não teve sorte!",
-            date: "2022-10-09T14:15:00.000Z",
-        },
-    ]
+    const [ notificationsList, setNotificationsList ] = useState([])
+    const { signout } = useUserAuth()
+    const nav = useNavigate()
+
+    const fetchNotifications = async () => {
+        const notifications = await getNotificationsHistory()
+        if(notifications.name == 'Error') {
+            switch(parseInt(notifications.message)) {
+                case 401:
+                case 403:
+                    signout()
+                    nav('/signin')
+                default:
+                console.log("An error occured")
+            }
+            return 
+        }
+
+        setNotificationsList(notifications)
+    }
+
+    useEffect(() => {
+        fetchNotifications()
+    }, [])
 
     return (
         <div className="notifications-container">
