@@ -74,6 +74,15 @@ Transaction.init({
     modelName: 'transactions'
 });
 
+class Notification extends Model {}
+Notification.init({
+    msg: DataTypes.STRING,
+    time: DataTypes.DATE,
+}, {
+    sequelize: sequelizeConnection,
+    modelName: 'notifications'
+});
+
 class MbWayPayment extends Model {}
 MbWayPayment.init({
     phone: DataTypes.STRING,
@@ -107,6 +116,9 @@ Odd.belongsTo(Game)
 User.hasMany(Transaction)
 Transaction.belongsTo(User)
 
+User.hasMany(Transaction)
+Notification.belongsTo(User)
+
 // MbWayPayment.hasOne(Bet)
 Bet.hasOne(MbWayPayment)
 
@@ -115,6 +127,7 @@ Bet.hasOne(CardPayment)
 
 exports.User = User
 exports.Transaction = Transaction
+exports.Notification = Notification
 exports.Game = Game
 exports.Odd = Odd
 exports.Bet = Bet
