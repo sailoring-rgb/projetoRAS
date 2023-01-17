@@ -23,6 +23,10 @@ export const ProfileCard = ({ user }) => {
                 <p>NIC:</p>
                 <p>{user.nic}h</p>
             </div>
+            <div>
+                <p>Saldo:</p>
+                <p>{user.wallet}h</p>
+            </div>
         </div>
     );
 };
