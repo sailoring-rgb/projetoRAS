@@ -1,5 +1,5 @@
 const gamesApi = require('../utils/apis')
-const { Game, Odd, User } = require('../model/db/model.db')
+const { Game, Odd, User, Bet, Notification } = require('../model/db/model.db')
 const crypto = require('crypto');
 
 // const { Odds } = require('../model/db/Odds')
@@ -192,10 +192,36 @@ class GamesController {
             })
 
         try {
-            const game = await Game.findByPk(gameId)
+            const game = await Game.findByPk(gameId, { include: User })
             await game.update({ deleted: true })
             await game.save()
+            
+            const bettingUsers = await Promise.all((await Bet.findAll({
+                where: {
+                    gameId: game.id
+                }
+            })).map(async bet => {
+                await bet.update({ state: 'CANCELED' })
+                const user = await User.findByPk(bet.dataValues.userId)
+                await user.update({ wallet: user.dataValues.wallet + bet.dataValues.total })
+
+                await bet.save()
+                await user.save()
+
+                return bet.dataValues.userId
+            }))
+            const followers = game.dataValues.users.map(user => user.id)
+            const receivingUsers = new Set(bettingUsers.concat(followers))
+    
+            receivingUsers.forEach(async userId => {
+                await Notification.create({
+                    userId: userId,
+                    msg: `O jogo ${game.dataValues.homeTeam} vs ${game.dataValues.awayTeam} foi cancelado.`,
+                    time:(new Date(Date.now())).toISOString()
+                })
+            })
         } catch(e) {
+            console.log(e)
             return res.status(500).json({
                 status: false
             })

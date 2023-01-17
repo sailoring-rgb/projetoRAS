@@ -69,7 +69,6 @@ class BetsController {
                 gameId,
                 oddId,
                 value,
-                state
             } = bet
     
             const newBet = await Bet.create({
@@ -77,7 +76,7 @@ class BetsController {
                 gameId: gameId,
                 oddId: oddId,
                 total: value,
-                state: state
+                state: 'ABERTA'
             })
     
             if(paymentType === 'MBWAY') {
