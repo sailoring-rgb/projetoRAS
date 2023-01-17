@@ -19,7 +19,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(routes)
 
-const cronJob = cron.schedule('10 * * * * *', function() {
+const cronJob = cron.schedule('*/20 * * * * *', function() {
     console.log('Cron running');
     updateDbGames()
 });

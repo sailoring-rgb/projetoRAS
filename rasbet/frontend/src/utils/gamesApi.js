@@ -70,3 +70,40 @@ export const getBasketballGames = async () => {
 
     return parseGame(data)
 }
+
+export const getTenisGames = async () => {
+    const userToken = localStorage.getItem("user_token")
+
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games/tenis/`, {
+        headers: {
+            Authorization: `Bearer ${userToken}`
+        }
+    }).then(res => {
+        if(res.status != 200)
+            return new Error(res.status)
+        return res.json()
+    })
+    .catch(res => res)
+
+    if(data.name == 'Error')
+        return data
+
+    return parseGame(data)
+}
+
+export const createGame = async (gameData) => {
+    const userToken = localStorage.getItem("user_token")
+
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`
+        },
+        body: JSON.stringify({ gameData })
+    }).then(res => {
+        return res.json()
+    })
+
+    return data
+}

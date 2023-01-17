@@ -1,10 +1,17 @@
+const { ConnectionTimedOutError } = require('sequelize');
+
 const Game = require('../model/Game').Game
 
 exports.fetchFootballGames = async () => {
     const data = await fetch(process.env.FOOTBALL_API)
-        .then(res => res.json());
-    const games = {}
+        .then(res => {
+            // if(res.status != 200)
+            //     return new Error(res.status)
+            return res.json()
+        })
+        // .catch(res => res)
 
+    const games = {}
     data.forEach(game => {
         const oddsListKey = game.bookmakers[0].markets[0].key
         const newGame = new Game(

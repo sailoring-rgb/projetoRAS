@@ -8,12 +8,14 @@ gamesRouter.get('/:game/', [
   gamesController.getGames
 ])
 
-gamesRouter.post('/', async (req, res) => {
-  const msg = {
-    msg: 'POST request to /games',
-    data: req.body
-  }
-  return res.status(200).send(msg)
-})
+gamesRouter.post('/', [
+  authController. validateJWT,
+  gamesController.createGame
+])
+
+gamesRouter.get('/id/:gameId', [
+  authController. validateJWT,
+  gamesController.getGameById
+])
 
 exports.gamesRouter = gamesRouter

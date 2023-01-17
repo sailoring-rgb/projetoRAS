@@ -162,5 +162,5 @@ exports.registerSpecialist = async (req, res) => {
 
     delete userData.confPassword
     
-    return await registerUser(userData, UserType.ADMIN, res)
+    return await registerUser(userData, UserType.SPECIALIST, res)
 }

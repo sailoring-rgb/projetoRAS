@@ -5,6 +5,7 @@ import adminButton from "../../imgs/adminIcon.png";
 import espButton from "../../imgs/especialistaIcon.png";
 import { useStateValue } from "../../state";
 import { useUserAuth } from "../../hooks/useAuth";
+import { userType } from "../../models/UserType";
 
 export const NavBar = () => {
     const { state } = useStateValue()
@@ -54,22 +55,33 @@ export const NavBar = () => {
                     </li>
                 </Link>
 
-                <Link to={`/admin`}>
-                    <li className={isSelected("/admin") ? "selected" : ""}>
-                        <img src={adminButton} />{" "}
-                    </li>
-                </Link>
-                <Link to={`/specialist`}>
-                    <li className={isSelected("/specialist") ? "selected" : ""}>
-                        <img src={espButton} />{" "}
-                    </li>
-                </Link>
-                <Link to={`/user`}>
-                    <li className={isSelected("/user") ? "selected" : ""}>
-                        <img src={userButton} />{" "}
-                    </li>
-                </Link>
+                {
+                    (state.authUser && state.authUser.type == userType.NORMAL) &&
+                        <Link to={`/user`}>
+                            <li className={isSelected("/user") ? "selected" : ""}>
+                                <img src={userButton} />
+                            </li>
+                        </Link>
+                }
+                {
+                    (state.authUser && state.authUser.type == userType.ADMIN) &&
+                        <Link to={`/admin`}>
+                            <li className={isSelected("/admin") ? "selected" : ""}>
+                                <img src={adminButton} />
+                            </li>
+                        </Link>
+                }
+                {
+                    (state.authUser && state.authUser.type == userType.SPECIALIST) &&
+                        <Link to={`/specialist`}>
+                            <li className={isSelected("/specialist") ? "selected" : ""}>
+                                <img src={espButton} />
+                            </li>
+                        </Link>
+                }
+
             </ul>
+
             <div className="flex-vertical">
                 <label>Bem vindo, { state.authUser && state.authUser.firstName }</label>
                 <label className="logout-btn" onClick={logout}>Sair</label>

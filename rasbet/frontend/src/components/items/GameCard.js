@@ -5,7 +5,7 @@ export const GameCard = ({ game, onOddClick }) => {
     const parseTimestamp = (timestamp) => {
         const date = new Date(timestamp);
         const currDate = new Date();
-        const currDayString = `${currDate.getDate()}/${currDate.getMonth()}/${currDate.getFullYear()}`;
+        const currDayString = `${currDate.getDate()}/${currDate.getMonth()+1}/${currDate.getFullYear()}`;
         const dayString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
         const hourString = `${String(date.getHours()).padStart(
             2,

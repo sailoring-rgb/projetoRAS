@@ -5,7 +5,8 @@ class Game extends Model {}
 Game.init({
     id: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
+        // autoIncrement: true
     },
     homeTeam: DataTypes.STRING,
     awayTeam: DataTypes.STRING,
@@ -19,10 +20,10 @@ Game.init({
 
 class Bet extends Model {}
 Bet.init({
-    // id: {
-    //     type: DataTypes.STRING,
-    //     primaryKey: true
-    // },
+    id: {
+        type: DataTypes.STRING,
+        primaryKey: true
+    },
     total: DataTypes.FLOAT,
 }, {
     timestamps: true,
@@ -34,7 +35,8 @@ class Odd extends Model {}
 Odd.init({
     id: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
+        // autoIncrement: true
     },
     name: DataTypes.STRING,
     value: DataTypes.FLOAT,

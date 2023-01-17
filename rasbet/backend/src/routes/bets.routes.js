@@ -10,7 +10,7 @@ betsRouter.post('/',[
 ])
 
 // Get bets history
-betsRouter.get('/',[
+betsRouter.get('/',[ 
     authController.validateJWT,
     betsController.getBetsHistory
 ]) 

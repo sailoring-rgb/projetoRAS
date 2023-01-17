@@ -46,7 +46,7 @@ export const GamesList = ({
                     value={searchText}/>
             </div>
             
-            { game !== 'football' && game !== 'basketball'
+            { game === 'motoGP'
             ?
                 <div className='gameslist'>
                     <h1 className='game-available-soon'>Jogo disponível brevemente</h1>
