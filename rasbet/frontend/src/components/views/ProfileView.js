@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-// import '../../css/views/BetStateView.scss'
-//import '../../css/views/FormView.scss'
-import { Input } from '../items/Input';
+import React from 'react';
 import { ProfileCard } from '../items/ProfileCard';
 import "../../css/blocks/ProfileModal.scss";
 
