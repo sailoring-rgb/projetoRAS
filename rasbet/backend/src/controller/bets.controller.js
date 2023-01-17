@@ -103,10 +103,10 @@ exports.placeBet = async (req, res) => {
 exports.changeState = async (req,res) => {
     const { betId,state } = req.body
     const bet = await Bet.findByPk(betId)
-    await bet.update({ state: bet.state})
+    await bet.update({ state: state })
     await bet.save()
-    
+        
     return res.status(200).json({
-        status: true
+        status: true,
     })   
 }

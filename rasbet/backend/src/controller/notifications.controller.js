@@ -47,11 +47,29 @@ exports.placeNotification = async (req, res) => {
             time,
         } = notification
 
-        const newNotification = await Notification.create({
+        await Notification.create({
             userId: userData.id,
             msg: msg,
             time: time,
         })
+    })
+    
+    return res.status(200).json({
+        status: true
+    })
+}
+
+exports.sendNotification = async (req,res) => {
+    const userData = req.jwt
+    const { notifsData } = req.body
+
+    const randomUUID = crypto.randomUUID()
+    const utcCommenceTime = new Date(notifsData.commenceTime).toISOString()
+    await Notification.create({
+        userId: userData.id,
+        id : randomUUID,
+        msg: msg, 
+        time: utcCommenceTime
     })
     
     return res.status(200).json({

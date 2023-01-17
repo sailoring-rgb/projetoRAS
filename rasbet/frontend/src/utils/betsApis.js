@@ -55,8 +55,8 @@ export const changeState = async (betId,state) => {
         },
         body: JSON.stringify({ betId,state })
     }).then(res => res.json())
-    console.log(data)
-    data.betsHistory = data.betsHistory.map(bet => new Bet(bet.id, bet.game, bet.odd))
+    
+    //data.betsHistory = data.betsHistory.map(bet => new Bet(bet.id, bet.game, bet.odd))
 
     return data
 }
