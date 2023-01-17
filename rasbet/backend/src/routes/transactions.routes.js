@@ -1,19 +1,26 @@
 const express = require('express')
-const transactionsRouter = express.Router()
-const transactionsController = require('../controller/transactions.controller')
-const authController = require('../controller/auth.controller')
+const { TransactionsController } = require('../controller/transactions.controller')
+const { AuthController } = require('../controller/auth.controller')
 
-// Place bet
-transactionsRouter.post('/',[
-    authController.validateJWT,
-    transactionsController.createTransaction
-])
+class TransactionsRouter {
+    constructor(io) {
+        this.router = express.Router()
+        this.authController = new AuthController(io)
+        this.transactionsController = new TransactionsController(io)
 
-// Get bets history
-transactionsRouter.get('/',[
-    authController.validateJWT,
-    transactionsController.getTransactionsHistory
-]) 
+        // Place bet
+        this.router.post('/',[
+            this.authController.validateJWT,
+            this.transactionsController.createTransaction
+        ])
+        
+        // Get bets history
+        this.router.get('/',[
+            this.authController.validateJWT,
+            this.transactionsController.getTransactionsHistory
+        ]) 
+    }
+}
 
 
-exports.transactionsRouter = transactionsRouter
+exports.TransactionsRouter = TransactionsRouter

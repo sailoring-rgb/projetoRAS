@@ -1,16 +1,20 @@
 const express = require('express')
-const authRouter = express.Router()
-const authController = require('../controller/auth.controller')
+const { AuthController } = require('../controller/auth.controller')
 
-// The secret should be an unguessable long string (you can use a password generator for this!)
+class AuthRouter {
+    constructor(io) {
+        this.router = express.Router()
+        this.authController = new AuthController(io)
 
-authRouter.post("/login", authController.login);
-authRouter.post("/register", authController.register);
-authRouter.post("/admin/register", authController.registerAdmin);
-authRouter.post("/specialist/register", authController.registerSpecialist);
-authRouter.get("/validateToken", [
-    authController.validateJWT,
-    authController.validateToken
-]);
+        this.router.post("/login", this.authController.login);
+        this.router.post("/register", this.authController.register);
+        this.router.post("/admin/register", this.authController.registerAdmin);
+        this.router.post("/specialist/register", this.authController.registerSpecialist);
+        this.router.get("/validateToken", [
+            this.authController.validateJWT,
+            this.authController.validateToken
+        ]);
+    }
+}
 
-exports.authRouter = authRouter
+exports.AuthRouter = AuthRouter

@@ -1,19 +1,27 @@
 const express = require('express')
-const { gamesRouter } = require('./games.routes.js')
-const { authRouter } = require('./auth.routes.js')
-const { betsRouter } = require('./bets.routes.js')
+const { GamesRouter } = require('./games.routes.js')
+const { AuthRouter } = require('./auth.routes.js')
+const { BetsRouter } = require('./bets.routes.js')
 const { notifsRouter } = require("./notifications.routes.js")
-const { functionsRouter } = require("./functions.routes.js")
-const { transactionsRouter } = require("./transactions.routes.js")
-
-const router = express.Router()
-
-router.use('/auth', authRouter)
-router.use('/games', gamesRouter)
-router.use('/bets', betsRouter)
-router.use("/notifications", notifsRouter)
-router.use("/functions", functionsRouter);
-router.use("/transactions", transactionsRouter);
+const { TransactionsRouter } = require("./transactions.routes.js")
 
 
-module.exports = router
+class RasbetRouter {
+    constructor(io) {
+        this.router = express.Router()
+        this.betsRouter = new BetsRouter(io)
+        this.gamesRouter = new GamesRouter(io)
+        this.authRouter = new AuthRouter(io)
+        this.transactionsRouter = new TransactionsRouter(io)
+        
+        this.router.use('/auth', this.authRouter.router)
+        this.router.use('/games', this.gamesRouter.router)
+        this.router.use('/bets', this.betsRouter.router)
+        this.router.use("/notifications", notifsRouter)
+        this.router.use("/transactions", this.transactionsRouter.router);
+    }
+}
+
+
+
+module.exports = RasbetRouter

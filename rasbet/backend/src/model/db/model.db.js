@@ -12,7 +12,8 @@ Game.init({
     awayTeam: DataTypes.STRING,
     commenceTime: DataTypes.DATE,
     oddsKey: DataTypes.STRING,
-    gameType: DataTypes.STRING
+    gameType: DataTypes.STRING,
+    // state: DataType.STRING
 }, {
     sequelize: sequelizeConnection,
     modelName: 'game'
@@ -76,6 +77,7 @@ Transaction.init({
     sequelize: sequelizeConnection,
     modelName: 'transactions'
 });
+
 
 class MbWayPayment extends Model {}
 MbWayPayment.init({

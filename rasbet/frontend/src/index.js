@@ -9,7 +9,6 @@ import {
 import { StateProvider } from "./state";
 import { initialState, globalStateReducer } from "./globalState";
 import { AuthProvider } from "./utils/auth";
-import { SocketProvider } from "./utils/sockets";
 
 import { userRoutes } from "./routing/user";
 import { specialistRoutes } from "./routing/specialist";
@@ -28,9 +27,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <StateProvider initialState={initialState} reducer={globalStateReducer}>
-            <SocketProvider>
-                <AuthProvider children={<RouterProvider router={router} />} />
-            </SocketProvider>
+            <AuthProvider children={<RouterProvider router={router} />} />
         </StateProvider>
     </React.StrictMode>
 )
