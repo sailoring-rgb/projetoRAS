@@ -26,6 +26,27 @@ class BetsController {
         return parsedBets
     }
 
+    getAllBets = async (req, res) => {
+        const dbBets = await Bet.findAll({
+            order: [    
+                ['createdAt', 'DESC'],
+            ],
+        })
+
+        const betsList = await Promise.all(await dbBets.map(async dbBet => {
+            const bet = dbBet.dataValues
+            bet.odd = await Odd.findOne({ where: { id: bet.oddId }})
+            bet.game = await Game.findOne({ where: { id: bet.gameId }})
+
+            bet.odd = bet.odd.dataValues
+            bet.game = bet.game.dataValues
+
+            return bet
+        }))
+
+        return res.state(200).json({ betsList })
+    }
+
     getBetsHistory = async (req, res) => {
         const userData = req.jwt
         const betsHistory = await this.getBets(userData.id)
