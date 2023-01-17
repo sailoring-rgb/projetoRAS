@@ -27,6 +27,7 @@ export const ProfileCard = ({ user }) => {
                 <p>Saldo:</p>
                 <p>{user.wallet}h</p>
             </div>
+
         </div>
     );
 };

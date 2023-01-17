@@ -32,6 +32,10 @@ export const SignUpView = () => {
       setError("As passwords têm de ser iguais")
       return
     }
+    if (getAge(userData.birthday) < 18) {
+      setError("Utilizador deve ser maior de 18 anos")
+      return
+    }
 
     const res = await signup({ ...userData, birthday: (new Date(userData.birthday)).getTime() })
     console.log(res)

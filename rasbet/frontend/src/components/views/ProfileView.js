@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ProfileCard } from '../items/ProfileCard';
 import "../../css/views/ProfileModal.scss";
@@ -14,6 +15,7 @@ export const ProfileView = () => {
             NIF: "987654321", 
             wallet: "3.0",          
     }   
+
     return (
         <div className="profile-container">
             <h2>Informações de Perfil</h2>
@@ -26,6 +28,7 @@ export const ProfileView = () => {
             <div className="deposit-withdraw-modal">
                 <button>Levantar</button>
                 <button>Depositar</button>
+
             </div>
         </div>
     )
