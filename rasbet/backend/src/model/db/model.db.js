@@ -23,6 +23,7 @@ Bet.init({
     //     type: DataTypes.STRING,
     //     primaryKey: true
     // },
+    state: DataTypes.STRING,
     total: DataTypes.FLOAT,
 }, {
     timestamps: true,

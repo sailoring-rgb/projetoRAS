@@ -15,10 +15,17 @@ betsRouter.get('/',[
     betsController.getBetsHistory
 ]) 
 
-// Get bets history
+// Delete bet
 betsRouter.delete('/',[
     authController.validateJWT,
     betsController.cancelBet
 ]) 
+
+// Change bet state
+betsRouter.post('/',[
+    authController.validateJWT,
+    betsController.changeState
+])
+
 
 exports.betsRouter = betsRouter

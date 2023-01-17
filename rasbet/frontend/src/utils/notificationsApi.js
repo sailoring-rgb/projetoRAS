@@ -40,7 +40,7 @@ export const eliminateNotification = async (notifId) => {
         body: JSON.stringify({ notifId })
     }).then(res => res.json())
     console.log(data)
-    data.notificationsHistory = data.notificationsHistory.map(notification => new Notification(notification.id, notification.msg, notification.time))
+    //data.notificationsHistory = data.notificationsHistory.map(notification => new Notification(notification.id, notification.msg, notification.time))
 
     return data
 }
