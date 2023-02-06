@@ -2,9 +2,9 @@
 
 Trabalho prático realizado no âmbito de Requisitos e Arquiteturas de Software.
 
-Classificação da Fase 1: 17.0/20 \
-Classificação da Fase 2: 14.4/20 \
-Classificação da Fase 3: .../20
+Classificação da Fase 1: 17.00/20 \
+Classificação da Fase 2: 14.40/20 \
+Classificação da Fase 3: 15.48/20
 
 # Autores
 
